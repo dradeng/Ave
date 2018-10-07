@@ -7,6 +7,7 @@ const passport = require('passport');
 const validateProfileInput = require('../../validation/profile');
 const validateExperienceInput = require('../../validation/experience');
 const validateEducationInput = require('../../validation/education');
+const validateReviewInput = require('../../validation/review');
 
 // Load Profile Model
 const Profile = require('../../models/Profile');
@@ -191,7 +192,6 @@ router.post(
         current: req.body.current,
         description: req.body.description
       };
-
       // Add to exp array
       profile.experience.unshift(newExp);
 
@@ -233,6 +233,38 @@ router.post(
     });
   }
 );
+
+
+// @route   POST api/profile/reviews
+// @desc    Add review to profile
+// @access  Private
+router.post(
+    '/reviews',
+    passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+        const { errors, isValid } = validateReviewInput(req.body);
+        // Check Validation
+        if (!isValid) {
+            // Return any errors with 400 status
+            return res.status(400).json(errors);
+        }
+        Profile.findOne({ user: req.body.target }).then(profile => {
+            const newReview = {
+                title: req.body.title,
+                reviewer: req.user.id,
+                description: req.body.description,
+                rating: req.body.rating,
+                date: Date.now(),
+            };
+            // Add to exp array
+           profile.reviews.unshift(newReview);
+
+           profile.save().then(profile => res.json(profile));
+        });
+    }
+);
+
+
 
 // @route   DELETE api/profile/experience/:exp_id
 // @desc    Delete experience from profile

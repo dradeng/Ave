@@ -6,6 +6,8 @@ import ProfileHeader from './ProfileHeader';
 import ProfileAbout from './ProfileAbout';
 import ProfileCreds from './ProfileCreds';
 import ProfileGithub from './ProfileGithub';
+import ProfileReview from './ProfileReview';
+
 import Spinner from '../common/Spinner';
 import { getProfileByHandle } from '../../actions/profileActions';
 
@@ -37,7 +39,12 @@ class Profile extends Component {
                 Back To Profiles
               </Link>
             </div>
-            <div className="col-md-6" />
+            <div style={{alignContent: "flex-end"}} className="col-md-6">
+                <Link to="/add-review" className="btn btn-light">
+                    <i className="fas fa-graduation-cap text-info mr-1" />
+                    Add Review
+                </Link>
+            </div>
           </div>
           <ProfileHeader profile={profile} />
           <ProfileAbout profile={profile} />
@@ -48,6 +55,7 @@ class Profile extends Component {
           {profile.githubusername ? (
             <ProfileGithub username={profile.githubusername} />
           ) : null}
+          <ProfileReview profile={profile}/>
         </div>
       );
     }

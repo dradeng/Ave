@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Spinner from '../common/Spinner';
 import ProfileItem from './ProfileItem';
+import Map from '../map/Map';
 import { getProfiles } from '../../actions/profileActions';
 
 class Profiles extends Component {
@@ -27,16 +28,23 @@ class Profiles extends Component {
     }
 
     return (
-      <div className="profiles">
+      <div  className="profiles">
         <div className="container">
           <div className="row">
-            <div className="col-md-12">
+            <div style={{overflow: 'scroll', height: '100vh'}} className="col-md-7">
               <h1 className="display-4 text-center">Developer Profiles</h1>
               <p className="lead text-center">
                 Browse and connect with developers
               </p>
               {profileItems}
+
+
+
             </div>
+            <div style={{overflow: 'hidden', height: '100vh',width: '100vh'}} className="col-md-5">
+              <Map/>
+            </div>
+
           </div>
         </div>
       </div>
