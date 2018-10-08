@@ -8,6 +8,7 @@ class PostForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      title: '',
       text: '',
       errors: {}
     };
@@ -28,6 +29,7 @@ class PostForm extends Component {
     const { user } = this.props.auth;
 
     const newPost = {
+      title: this.state.title,
       text: this.state.text,
       name: user.name,
       avatar: user.avatar
@@ -35,6 +37,7 @@ class PostForm extends Component {
 
     this.props.addPost(newPost);
     this.setState({ text: '' });
+    this.setState({ title: '' });
   }
 
   onChange(e) {
@@ -50,6 +53,15 @@ class PostForm extends Component {
           <div className="card-header bg-info text-white">Say Somthing...</div>
           <div className="card-body">
             <form onSubmit={this.onSubmit}>
+              <div className="form-group">
+                <TextAreaFieldGroup
+                  placeholder="Title of post"
+                  name="title"
+                  value={this.state.title}
+                  onChange={this.onChange}
+                  error={errors.title}
+                />
+              </div>
               <div className="form-group">
                 <TextAreaFieldGroup
                   placeholder="Create a post"
