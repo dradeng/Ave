@@ -31,6 +31,7 @@ class PostForm extends Component {
     const newPost = {
       title: this.state.title,
       text: this.state.text,
+      images: this.state.images,
       name: user.name,
       avatar: user.avatar
     };
@@ -38,6 +39,7 @@ class PostForm extends Component {
     this.props.addPost(newPost);
     this.setState({ text: '' });
     this.setState({ title: '' });
+    this.setState({ image: '' });
   }
 
   onChange(e) {
@@ -70,6 +72,11 @@ class PostForm extends Component {
                   onChange={this.onChange}
                   error={errors.text}
                 />
+              </div>
+                <label for="file">Choose File</label>
+                <input type="file" id="file"/>
+              <div>
+
               </div>
               <button type="submit" className="btn btn-dark">
                 Submit

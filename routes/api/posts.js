@@ -118,6 +118,11 @@ router.post(
   }
 );
 
+
+//router.post('/upload', upload.single('file'), (req, res) => {
+//  res.json({file: req.file });
+//});
+
 // @route   POST api/posts/unlike/:id
 // @desc    Unlike post
 // @access  Private

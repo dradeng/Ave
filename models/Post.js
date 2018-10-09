@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const fs = require('fs');
+const multer = require('multer');
 
 // Create Schema
 const PostSchema = new Schema({
@@ -14,6 +16,10 @@ const PostSchema = new Schema({
   text: {
     type: String,
     required: true
+  },
+  pictures: {
+    data: Buffer, 
+    contentType: String
   },
   name: {
     type: String
