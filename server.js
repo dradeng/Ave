@@ -4,6 +4,11 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const path = require('path');
 
+const multer = require('multer');
+const GridFsStorage = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
+const methodOverride = require('method-override');
+
 const users = require('./routes/api/users');
 const profile = require('./routes/api/profile');
 const posts = require('./routes/api/posts');
@@ -15,14 +20,47 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // DB Config
-const db = require('./config/keys').mongoURI;
+const mongoURI = require('./config/keys').mongoURI;
+const conn = mongoose.createConnection(mongoURI);
 
-// Connect to MongoDB
+
+
+let gfs;
+conn.once('open', () => {
+	gfs = Grid(conn.db, mongoose.mongo);
+	gfs.collection('uploads');
+	console.log('connection open');
+});
+
+const storage = new GridFsStorage({
+	url: mongoURI,
+	file: (req, file) => {
+		return new Promise((resolve, reject) => {
+			crypto.randomBytes(16, (err, buf) => {
+				if (err) {
+					return reject(err);
+				}
+				const filename = buf.toString('hex') + path.extname(file.originalname);
+				const fileInfo = {
+					filename: filename,
+					bucketName: 'uploads'
+				};
+				resolve(fileInfo);
+
+			});
+		});
+	}
+});
+const upload = multer({storage});
+
+
+//THIS IS THE ORIGINAL WAY TO CONNECT TO MONGODB
+//THIS HAS TO GO AFTER CREATE CONNECITON OR CONN.ONCE THROWS AN ERROR
+//CREATE CONNECTION WAS SOLELY DONE FOR GRIDFS AND UPLOADING PICS
 mongoose
-  .connect(db)
+  .connect(mongoURI)
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));
-
 // Passport middleware
 app.use(passport.initialize());
 
