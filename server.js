@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const path = require('path');
+const crypto = require('crypto');
 
 const multer = require('multer');
 const GridFsStorage = require('multer-gridfs-storage');
@@ -28,34 +29,37 @@ const conn = mongoose.createConnection(mongoURI);
 
 
 let gfs;
+
 conn.once('open', () => {
-	gfs = Grid(conn.db, mongoose.mongo);
-	gfs.collection('uploads');
-	console.log('connection open');
+  // Init stream
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection('uploads');
 });
 
+// Create storage engine
 const storage = new GridFsStorage({
-	url: mongoURI,
-	file: (req, file) => {
-		return new Promise((resolve, reject) => {
-			crypto.randomBytes(16, (err, buf) => {
-				if (err) {
-					return reject(err);
-				}
-				const filename = buf.toString('hex') + path.extname(file.originalname);
-				const fileInfo = {
-					filename: filename,
-					bucketName: 'uploads'
-				};
-				resolve(fileInfo);
-
-			});
-		});
-	}
+  url: mongoURI,
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(16, (err, buf) => {
+        if (err) {
+          return reject(err);
+        }
+        const filename = buf.toString('hex') + path.extname(file.originalname);
+        const fileInfo = {
+          filename: filename,
+          bucketName: 'uploads'
+        };
+        resolve(fileInfo);
+      });
+    });
+  }
 });
-const upload = multer({storage});
+const upload = multer({ storage });
 
 
+
+exports.upload = upload;
 
 //THIS IS THE ORIGINAL WAY TO CONNECT TO MONGODB
 //THIS HAS TO GO AFTER CREATE CONNECITON OR CONN.ONCE THROWS AN ERROR
@@ -74,6 +78,13 @@ require('./config/passport')(passport);
 app.use('/api/users', users);
 app.use('/api/profile', profile);
 app.use('/api/posts', posts);
+
+
+
+app.post('/upload', upload.single('file'), (req,res) => {
+	res.json({ file: req.file });
+});
+
 
 // Server static assets if in production
 if (process.env.NODE_ENV === 'production') {

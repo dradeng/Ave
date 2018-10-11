@@ -3,6 +3,9 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const passport = require('passport');
 
+
+const upload = require('../../server').upload;
+
 // Post model
 const Post = require('../../models/Post');
 // Profile model
@@ -43,7 +46,13 @@ router.get('/:id', (req, res) => {
 router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
+  //upload.single('file'),
   (req, res) => {
+    if(err){
+      console.log(err);
+    } else {
+      console.log('no error');
+    }
     const { errors, isValid } = validatePostInput(req.body);
 
     // Check Validation
@@ -122,9 +131,6 @@ router.post(
 );
 
 
-//router.post('/upload', upload.single('file'), (req, res) => {
-//  res.json({file: req.file });
-//});
 
 // @route   POST api/posts/unlike/:id
 // @desc    Unlike post
@@ -228,5 +234,6 @@ router.delete(
       .catch(err => res.status(404).json({ postnotfound: 'No post found' }));
   }
 );
+
 
 module.exports = router;
