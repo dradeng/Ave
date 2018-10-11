@@ -20,7 +20,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // DB Config
-const mongoURI = require('./config/keys').mongoURI;
+
+const db = require('./config/keys').mongoURI;
+/*
 const conn = mongoose.createConnection(mongoURI);
 
 
@@ -52,13 +54,14 @@ const storage = new GridFsStorage({
 	}
 });
 const upload = multer({storage});
+*/
 
 
 //THIS IS THE ORIGINAL WAY TO CONNECT TO MONGODB
 //THIS HAS TO GO AFTER CREATE CONNECITON OR CONN.ONCE THROWS AN ERROR
 //CREATE CONNECTION WAS SOLELY DONE FOR GRIDFS AND UPLOADING PICS
 mongoose
-  .connect(mongoURI)
+  .connect(db)
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));
 // Passport middleware

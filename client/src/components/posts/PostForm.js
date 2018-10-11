@@ -11,8 +11,8 @@ class PostForm extends Component {
       title: '',
       text: '',
       address: '',
-      longitude: 0,
-      latitude: 0,
+      //longitude: 0,
+      //latitude: 0,
       errors: {}
     };
 
@@ -35,8 +35,8 @@ class PostForm extends Component {
       title: this.state.title,
       text: this.state.text,
       address: this.state.address,
-      longitude: 0, //THIS NEEDS TO CHANGE, GRAB FROM GOOGLE API
-      latitude: 0, //THIS IS NEEDS TO CHANGE, GRAB FROM GOOGLE API
+      //longitude: 0, //THIS NEEDS TO CHANGE, GRAB FROM GOOGLE API
+      //latitude: 0, //THIS IS NEEDS TO CHANGE, GRAB FROM GOOGLE API
       name: user.name,
       avatar: user.avatar
     };
@@ -45,14 +45,13 @@ class PostForm extends Component {
     this.setState({ text: '' });
     this.setState({ title: '' });
     this.setState({ address: '' });
-    this.setState({ longitude: 0 });
-    this.setState({ latitude: 0 });
+    
   }
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
-  getLatLong() {
+  /*getLatLong() {
     //COMMENTED THIS OUT, WILL WORK ON TOMORROW
     //THIS CODE DOESNT DO ANYTHING AND IS WRONG
     /*var geocoder = new google.maps.Geocoder();
@@ -65,8 +64,8 @@ class PostForm extends Component {
         var longitude = results[0].geometry.location.lng();
 
       }
-    });*/
-  }
+    });
+  }*/
 
   render() {
     const { errors } = this.state;
@@ -99,7 +98,6 @@ class PostForm extends Component {
                 <TextAreaFieldGroup
                   placeholder="Address of post (this will not be publicly visible)"
                   name="address"
-                  id="address"
                   value={this.state.address}
                   onChange={this.onChange}
                   error={errors.address}
