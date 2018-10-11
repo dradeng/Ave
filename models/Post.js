@@ -27,6 +27,14 @@ const PostSchema = new Schema({
   avatar: {
     type: String
   },
+  latitude: {
+    type: Number,
+    required: true
+  },
+  longitude: {
+    type: Number,
+    required: true
+  },
   likes: [
     {
       user: {

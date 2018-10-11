@@ -58,7 +58,9 @@ router.post(
       text: req.body.text,
       name: req.body.name,
       avatar: req.body.avatar,
-      user: req.user.id
+      user: req.user.id,
+      latitude: req.body.latitude,
+      longitude: req.body.longitude
     });
 
     newPost.save().then(post => res.json(post));

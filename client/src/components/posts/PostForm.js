@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Geocode from 'react-geocode';
 import { connect } from 'react-redux';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import { addPost } from '../../actions/postActions';
@@ -11,8 +12,8 @@ class PostForm extends Component {
       title: '',
       text: '',
       address: '',
-      //longitude: 0,
-      //latitude: 0,
+      longitude: 0,
+      latitude: 0,
       errors: {}
     };
 
@@ -35,8 +36,8 @@ class PostForm extends Component {
       title: this.state.title,
       text: this.state.text,
       address: this.state.address,
-      //longitude: 0, //THIS NEEDS TO CHANGE, GRAB FROM GOOGLE API
-      //latitude: 0, //THIS IS NEEDS TO CHANGE, GRAB FROM GOOGLE API
+      longitude: this.state.longitude, 
+      latitude: this.state.latitude, 
       name: user.name,
       avatar: user.avatar
     };
@@ -45,27 +46,42 @@ class PostForm extends Component {
     this.setState({ text: '' });
     this.setState({ title: '' });
     this.setState({ address: '' });
+    this.setState({ latitude: 0 });
+    this.setState({ longitude: 0 });
     
   }
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
+
+    if( e.target.name === 'address')
+    {
+      this.getLatLong(e.target.value);
+    }
   }
-  /*getLatLong() {
-    //COMMENTED THIS OUT, WILL WORK ON TOMORROW
-    //THIS CODE DOESNT DO ANYTHING AND IS WRONG
-    /*var geocoder = new google.maps.Geocoder();
-    var address = document.getElementById('address').value;
-
-    geocoder.geocode({ 'address': address }, function (results, status) {
-
-      if (status == google.maps.GeocoderStatus.OK) {
-        var latitude = results[0].geometry.location.lat();
-        var longitude = results[0].geometry.location.lng();
-
+  getLatLong(address) {
+    // set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
+    
+    const GoogleMapsApi = require('../../config/index').GoogleMapsApi;
+    Geocode.setApiKey(GoogleMapsApi);
+     
+    // Enable or disable logs. Its optional.
+    Geocode.enableDebug();
+     
+    // Get latidude & longitude from address.
+    Geocode.fromAddress(address).then(
+      response => {
+        const { lat, lng } = response.results[0].geometry.location;
+        
+        this.setState({ latitude: lat});
+        this.setState({ longitude: lng});
+      },
+      error => {
+        console.error(error);
       }
-    });
-  }*/
+    );
+  
+  }
 
   render() {
     const { errors } = this.state;
