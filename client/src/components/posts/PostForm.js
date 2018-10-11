@@ -119,14 +119,17 @@ class PostForm extends Component {
                   error={errors.address}
                 />
               </div>
-                <label for="file">Choose File</label>
-                <input type="file" id="file"/>
-              <div>
-
-              </div>
+               
+            
               <button type="submit" className="btn btn-dark">
                 Submit
               </button>
+            </form>
+
+            <form action="api/posts/upload" method="POST" enctype="multipart/form-data">
+              <label for="file">Choose File</label>
+              <input type="file" name="file" id="file"/>
+              <input type="submit" value="Submit"/>
             </form>
           </div>
         </div>

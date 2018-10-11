@@ -3,6 +3,17 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const passport = require('passport');
 
+
+const crypto = require('crypto');
+const path = require('path');
+const multer = require('multer');
+const GridFsStorage = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
+const mongoURI = require('../../config/keys').mongoURI;
+const conn = mongoose.createConnection(mongoURI);
+
+//const upload = require('../../server').upload;
+
 // Post model
 const Post = require('../../models/Post');
 // Profile model
@@ -10,6 +21,41 @@ const Profile = require('../../models/Profile');
 
 // Validation
 const validatePostInput = require('../../validation/post');
+
+
+
+let gfs;
+
+conn.once('open', () => {
+  // Init stream
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection('uploads');
+});
+
+// Create storage engine
+const storage = new GridFsStorage({
+  url: mongoURI,
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(16, (err, buf) => {
+        if (err) {
+          return reject(err);
+        }
+        const filename = buf.toString('hex') + path.extname(file.originalname);
+        const fileInfo = {
+          filename: filename,
+          bucketName: 'uploads'
+        };
+        resolve(fileInfo);
+      });
+    });
+  }
+});
+const upload = multer({ storage });
+
+
+
+
 
 // @route   GET api/posts/test
 // @desc    Tests post route
@@ -43,7 +89,9 @@ router.get('/:id', (req, res) => {
 router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
+  upload.single('file'),
   (req, res) => {
+    
     const { errors, isValid } = validatePostInput(req.body);
 
     // Check Validation
@@ -122,9 +170,6 @@ router.post(
 );
 
 
-//router.post('/upload', upload.single('file'), (req, res) => {
-//  res.json({file: req.file });
-//});
 
 // @route   POST api/posts/unlike/:id
 // @desc    Unlike post
@@ -228,5 +273,9 @@ router.delete(
       .catch(err => res.status(404).json({ postnotfound: 'No post found' }));
   }
 );
+
+router.post('/upload', upload.single('file'), (req,res) => {
+  res.json({ file: req.file });
+});
 
 module.exports = router;

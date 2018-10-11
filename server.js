@@ -4,9 +4,6 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const path = require('path');
 
-const multer = require('multer');
-const GridFsStorage = require('multer-gridfs-storage');
-const Grid = require('gridfs-stream');
 const methodOverride = require('method-override');
 
 const users = require('./routes/api/users');
@@ -23,43 +20,15 @@ app.use(bodyParser.json());
 
 const mongoURI = require('./config/keys').mongoURI;
 
-const conn = mongoose.createConnection(mongoURI);
-
-
-
-let gfs;
-conn.once('open', () => {
-	gfs = Grid(conn.db, mongoose.mongo);
-	gfs.collection('uploads');
-	console.log('connection open');
-});
-
-const storage = new GridFsStorage({
-	url: mongoURI,
-	file: (req, file) => {
-		return new Promise((resolve, reject) => {
-			crypto.randomBytes(16, (err, buf) => {
-				if (err) {
-					return reject(err);
-				}
-				const filename = buf.toString('hex') + path.extname(file.originalname);
-				const fileInfo = {
-					filename: filename,
-					bucketName: 'uploads'
-				};
-				resolve(fileInfo);
-
-			});
-		});
-	}
-});
-const upload = multer({storage});
-
-
 
 //THIS IS THE ORIGINAL WAY TO CONNECT TO MONGODB
 //THIS HAS TO GO AFTER CREATE CONNECITON OR CONN.ONCE THROWS AN ERROR
 //CREATE CONNECTION WAS SOLELY DONE FOR GRIDFS AND UPLOADING PICS
+
+//COMMENT ABOVE IS OLD^^
+//Draden moved create connection to api post
+//Originally had it here and tried to export it, but it didnt
+//work well so just moved all the code over
 mongoose
   .connect(mongoURI)
   .then(() => console.log('MongoDB Connected'))
@@ -74,6 +43,7 @@ require('./config/passport')(passport);
 app.use('/api/users', users);
 app.use('/api/profile', profile);
 app.use('/api/posts', posts);
+
 
 // Server static assets if in production
 if (process.env.NODE_ENV === 'production') {
