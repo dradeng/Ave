@@ -10,6 +10,9 @@ class PostForm extends Component {
     this.state = {
       title: '',
       text: '',
+      address: '',
+      longitude: 0,
+      latitude: 0,
       errors: {}
     };
 
@@ -31,7 +34,9 @@ class PostForm extends Component {
     const newPost = {
       title: this.state.title,
       text: this.state.text,
-      images: this.state.images,
+      address: this.state.address,
+      longitude: 0, //THIS NEEDS TO CHANGE, GRAB FROM GOOGLE API
+      latitude: 0, //THIS IS NEEDS TO CHANGE, GRAB FROM GOOGLE API
       name: user.name,
       avatar: user.avatar
     };
@@ -39,11 +44,28 @@ class PostForm extends Component {
     this.props.addPost(newPost);
     this.setState({ text: '' });
     this.setState({ title: '' });
-    this.setState({ image: '' });
+    this.setState({ address: '' });
+    this.setState({ longitude: 0 });
+    this.setState({ latitude: 0 });
   }
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
+  }
+  getLatLong() {
+    //COMMENTED THIS OUT, WILL WORK ON TOMORROW
+    //THIS CODE DOESNT DO ANYTHING AND IS WRONG
+    /*var geocoder = new google.maps.Geocoder();
+    var address = document.getElementById('address').value;
+
+    geocoder.geocode({ 'address': address }, function (results, status) {
+
+      if (status == google.maps.GeocoderStatus.OK) {
+        var latitude = results[0].geometry.location.lat();
+        var longitude = results[0].geometry.location.lng();
+
+      }
+    });*/
   }
 
   render() {
@@ -71,6 +93,16 @@ class PostForm extends Component {
                   value={this.state.text}
                   onChange={this.onChange}
                   error={errors.text}
+                />
+              </div>
+              <div className="form-group">
+                <TextAreaFieldGroup
+                  placeholder="Address of post (this will not be publicly visible)"
+                  name="address"
+                  id="address"
+                  value={this.state.address}
+                  onChange={this.onChange}
+                  error={errors.address}
                 />
               </div>
                 <label for="file">Choose File</label>

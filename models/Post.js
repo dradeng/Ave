@@ -13,13 +13,21 @@ const PostSchema = new Schema({
     type: String,
     required: true
   },
+  address: {
+    type: String,
+    required: true
+  },
   text: {
     type: String,
     required: true
   },
-  pictures: {
-    data: Buffer, 
-    contentType: String
+  latitude: {
+    type: Number,
+    required: true
+  },
+  longitude: {
+    type: Number,
+    required: true
   },
   name: {
     type: String
