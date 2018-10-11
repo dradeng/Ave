@@ -27,6 +27,11 @@ class Navbar extends Component {
             Dashboard
           </Link>
         </li>
+          <li className="nav-item">
+              <Link className="nav-link" to="/favorites">
+                  Favorites
+              </Link>
+          </li>
         <li className="nav-item">
           <a
             href=""

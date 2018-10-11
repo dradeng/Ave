@@ -2,9 +2,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import isEmpty from '../../validation/is-empty';
+import connect from "react-redux/es/connect/connect";
+import { addFavorite } from "../../actions/profileActions";
 
 class ProfileItem extends Component {
-  render() {
+
+
+    onFavoriteClick(id) {
+     this.props.addFavorite(id);
+    }
+
+    render() {
     const { profile } = this.props;
 
     return (
@@ -31,7 +39,16 @@ class ProfileItem extends Component {
             </Link>
           </div>
           <div className="col-md-4 d-none d-md-block">
+            <div className="row">
             <h4>Skill Set</h4>
+              <button
+                  onClick={this.onFavoriteClick.bind(this, profile.user._id)}
+                  type="button"
+                  className="btn btn-light mr-1"
+              >
+                  <i  className="text-secondary fas fa-star" />
+              </button>
+            </div>
             <ul className="list-group">
               {profile.skills.slice(0, 4).map((skill, index) => (
                 <li key={index} className="list-group-item">
@@ -48,7 +65,13 @@ class ProfileItem extends Component {
 }
 
 ProfileItem.propTypes = {
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
+  addFavorite: PropTypes.func.isRequired,
+
 };
 
-export default ProfileItem;
+const mapStateToProps = state => ({
+    auth: state.auth
+});
+
+export default  connect(mapStateToProps, { addFavorite })(ProfileItem);

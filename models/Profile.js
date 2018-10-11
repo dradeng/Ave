@@ -94,6 +94,14 @@ const ProfileSchema = new Schema({
             }
         }
     ],
+    favoriteProfile: [
+        {
+            user: {
+                type: String,
+                required: true
+            }
+        }
+    ],
     social: {
         youtube: {
             type: String

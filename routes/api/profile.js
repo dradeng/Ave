@@ -66,7 +66,6 @@ router.get('/all', (req, res) => {
 
 router.get('/handle/:handle', (req, res) => {
   const errors = {};
-
   Profile.findOne({ handle: req.params.handle })
     .populate('user', ['name', 'avatar'])
     .then(profile => {
@@ -74,7 +73,6 @@ router.get('/handle/:handle', (req, res) => {
         errors.noprofile = 'There is no profile for this user';
         res.status(404).json(errors);
       }
-
       res.json(profile);
     })
     .catch(err => res.status(404).json(err));
@@ -86,7 +84,6 @@ router.get('/handle/:handle', (req, res) => {
 
 router.get('/user/:user_id', (req, res) => {
   const errors = {};
-
   Profile.findOne({ user: req.params.user_id })
     .populate('user', ['name', 'avatar'])
     .then(profile => {
@@ -94,7 +91,6 @@ router.get('/user/:user_id', (req, res) => {
         errors.noprofile = 'There is no profile for this user';
         res.status(404).json(errors);
       }
-
       res.json(profile);
     })
     .catch(err =>
@@ -199,6 +195,35 @@ router.post(
     });
   }
 );
+
+// @route   POST api/profile/favorites
+// @desc    Add favorite to profile
+// @access  Private
+router.post(
+    '/favoriteProfile/:userID',
+    passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+        Profile.findOne({ user: req.user.id }).then(profile => {
+                    if (
+                        profile.favoriteProfile.filter(favorite => favorite.user.toString() === req.params.userID)
+                            .length > 0
+                    ) {
+                        return res
+                            .status(400)
+                            .json({ alreadyliked: 'User already favored this post' });
+                    }
+
+                    // Add user id to likes array
+                    profile.favoriteProfile.unshift({ user: req.params.userID });
+
+                    profile.save().then(profile => res.json(profile));
+                })
+                .catch(err => res.status(404).json({ postnotfound: 'No favorite found' }));
+
+    }
+);
+
+
 
 // @route   POST api/profile/education
 // @desc    Add education to profile

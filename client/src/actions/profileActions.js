@@ -6,6 +6,7 @@ import {
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
   GET_ERRORS,
+   GET_FAVORITE,
   SET_CURRENT_USER
 } from './types';
 
@@ -47,6 +48,26 @@ export const getProfileByHandle = handle => dispatch => {
     );
 };
 
+// Get profile by handle
+export const getProfileByID = userID => dispatch => {
+
+    dispatch(setProfileLoading());
+    axios
+        .get(`/api/profile/user/${userID}`)
+        .then(res =>
+            dispatch({
+                type: GET_FAVORITE,
+                payload: res.data
+            })
+        )
+        .catch(err =>
+            dispatch({
+                type: GET_FAVORITE,
+                payload: null
+            })
+        );
+};
+
 // Create Profile
 export const createProfile = (profileData, history) => dispatch => {
   axios
@@ -84,6 +105,18 @@ export const addEducation = (eduData, history) => dispatch => {
                 payload: err.response.data
             })
         );
+};
+
+// Add education
+export const addFavorite = userID => dispatch => {
+    axios
+        .post(`/api/profile/favoriteProfile/${userID}`)
+        .catch(err => {
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            });
+        });
 };
 
 // Add review
