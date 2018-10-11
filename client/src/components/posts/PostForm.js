@@ -126,7 +126,7 @@ class PostForm extends Component {
               </button>
             </form>
 
-            <form action="/upload" method="POST" enctype="multipart/form-data">
+            <form action="api/posts/upload" method="POST" enctype="multipart/form-data">
               <label for="file">Choose File</label>
               <input type="file" name="file" id="file"/>
               <input type="submit" value="Submit"/>
