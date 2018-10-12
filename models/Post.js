@@ -35,6 +35,10 @@ const PostSchema = new Schema({
     type: Number,
     required: true
   },
+  images : {
+    data: Buffer,
+    contentType: String
+  },
   likes: [
     {
       user: {

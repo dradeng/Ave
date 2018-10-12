@@ -4,14 +4,6 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 
 
-const crypto = require('crypto');
-const path = require('path');
-const multer = require('multer');
-const GridFsStorage = require('multer-gridfs-storage');
-const Grid = require('gridfs-stream');
-const mongoURI = require('../../config/keys').mongoURI;
-const conn = mongoose.createConnection(mongoURI);
-
 //const upload = require('../../server').upload;
 
 // Post model
@@ -23,35 +15,20 @@ const Profile = require('../../models/Profile');
 const validatePostInput = require('../../validation/post');
 
 
+/*######################################################
+THIS IS FOR SETTING UP AMAZON S3
+/*######################################################*/
+const fs = require('fs');
+const AWS = require('aws-sdk');
+const AWS_ACCESS_KEY = require('../../config/keys').IAmUserKey;
+const AWS_SECRET_ACCESS_KEY = require('../../config/keys').IAmUserSecret;
+const AWS_BUCKET_NAME = require('../../config/keys').BucketName;
 
-let gfs;
-
-conn.once('open', () => {
-  // Init stream
-  gfs = Grid(conn.db, mongoose.mongo);
-  gfs.collection('uploads');
+const s3 = new AWS.S3({
+  accessKeyId: AWS_ACCESS_KEY,
+  secretAccessKey: AWS_SECRET_ACCESS_KEY,
+  Bucket: AWS_BUCKET_NAME
 });
-
-// Create storage engine
-const storage = new GridFsStorage({
-  url: mongoURI,
-  file: (req, file) => {
-    return new Promise((resolve, reject) => {
-      crypto.randomBytes(16, (err, buf) => {
-        if (err) {
-          return reject(err);
-        }
-        const filename = buf.toString('hex') + path.extname(file.originalname);
-        const fileInfo = {
-          filename: filename,
-          bucketName: 'uploads'
-        };
-        resolve(fileInfo);
-      });
-    });
-  }
-});
-const upload = multer({ storage });
 
 
 
@@ -89,7 +66,6 @@ router.get('/:id', (req, res) => {
 router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
-  upload.single('file'),
   (req, res) => {
     
     const { errors, isValid } = validatePostInput(req.body);
@@ -100,6 +76,23 @@ router.post(
       return res.status(400).json(errors);
     }
 
+    const uploadFile = () => {
+      fs.readFile(req.body.images, (err, data) => {
+        if(err) throw err;
+
+        const params = {
+          Bucket: AWS_BUCKET_NAME,
+          Key: req.body.images,
+          Body: JSON.stringify(data, null, 2)
+        };
+        s3.upload(params, function(err, data) {
+          if(err) throw err;
+          console.log('file uploaded successfully');
+        });
+      });
+    };
+    uploadFile();
+
     const newPost = new Post({
       title: req.body.title,
       address: req.body.address,
@@ -108,7 +101,8 @@ router.post(
       avatar: req.body.avatar,
       user: req.user.id,
       latitude: req.body.latitude,
-      longitude: req.body.longitude
+      longitude: req.body.longitude,
+      images: req.body.images
     });
 
     newPost.save().then(post => res.json(post));
@@ -273,9 +267,5 @@ router.delete(
       .catch(err => res.status(404).json({ postnotfound: 'No post found' }));
   }
 );
-
-router.post('/upload', upload.single('file'), (req,res) => {
-  res.json({ file: req.file });
-});
 
 module.exports = router;

@@ -21,14 +21,6 @@ app.use(bodyParser.json());
 const mongoURI = require('./config/keys').mongoURI;
 
 
-//THIS IS THE ORIGINAL WAY TO CONNECT TO MONGODB
-//THIS HAS TO GO AFTER CREATE CONNECITON OR CONN.ONCE THROWS AN ERROR
-//CREATE CONNECTION WAS SOLELY DONE FOR GRIDFS AND UPLOADING PICS
-
-//COMMENT ABOVE IS OLD^^
-//Draden moved create connection to api post
-//Originally had it here and tried to export it, but it didnt
-//work well so just moved all the code over
 mongoose
   .connect(mongoURI)
   .then(() => console.log('MongoDB Connected'))

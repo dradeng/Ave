@@ -14,6 +14,7 @@ class PostForm extends Component {
       address: '',
       longitude: 0,
       latitude: 0,
+      images: '',
       errors: {}
     };
 
@@ -39,6 +40,7 @@ class PostForm extends Component {
       longitude: this.state.longitude, 
       latitude: this.state.latitude, 
       name: user.name,
+      images: this.state.images,
       avatar: user.avatar
     };
 
@@ -46,6 +48,7 @@ class PostForm extends Component {
     this.setState({ text: '' });
     this.setState({ title: '' });
     this.setState({ address: '' });
+    this.setState({ images: '' });
     this.setState({ latitude: 0 });
     this.setState({ longitude: 0 });
     
@@ -91,7 +94,7 @@ class PostForm extends Component {
         <div className="card card-info">
           <div className="card-header bg-info text-white">Say Somthing...</div>
           <div className="card-body">
-            <form onSubmit={this.onSubmit}>
+            <form onSubmit={this.onSubmit} enctype="multipart/form-data">
               <div className="form-group">
                 <TextAreaFieldGroup
                   placeholder="Title of post"
@@ -119,17 +122,21 @@ class PostForm extends Component {
                   error={errors.address}
                 />
               </div>
-               
+              
+              <div>
+                <label for="file">Choose File</label>
+                <input 
+                  type="file" 
+                  name="file" 
+                  id="file"
+                  value={this.state.images}
+                  onChange={this.onChange}
+                />
+              </div>
             
               <button type="submit" className="btn btn-dark">
                 Submit
               </button>
-            </form>
-
-            <form action="api/posts/upload" method="POST" enctype="multipart/form-data">
-              <label for="file">Choose File</label>
-              <input type="file" name="file" id="file"/>
-              <input type="submit" value="Submit"/>
             </form>
           </div>
         </div>
