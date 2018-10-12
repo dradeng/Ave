@@ -197,7 +197,7 @@ router.post(
   }
 );
 
-// @route   POST api/profile/favorites
+// @route   POST api/profile/favoriteProfile
 // @desc    Add favorite to profile
 // @access  Private
 router.post(
@@ -223,6 +223,39 @@ router.post(
 
     }
 );
+
+// @route   POST api/profile/favoriteProfile
+// @desc    unfavorite profile
+// @access  Private
+router.post(
+    '/unfavoriteProfile/:userID',
+    passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+        Profile.findOne({ user: req.user.id }).then(profile => {
+
+            if (
+                profile.favoriteProfile.filter(favorite => favorite.user.toString() === req.params.userID)
+                    .length === 0
+            ) {
+                return res
+                    .status(400)
+                    .json({ alreadyliked: 'User has not liked this post' });
+            }
+
+                    // Get remove index
+                    const removeIndex = profile.favoriteProfile
+                        .map(favorite => favorite.user.toString())
+                        .indexOf(req.params.userID);
+
+                    // Splice out of array
+                    profile.favoriteProfile.splice(removeIndex, 1);
+
+                    // Save
+                    profile.save().then(profile => res.json(profile));
+                })
+                .catch(err => res.status(404).json({ profilenotfound: 'No profile found' }));
+});
+
 
 
 

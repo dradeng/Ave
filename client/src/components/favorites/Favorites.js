@@ -50,7 +50,7 @@ class Favorites extends Component {
         let favoriteContent;
         if (favoriteProfile.length > 0) {
             favoriteContent = favoriteProfile.map(profile => (
-                <ProfileItem key={profile._id} profile={profile} />
+                <ProfileItem isFavorited={true} key={profile._id} profile={profile} />
             ));
         }
         if (favoriteProfile === null || loading) {

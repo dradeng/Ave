@@ -107,7 +107,7 @@ export const addEducation = (eduData, history) => dispatch => {
         );
 };
 
-// Add education
+// Add Favorite
 export const addFavorite = userID => dispatch => {
     axios
         .post(`/api/profile/favoriteProfile/${userID}`)
@@ -118,6 +118,20 @@ export const addFavorite = userID => dispatch => {
             });
         });
 };
+
+
+// Remove favorite
+export const removeFavorite = userID => dispatch => {
+    axios
+        .post(`/api/profile/unfavoriteProfile/${userID}`)
+        .catch(err => {
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            });
+        });
+};
+
 
 // Add review
 export const addReview = (reviewData, history) => dispatch => {

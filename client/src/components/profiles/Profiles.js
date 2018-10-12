@@ -4,24 +4,40 @@ import PropTypes from 'prop-types';
 import Spinner from '../common/Spinner';
 import ProfileItem from './ProfileItem';
 import Map from '../map/Map';
-import { getProfiles } from '../../actions/profileActions';
+import { getProfiles, getCurrentProfile } from '../../actions/profileActions';
 
 class Profiles extends Component {
   componentDidMount() {
     this.props.getProfiles();
+    this.props.getCurrentProfile();
+
   }
 
   render() {
-    const { profiles, loading } = this.props.profile;
+    const { profiles,profile, loading } = this.props.profile;
     let profileItems;
-
     if (profiles === null || loading) {
       profileItems = <Spinner />;
     } else {
       if (profiles.length > 0) {
-        profileItems = profiles.map(profile => (
-          <ProfileItem key={profile._id} profile={profile} />
-        ));
+        profileItems = profiles.map(pro => {
+          if (profile !== null) {
+              if(profile.favoriteProfile.filter(favorite => favorite.user.toString() === pro.user._id)
+                  .length === 0) {
+                  return (
+                      <ProfileItem key={pro._id} profile={pro} isFavorited={false}/>
+                  )
+              }
+              else {
+                  return  (
+                      <ProfileItem key={pro._id} profile={pro} isFavorited={true}/>
+                  )
+              }
+          }
+            return (
+            <ProfileItem key={pro._id} profile={pro} isFavorited={false}/>
+          );
+        });
       } else {
         profileItems = <h4>No profiles found...</h4>;
       }
@@ -54,6 +70,7 @@ class Profiles extends Component {
 
 Profiles.propTypes = {
   getProfiles: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired
 };
 
@@ -61,4 +78,4 @@ const mapStateToProps = state => ({
   profile: state.profile
 });
 
-export default connect(mapStateToProps, { getProfiles })(Profiles);
+export default connect(mapStateToProps, { getProfiles, getCurrentProfile })(Profiles);
