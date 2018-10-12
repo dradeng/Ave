@@ -18,18 +18,15 @@ const validatePostInput = require('../../validation/post');
 /*######################################################
 THIS IS FOR SETTING UP AMAZON S3
 /*######################################################*/
-const fs = require('fs');
-const AWS = require('aws-sdk');
-const AWS_ACCESS_KEY = require('../../config/keys').IAmUserKey;
-const AWS_SECRET_ACCESS_KEY = require('../../config/keys').IAmUserSecret;
-const AWS_BUCKET_NAME = require('../../config/keys').BucketName;
 
-const s3 = new AWS.S3({
-  accessKeyId: AWS_ACCESS_KEY,
-  secretAccessKey: AWS_SECRET_ACCESS_KEY,
-  Bucket: AWS_BUCKET_NAME
-});
 
+const multer = require('multer');
+ 
+const storage = multer.memoryStorage()
+const upload = multer({storage: storage});
+const awsWorker = require('../../controllers/aws.js');
+
+router.post('/upload', upload.single("file"), awsWorker.doUpload);
 
 
 
@@ -76,7 +73,7 @@ router.post(
       return res.status(400).json(errors);
     }
 
-    const uploadFile = () => {
+    /*const uploadFile = () => {
       fs.readFile(req.body.images, (err, data) => {
         if(err) throw err;
 
@@ -91,7 +88,7 @@ router.post(
         });
       });
     };
-    uploadFile();
+    uploadFile();*/
 
     const newPost = new Post({
       title: req.body.title,
@@ -102,7 +99,7 @@ router.post(
       user: req.user.id,
       latitude: req.body.latitude,
       longitude: req.body.longitude,
-      images: req.body.images
+      //images: req.body.images
     });
 
     newPost.save().then(post => res.json(post));
