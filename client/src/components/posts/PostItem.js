@@ -5,6 +5,7 @@ import classnames from 'classnames';
 import { Link } from 'react-router-dom';
 import { deletePost, addLike, removeLike } from '../../actions/postActions';
 
+
 class PostItem extends Component {
   onDeleteClick(id) {
     this.props.deletePost(id);
@@ -17,7 +18,6 @@ class PostItem extends Component {
   onUnlikeClick(id) {
     this.props.removeLike(id);
   }
-
   findUserLike(likes) {
     const { auth } = this.props;
     if (likes.filter(like => like.user === auth.user.id).length > 0) {
@@ -43,10 +43,13 @@ class PostItem extends Component {
             </a>
             <br />
             <p className="text-center">{post.name}</p>
+
           </div>
           <div className="col-md-10">
             <p className="lead">{post.title}</p>
             <p className="lead">{post.text}</p>
+           
+            <img src={post.images} />
             {showActions ? (
               <span>
                 <button
