@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Geocode from 'react-geocode';
+import axios from 'axios';
 import { connect } from 'react-redux';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import { addPost } from '../../actions/postActions';
@@ -40,8 +41,8 @@ class PostForm extends Component {
       longitude: this.state.longitude, 
       latitude: this.state.latitude, 
       name: user.name,
-      images: this.state.images,
-      avatar: user.avatar
+      avatar: user.avatar,
+      images: this.state.images
     };
 
     this.props.addPost(newPost);
@@ -52,11 +53,30 @@ class PostForm extends Component {
     this.setState({ latitude: 0 });
     this.setState({ longitude: 0 });
     
+    
+  }
+  //THIS IS FOR A FILE BE UPLOADED
+  fileChangedHandler = (event) => {
+    
+    const file = event.target.files[0];
+    
+    // this.setState({selectedFile: event.target.files[0]});
+    const uuidv4 = require('uuid/v4');
+    const formData = new FormData();
+    const fileName = uuidv4();
+    formData.append('file', file, fileName);
+
+    this.setState({ images: fileName });
+    
+    axios.post('api/posts/uploads', formData);
+
+
   }
 
   onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
 
+    this.setState({ [e.target.name]: e.target.value });
+ 
     if( e.target.name === 'address')
     {
       this.getLatLong(e.target.value);
@@ -80,7 +100,8 @@ class PostForm extends Component {
         this.setState({ longitude: lng});
       },
       error => {
-        console.error(error);
+        //console.error(error);
+        //Commented out because it says an error when ur not done typing out address
       }
     );
   
@@ -94,14 +115,14 @@ class PostForm extends Component {
         <div className="card card-info">
           <div className="card-header bg-info text-white">Say Somthing...</div>
           <div className="card-body">
-            <form onSubmit={this.onSubmit} enctype="multipart/form-data">
+            <form onSubmit={this.onSubmit} method="POST" enctype="multipart/form-data">
               <div className="form-group">
                 <TextAreaFieldGroup
                   placeholder="Title of post"
                   name="title"
                   value={this.state.title}
                   onChange={this.onChange}
-                  error={errors.title}
+                  error={errors.title} 
                 />
               </div>
               <div className="form-group">
@@ -123,21 +144,16 @@ class PostForm extends Component {
                 />
               </div>
               
-              <div>
-                <label for="file">Choose File</label>
-                <input 
-                  type="file" 
-                  name="file" 
-                  id="file"
-                  value={this.state.images}
-                  onChange={this.onChange}
-                />
-              </div>
-            
+              
+              <input type="file" name="file" id="file" onChange={this.fileChangedHandler}/>
+
               <button type="submit" className="btn btn-dark">
                 Submit
               </button>
+         
             </form>
+            
+
           </div>
         </div>
       </div>

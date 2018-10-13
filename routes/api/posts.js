@@ -19,16 +19,17 @@ const validatePostInput = require('../../validation/post');
 THIS IS FOR SETTING UP AMAZON S3
 /*######################################################*/
 
-
+const uuidv4 = require('uuid/v4');
 const multer = require('multer');
- 
+const stream = require('stream');
+const s3 = require('../../config/s3.js');
 const storage = multer.memoryStorage()
 const upload = multer({storage: storage});
 const awsWorker = require('../../controllers/aws.js');
 
-router.post('/upload', upload.single("file"), awsWorker.doUpload);
+router.post('/uploads', upload.single("file"), awsWorker.doUpload);
 
-
+/*######################################################*/
 
 
 // @route   GET api/posts/test
@@ -73,23 +74,6 @@ router.post(
       return res.status(400).json(errors);
     }
 
-    /*const uploadFile = () => {
-      fs.readFile(req.body.images, (err, data) => {
-        if(err) throw err;
-
-        const params = {
-          Bucket: AWS_BUCKET_NAME,
-          Key: req.body.images,
-          Body: JSON.stringify(data, null, 2)
-        };
-        s3.upload(params, function(err, data) {
-          if(err) throw err;
-          console.log('file uploaded successfully');
-        });
-      });
-    };
-    uploadFile();*/
-
     const newPost = new Post({
       title: req.body.title,
       address: req.body.address,
@@ -99,7 +83,7 @@ router.post(
       user: req.user.id,
       latitude: req.body.latitude,
       longitude: req.body.longitude,
-      //images: req.body.images
+      images: req.body.images
     });
 
     newPost.save().then(post => res.json(post));

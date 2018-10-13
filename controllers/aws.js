@@ -7,11 +7,11 @@ exports.doUpload = (req, res) => {
 	const params = s3.uploadParams;
 	
 
-	//Originally was req.file.originalname
-	//Need to create a folder for each user
-	params.Key = uuidv4();
+	params.Key = req.file.originalname;
+
 	params.Body = req.file.buffer;
-		
+	
+
 	s3Client.upload(params, (err, data) => {
 		if (err) {
 			res.status(500).json({error:"Error -> " + err});
