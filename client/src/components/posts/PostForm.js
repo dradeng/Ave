@@ -15,7 +15,7 @@ class PostForm extends Component {
       address: '',
       longitude: 0,
       latitude: 0,
-      images: '',
+      images: [],
       errors: {}
     };
 
@@ -49,7 +49,7 @@ class PostForm extends Component {
     this.setState({ text: '' });
     this.setState({ title: '' });
     this.setState({ address: '' });
-    this.setState({ images: '' });
+    this.setState({ images: [] });
     this.setState({ latitude: 0 });
     this.setState({ longitude: 0 });
     
@@ -70,7 +70,11 @@ class PostForm extends Component {
     // I do this after so it only affects the state, not whats uploaded to s3
     // The state & model in the db stores the whole url
     fileName = 'https://s3.us-east-2.amazonaws.com/aveneu/' + fileName;
-    this.setState({ images: fileName });
+    
+
+    
+    this.setState({ images: [...this.state.images, fileName] });
+    
     
     axios.post('api/posts/uploads', formData);
 
@@ -156,7 +160,7 @@ class PostForm extends Component {
               </button>
          
             </form>
-            
+            <p>{this.state.images}</p>
 
           </div>
         </div>

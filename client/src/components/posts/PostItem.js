@@ -30,6 +30,10 @@ class PostItem extends Component {
   render() {
     const { post, auth, showActions } = this.props;
 
+    const allImage = post.images.map((item, index) => (
+      <img src={item} /> )
+    );
+
     return (
       <div className="card card-body mb-3">
         <div className="row">
@@ -48,8 +52,10 @@ class PostItem extends Component {
           <div className="col-md-10">
             <p className="lead">{post.title}</p>
             <p className="lead">{post.text}</p>
-           
-            {post.images.map(imageUrl => <img src={imageUrl} />)}
+            
+            
+            {allImage}
+
             {showActions ? (
               <span>
                 <button
