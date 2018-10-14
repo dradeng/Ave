@@ -19,6 +19,11 @@ class Messages extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 	}
+  componentWillReceiveProps(newProps) {
+    if (newProps.errors) {
+      this.setState({ errors: newProps.errors });
+    }
+  }
   onChange(e) {
 
     this.setState({ [e.target.name]: e.target.value });
@@ -67,9 +72,6 @@ Messages.propTypes = {
   addChat: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-  auth: state.auth,
-  errors: state.errors
-});
 
-export default connect(mapStateToProps, { addChat })(Messages);
+
+export default connect(null, { addChat })(Messages);

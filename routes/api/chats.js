@@ -37,6 +37,12 @@ router.post(
   
   (req, res) => {
 
+    isValid = true
+    if (!isValid) {
+      // If any errors, send 400 with errors object
+      return res.status(400).json('bad message');
+    }
+
     const newChat = new Chat({
       message: req.body.message,
       user: req.user.id,

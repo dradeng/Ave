@@ -4,7 +4,9 @@ import {
   ADD_CHAT,
   GET_CHAT,
   CHAT_LOADING,
-  CLEAR_CHAT_ERRORS
+  CLEAR_CHAT_ERRORS,
+  GET_CHAT_ERRORS
+
 } from './types';
 
 // Add Post
@@ -20,8 +22,8 @@ export const addChat = chatData => dispatch => {
     )
     .catch(err =>
       dispatch({
-        //type: GET_ERRORS,
-        //payload: err.response.data
+        type: GET_CHAT_ERRORS,
+        payload: err.response.data
       })
     );
 };

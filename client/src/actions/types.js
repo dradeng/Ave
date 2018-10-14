@@ -17,4 +17,5 @@ export const GET_CHAT = 'GET_CHAT';
 export const ADD_CHAT = 'ADD_CHAT';
 export const CHAT_LOADING = 'CHAT_LOADING';
 export const CLEAR_CHAT_ERRORS = 'CLEAR_ERRORS';
+export const GET_CHAT_ERRORS = 'CLEAR_ERRORS';
 

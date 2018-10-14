@@ -1,11 +1,12 @@
 import {
   ADD_CHAT,
   GET_CHAT,
-  CHAT_LOADING
+  CHAT_LOADING,
 } from '../actions/types';
 
 const initialState = {
   chats: [],
+  chat: {},
   loading: false
 };
 
@@ -19,13 +20,13 @@ export default function(state = initialState, action) {
     case GET_CHAT:
       return {
         ...state,
-        posts: action.payload,
+        chats: action.payload,
         loading: false
       };
     case ADD_CHAT:
       return {
         ...state,
-        posts: [action.payload, ...state.posts]
+        chats: [action.payload, ...state.chats]
       };
     default:
       return state;
