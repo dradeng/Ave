@@ -59,13 +59,13 @@ if (process.env.NODE_ENV === 'production') {
 const port = process.env.PORT || 5000;
 
 
-io.on('connection', (client) => {
-  client.on('subscribeToTimer', (interval) => {
-    console.log('client is subscribing to timer with interval ', interval);
-    setInterval(() => {
-      client.emit('timer', new Date());
-    }, interval);
-  });
+io.on('connection', function () {
+  console.log('connected to server from node backend');
+});
+io.on('11', function(data){
+  console.log('got emit');
+  console.log(data.playerID);
+  console.log(data.otherVariable);
 });
 
 //Changed from app.listen to server.listen to enable socket messaging

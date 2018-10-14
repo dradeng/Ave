@@ -4,11 +4,12 @@ import {
   ADD_CHAT,
   GET_CHAT,
   CHAT_LOADING,
+  CLEAR_CHAT_ERRORS
 } from './types';
 
 // Add Post
 export const addChat = chatData => dispatch => {
-  dispatch(clearErrors());
+  dispatch(clearChatErrors());
   axios
     .post('/api/chat', chatData)
     .then(res =>
@@ -27,7 +28,7 @@ export const addChat = chatData => dispatch => {
 
 // Get Posts
 export const getChat = () => dispatch => {
-  dispatch(setPostLoading());
+  dispatch(setChatLoading());
   axios
     .get('/api/chat')
     .then(res =>
@@ -48,6 +49,12 @@ export const getChat = () => dispatch => {
 export const setChatLoading = () => {
   return {
     type: CHAT_LOADING
+  };
+};
+// Clear errors
+export const clearChatErrors = () => {
+  return {
+    type: CLEAR_CHAT_ERRORS
   };
 };
 
