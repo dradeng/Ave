@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const path = require('path');
+const socketIO = require('socket.io');
+const http = require('http');
 
 const methodOverride = require('method-override');
 
@@ -19,6 +21,9 @@ app.use(bodyParser.json());
 // DB Config
 
 const mongoURI = require('./config/keys').mongoURI;
+const publicPath = path.join(__dirname, '../public');
+var server = http.createServer(app);
+var io = socketIO(server);
 
 
 mongoose
@@ -37,6 +42,8 @@ app.use('/api/profile', profile);
 app.use('/api/posts', posts);
 
 
+
+
 // Server static assets if in production
 if (process.env.NODE_ENV === 'production') {
   // Set static folder
@@ -49,4 +56,10 @@ if (process.env.NODE_ENV === 'production') {
 
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => console.log(`Server running on port ${port}`));
+
+io.on('connection', (socket) => {
+	console.log('New user connected');
+});
+//Changed from app.listen to server.listen to enable socket messaging
+
+server.listen(port, () => console.log(`Server running on port ${port}`));
