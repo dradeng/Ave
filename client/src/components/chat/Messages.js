@@ -4,14 +4,22 @@ const socket = openSocket('http://localhost:3000');
 
 
 class Messages extends Component {
+	constructor(props) {
+  		super(props);
+  		this.state = {
+      		message: '',
+      		user: null,
+      		date: null
+    	};
+	}
 
 	render() {
-	  	return (
-	    	<div>
-	    	  NOTHING HERE YET
-	    	</div>
-	  	);
-	};
+  		return (
+    		<div>
+    			Nothing to look at
+    		</div>
+  );
+}
 }
 
 export default Messages;

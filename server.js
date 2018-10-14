@@ -11,6 +11,7 @@ const methodOverride = require('method-override');
 const users = require('./routes/api/users');
 const profile = require('./routes/api/profile');
 const posts = require('./routes/api/posts');
+const chat = require('./routes/api/chats');
 
 const app = express();
 
@@ -40,6 +41,7 @@ require('./config/passport')(passport);
 app.use('/api/users', users);
 app.use('/api/profile', profile);
 app.use('/api/posts', posts);
+app.use('/api/chat', chat);
 
 
 
@@ -57,9 +59,15 @@ if (process.env.NODE_ENV === 'production') {
 const port = process.env.PORT || 5000;
 
 
-io.on('connection', (socket) => {
-	console.log('New user connected');
+io.on('connection', (client) => {
+  client.on('subscribeToTimer', (interval) => {
+    console.log('client is subscribing to timer with interval ', interval);
+    setInterval(() => {
+      client.emit('timer', new Date());
+    }, interval);
+  });
 });
+
 //Changed from app.listen to server.listen to enable socket messaging
 
 server.listen(port, () => console.log(`Server running on port ${port}`));
