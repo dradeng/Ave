@@ -27,7 +27,7 @@ const storage = multer.memoryStorage()
 const upload = multer({storage: storage});
 const awsWorker = require('../../controllers/aws.js');
 
-router.post('/uploads', upload.single("file"), awsWorker.doUpload);
+router.post('/uploads', upload.any(), awsWorker.doUpload);
 
 /*######################################################*/
 

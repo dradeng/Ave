@@ -49,7 +49,7 @@ class PostItem extends Component {
             <p className="lead">{post.title}</p>
             <p className="lead">{post.text}</p>
            
-            <img src={post.images} />
+            {post.images.map(imageUrl => <img src={imageUrl} />)}
             {showActions ? (
               <span>
                 <button
