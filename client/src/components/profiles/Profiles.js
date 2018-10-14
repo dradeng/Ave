@@ -47,7 +47,7 @@ class Profiles extends Component {
       <div  className="profiles">
         <div className="container">
           <div className="row">
-            <div style={{overflow: 'scroll', height: '100vh'}} className="col-md-7">
+            <div style={{overflow: 'scroll', height: '100vh'}} className="col-md-12">
               <h1 className="display-4 text-center">Developer Profiles</h1>
               <p className="lead text-center">
                 Browse and connect with developers
@@ -57,9 +57,7 @@ class Profiles extends Component {
 
 
             </div>
-            <div style={{overflow: 'hidden', height: '100vh',width: '100vh'}} className="col-md-5">
-              <Map/>
-            </div>
+
 
           </div>
         </div>

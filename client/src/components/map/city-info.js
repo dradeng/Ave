@@ -4,17 +4,19 @@ export default class CityInfo extends PureComponent {
 
     render() {
         const {info} = this.props;
-        const displayName = `${info.city}, ${info.state}`;
+        const displayName = `${info.name}`;
 
         return (
             <div>
                 <div>
-                    {displayName} | <a target="_new"
-                                       href={`http://en.wikipedia.org/w/index.php?title=Special:Search&search=${displayName}`}>
-                    Wikipedia
-                </a>
+                    {displayName}
                 </div>
-                <img width={240} src={info.image} />
+                <div style={{width: 200}}>
+                <img width={200} src={info.images[0]} />
+                </div>
+                <div>
+                    {info.text}
+                </div>
             </div>
         );
     }

@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import MapGL, {Marker, Popup, NavigationControl} from 'react-map-gl';
 import Geocode from "react-geocode";
-
+import PropTypes from 'prop-types';
 import ControlPanel from './control-panel';
 import CityPin from './city-pin';
 import CityInfo from './city-info';
@@ -20,7 +20,7 @@ const navStyle = {
     padding: '10px'
 };
 
-export default class App extends Component {
+export default class Map extends Component {
 
     constructor(props) {
         super(props);
@@ -61,31 +61,20 @@ export default class App extends Component {
         this.setState({viewport});
     }
 
-    _renderCityMarker = (city, index) => {
-/*
-        let promise = Geocode.fromAddress(city.city).then(
-            response => {
-               return  response.results[0].geometry.location;
-            },
-            error => {
-                console.error(error);
-            }
-        );
-
-        console.log(promise);
-        */
+    _renderPropertyMarker = (property, index) => {
+        console.log(property);
         return (
-            <Marker key={`marker-${index}`}
-                    longitude={city.longitude} 
-                    latitude={city.latitude} >
-                <CityPin size={20} onClick={() => this.setState({popupInfo: city})} />
+            <Marker key={`marker-${property._id}`}
+                    longitude={property.longitude}
+                    latitude={property.latitude} >
+                <CityPin size={20} onClick={() => this.setState({popupInfo: property})} />
             </Marker>
         );
     }
 
     _renderPopup() {
         const {popupInfo} = this.state;
-
+        console.log(popupInfo);
         return popupInfo && (
             <Popup tipSize={5}
                    anchor="top"
@@ -108,7 +97,7 @@ export default class App extends Component {
                 onViewportChange={this._updateViewport}
                 mapboxApiAccessToken={TOKEN} >
 
-                { CITIES.map(this._renderCityMarker) }
+                { this.props.geojson.map(this._renderPropertyMarker) }
 
                 {this._renderPopup()}
 
@@ -122,3 +111,7 @@ export default class App extends Component {
     }
 
 }
+
+Map.propTypes = {
+    geojson: PropTypes.array.isRequired,
+};
