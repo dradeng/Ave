@@ -28,4 +28,24 @@ router.get('/', (req, res) => {
 });
 
 
+// @route   POST api/chat
+// @desc    Create chat
+// @access  Private
+router.post(
+  '/',
+  passport.authenticate('jwt', { session: false }),
+  
+  (req, res) => {
+
+    const newChat = new Chat({
+      message: req.body.message,
+      user: req.user.id,
+      //No need to add date
+    });
+
+    newChat.save().then(chat => res.json(chat));
+  }
+);
+
+
 module.exports = router;
