@@ -3,6 +3,7 @@ import axios from 'axios';
 import {
   ADD_CHAT,
   GET_CHAT,
+  GET_CHATS,
   CHAT_LOADING,
   CLEAR_CHAT_ERRORS,
   GET_CHAT_ERRORS
@@ -13,7 +14,7 @@ import {
 export const addChat = chatData => dispatch => {
   dispatch(clearChatErrors());
   axios
-    .post('/api/chat', chatData)
+    .post('/api/chats', chatData)
     .then(res =>
       dispatch({
         type: ADD_CHAT,
@@ -29,10 +30,29 @@ export const addChat = chatData => dispatch => {
 };
 
 // Get Posts
-export const getChat = () => dispatch => {
+export const getChats = () => dispatch => {
   dispatch(setChatLoading());
   axios
-    .get('/api/chat')
+    .get('/api/chats')
+    .then(res =>
+      dispatch({
+        type: GET_CHATS,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_CHATS,
+        payload: null
+      })
+    );
+};
+
+// Get Post
+export const getChat = id => dispatch => {
+  dispatch(setChatLoading());
+  axios
+    .get(`/api/chats/${id}`)
     .then(res =>
       dispatch({
         type: GET_CHAT,
@@ -41,8 +61,8 @@ export const getChat = () => dispatch => {
     )
     .catch(err =>
       dispatch({
-        //type: GET_POSTS,
-        //payload: null
+        type: GET_CHAT,
+        payload: null
       })
     );
 };

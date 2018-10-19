@@ -13,13 +13,16 @@ export const GET_POST = 'GET_POST';
 export const ADD_POST = 'ADD_POST';
 export const DELETE_POST = 'DELETE_POST';
 
+
+//stuff for chats
 export const GET_CHAT = 'GET_CHAT';
+export const GET_CHATS = 'GET_CHATS';
 export const ADD_CHAT = 'ADD_CHAT';
 export const CHAT_LOADING = 'CHAT_LOADING';
 export const CLEAR_CHAT_ERRORS = 'CLEAR_ERRORS';
 export const GET_CHAT_ERRORS = 'CLEAR_ERRORS';
 
-
+//stuff for messages
 export const GET_MESSAGE = 'GET_MESSAGE';
 export const GET_MESSAGES = 'GET_MESSAGES';
 export const ADD_MESSAGE = 'ADD_MESSAGE';

@@ -12,6 +12,8 @@ const users = require('./routes/api/users');
 const profile = require('./routes/api/profile');
 const posts = require('./routes/api/posts');
 const messages = require('./routes/api/messages');
+const chats = require('./routes/api/chats');
+
 
 const app = express();
 
