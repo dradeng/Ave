@@ -21,7 +21,16 @@ const UserSchema = new Schema({
   date: {
     type: Date,
     default: Date.now
-  }
+  },
+  chats: [
+    {
+      chat: {
+        type: Schema.Types.ObjectId,
+        ref: 'chats'
+      },
+      
+    }
+  ]
 });
 
 module.exports = User = mongoose.model('users', UserSchema);
