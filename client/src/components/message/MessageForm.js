@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import openSocket from 'socket.io-client';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addChat } from '../../actions/chatActions';
+import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
+import { addMessage } from '../../actions/messageActions';
 
 
 
@@ -11,7 +12,7 @@ class MessageForm extends Component {
 	constructor(props) {
   		super(props);
   		this.state = {
-      		message: '',
+      		content: '',
     	};
 
     this.onChange = this.onChange.bind(this);
@@ -31,11 +32,11 @@ class MessageForm extends Component {
     e.preventDefault();
 
     const newMessage = {
-      message: this.state.message,
+      content: this.state.content,
     };
 
-    this.props.addChat(newMessage);
-    this.setState({ message: '' });
+    this.props.addMessage(newMessage);
+    this.setState({ content: '' });
 
   }
 	render() {
@@ -49,7 +50,16 @@ class MessageForm extends Component {
 
 
   			<form onSubmit={this.onSubmit} method="POST" enctype="multipart/form-data">
-          <input value={this.state.address} onChange={this.onChange} name="message" type="text" placeholder="Message" />
+          
+          <div className="form-group">
+            <TextAreaFieldGroup
+              placeholder="What do you want to say?"
+              name="content"
+              value={this.state.content}
+              onChange={this.onChange}
+            />
+          </div>
+
           <button type="submit" className="btn btn-dark">
             Send
           </button>
@@ -65,4 +75,4 @@ MessageForm.propTypes = {
 
 
 
-export default connect(null, { addChat })(MessageForm);
+export default connect(null, { addMessage })(MessageForm);

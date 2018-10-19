@@ -1,32 +1,40 @@
 import {
-  ADD_CHAT,
-  GET_CHAT,
-  CHAT_LOADING,
+  ADD_MESSAGE,
+  GET_MESSAGE,
+  GET_MESSAGES,
+  MESSAGE_LOADING,
+  
 } from '../actions/types';
 
 const initialState = {
-  chats: [],
-  chat: {},
+  messages: [],
+  message: {},
   loading: false
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case CHAT_LOADING:
+    case MESSAGE_LOADING:
       return {
         ...state,
         loading: true
       };
-    case GET_CHAT:
+    case GET_MESSAGES:
       return {
         ...state,
-        chats: action.payload,
+        messages: action.payload,
         loading: false
       };
-    case ADD_CHAT:
+    case GET_MESSAGE:
       return {
         ...state,
-        chats: [action.payload, ...state.chats]
+        message: action.payload,
+        loading: false
+      };
+    case ADD_MESSAGE:
+      return {
+        ...state,
+        messages: [action.payload, ...state.messages]
       };
     default:
       return state;

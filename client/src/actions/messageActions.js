@@ -14,7 +14,7 @@ import {
 export const addMessage = messageData => dispatch => {
   dispatch(clearMessageErrors());
   axios
-    .post('/api/message', messageData)
+    .post('/api/messages', messageData)
     .then(res =>
       dispatch({
         type: ADD_MESSAGE,

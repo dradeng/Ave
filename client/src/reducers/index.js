@@ -4,11 +4,13 @@ import errorReducer from './errorReducer';
 import profileReducer from './profileReducer';
 import postReducer from './postReducer';
 import chatReducer from './chatReducer';
+import messageReducer from './messageReducer';
 
 export default combineReducers({
   auth: authReducer,
   errors: errorReducer,
   profile: profileReducer,
   post: postReducer,
-  chat: chatReducer
+  chat: chatReducer,
+  message: messageReducer
 });

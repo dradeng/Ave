@@ -23,7 +23,7 @@ const Profile = require('../../models/Profile');
 router.get('/', (req, res) => {
   Message.find()
     .sort({ date: -1 })
-    .then(chats => res.json(chats))
+    .then(messages => res.json(messages))
     .catch(err => res.status(404).json({ nochatsfound: 'No Chats found' }));
 });
 
