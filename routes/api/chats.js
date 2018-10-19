@@ -7,7 +7,7 @@ const passport = require('passport');
 //const upload = require('../../server').upload;
 
 // Post model
-const Chat = require('../../models/Chat');
+const Message = require('../../models/Message');
 // Profile model
 const Profile = require('../../models/Profile');
 
@@ -21,7 +21,7 @@ const Profile = require('../../models/Profile');
 // @desc    Get chats
 // @access  Public
 router.get('/', (req, res) => {
-  Chat.find()
+  Message.find()
     .sort({ date: -1 })
     .then(chats => res.json(chats))
     .catch(err => res.status(404).json({ nochatsfound: 'No Chats found' }));
@@ -43,13 +43,13 @@ router.post(
       return res.status(400).json('bad message');
     }
 
-    const newChat = new Chat({
+    const newMessage = new Message({
       message: req.body.message,
       user: req.user.id,
       //No need to add date
     });
 
-    newChat.save().then(chat => res.json(chat));
+    newMessage.save().then(message => res.json(message));
   }
 );
 

@@ -5,11 +5,9 @@ import { connect } from 'react-redux';
 import { addChat } from '../../actions/chatActions';
 
 
-const socket = openSocket('http://localhost:3000');
 
 
-
-class Messages extends Component {
+class MessageForm extends Component {
 	constructor(props) {
   		super(props);
   		this.state = {
@@ -42,21 +40,14 @@ class Messages extends Component {
   }
 	render() {
 
-    socket.on('connect', function() {
-      console.log('connected to server from react');
-
-      socket.emit("11", {
-        playerID: 2,
-        otherVariable:1
-      }); 
-      console.log('past emit');
-    });
-    socket.on('disconnect', function () {
-      console.log('disconnected from server')
-    });
-
 		return (
   		<div>
+
+        <div>
+
+        </div>
+
+
   			<form onSubmit={this.onSubmit} method="POST" enctype="multipart/form-data">
           <input value={this.state.address} onChange={this.onChange} name="message" type="text" placeholder="Message" />
           <button type="submit" className="btn btn-dark">
@@ -68,10 +59,10 @@ class Messages extends Component {
   }
 }
 
-Messages.propTypes = {
+MessageForm.propTypes = {
   addChat: PropTypes.func.isRequired,
 };
 
 
 
-export default connect(null, { addChat })(Messages);
+export default connect(null, { addChat })(MessageForm);
