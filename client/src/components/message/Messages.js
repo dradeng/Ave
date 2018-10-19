@@ -13,7 +13,7 @@ class Messages extends Component {
 
     return (
       <div>
-
+        
         <MessageForm />
       </div>
     );

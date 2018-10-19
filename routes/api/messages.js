@@ -44,7 +44,7 @@ router.post(
     }
 
     const newMessage = new Message({
-      message: req.body.message,
+      content: req.body.content,
       user: req.user.id,
       //No need to add date
     });
