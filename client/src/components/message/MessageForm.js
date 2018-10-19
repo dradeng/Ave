@@ -13,6 +13,7 @@ class MessageForm extends Component {
   		super(props);
   		this.state = {
       		content: '',
+          errors: {}
     	};
 
     this.onChange = this.onChange.bind(this);
@@ -23,6 +24,7 @@ class MessageForm extends Component {
       this.setState({ errors: newProps.errors });
     }
   }
+
   onChange(e) {
 
     this.setState({ [e.target.name]: e.target.value });
@@ -30,6 +32,9 @@ class MessageForm extends Component {
   }
   onSubmit(e) {
     e.preventDefault();
+
+
+    const { user } = this.props.auth;
 
     const newMessage = {
       content: this.state.content,
@@ -40,6 +45,9 @@ class MessageForm extends Component {
 
   }
 	render() {
+
+    const { errors } = this.state;
+
 
 		return (
   		<div>
@@ -57,6 +65,7 @@ class MessageForm extends Component {
               name="content"
               value={this.state.content}
               onChange={this.onChange}
+              error={errors.message}
             />
           </div>
 
@@ -70,9 +79,15 @@ class MessageForm extends Component {
 }
 
 MessageForm.propTypes = {
-  addChat: PropTypes.func.isRequired,
+  addMessage: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
 };
 
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
 
 
-export default connect(null, { addMessage })(MessageForm);
+export default connect(mapStateToProps, { addMessage })(MessageForm);
