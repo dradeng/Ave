@@ -3,26 +3,26 @@ import axios from 'axios';
 import {
   ADD_MESSAGE,
   GET_MESSAGE,
-  CHAT_LOADING,
-  CLEAR_CHAT_ERRORS,
-  GET_CHAT_ERRORS
+  MESSAGE_LOADING,
+  CLEAR_MESSAGE_ERRORS,
+  GET_MESSAGE_ERRORS
 
 } from './types';
 
 // Add Post
-export const addMessage = chatData => dispatch => {
-  dispatch(clearChatErrors());
+export const addMessage = messageData => dispatch => {
+  dispatch(clearMessageErrors());
   axios
-    .post('/api/chat', chatData)
+    .post('/api/chat', messageData)
     .then(res =>
       dispatch({
-        type: ADD_CHAT,
+        type: ADD_MESSAGE,
         payload: res.data
       })
     )
     .catch(err =>
       dispatch({
-        type: GET_CHAT_ERRORS,
+        type: GET_MESSAGE_ERRORS,
         payload: err.response.data
       })
     );
@@ -30,12 +30,12 @@ export const addMessage = chatData => dispatch => {
 
 // Get Posts
 export const getMessage = () => dispatch => {
-  dispatch(setChatLoading());
+  dispatch(setMessageLoading());
   axios
     .get('/api/chat')
     .then(res =>
       dispatch({
-        type: GET_CHAT,
+        type: GET_MESSAGE,
         payload: res.data
       })
     )
@@ -48,14 +48,14 @@ export const getMessage = () => dispatch => {
 };
 
 // Profile loading
-export const setChatLoading = () => {
+export const setMessageLoading = () => {
   return {
-    type: CHAT_LOADING
+    type: MESSAGE_LOADING
   };
 };
 // Clear errors
-export const clearChatErrors = () => {
+export const clearMessageErrors = () => {
   return {
-    type: CLEAR_CHAT_ERRORS
+    type: CLEAR_MESSAGE_ERRORS
   };
 };

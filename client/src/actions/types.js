@@ -20,6 +20,10 @@ export const CLEAR_CHAT_ERRORS = 'CLEAR_ERRORS';
 export const GET_CHAT_ERRORS = 'CLEAR_ERRORS';
 
 
-export const GET_CHAT = 'GET_MESSAGE';
-export const ADD_CHAT = 'ADD_MESSAGE';
+export const GET_MESSAGE = 'GET_MESSAGE';
+export const ADD_MESSAGE = 'ADD_MESSAGE';
+export const MESSAGE_LOADING = 'MESSAGE_LOADING';
+export const CLEAR_MESSAGE_ERRORS = 'CLEAR_MESSAGE_ERRORS';
+export const GET_MESSAGE_ERRORS = 'CLEAR_MESSAGE_ERRORS';
+
 
