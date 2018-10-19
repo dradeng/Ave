@@ -15,12 +15,23 @@ class Message extends Component {
       
         <div>
           {message.content}
-
         </div>
       
     );
   }
 }
+Message.defaultProps = {
+  showActions: true
+};
 
+Message.propTypes = {
+  auth: PropTypes.object.isRequired
+};
 
-export default Message;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, { })(
+  Message
+);
