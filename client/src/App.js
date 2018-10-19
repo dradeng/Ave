@@ -109,7 +109,7 @@ class App extends Component {
                 <PrivateRoute exact path="/feed" component={Posts} />
               </Switch>
               <Switch>
-                <PrivateRoute exact path="/chats" component={Messages} />
+                <PrivateRoute exact path="/messages" component={Messages} />
               </Switch>
               <Switch>
                 <PrivateRoute exact path="/post/:id" component={Post} />

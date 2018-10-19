@@ -21,6 +21,7 @@ export const GET_CHAT_ERRORS = 'CLEAR_ERRORS';
 
 
 export const GET_MESSAGE = 'GET_MESSAGE';
+export const GET_MESSAGES = 'GET_MESSAGES';
 export const ADD_MESSAGE = 'ADD_MESSAGE';
 export const MESSAGE_LOADING = 'MESSAGE_LOADING';
 export const CLEAR_MESSAGE_ERRORS = 'CLEAR_MESSAGE_ERRORS';

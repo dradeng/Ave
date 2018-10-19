@@ -3,6 +3,7 @@ import axios from 'axios';
 import {
   ADD_MESSAGE,
   GET_MESSAGE,
+  GET_MESSAGES,
   MESSAGE_LOADING,
   CLEAR_MESSAGE_ERRORS,
   GET_MESSAGE_ERRORS
@@ -13,7 +14,7 @@ import {
 export const addMessage = messageData => dispatch => {
   dispatch(clearMessageErrors());
   axios
-    .post('/api/chat', messageData)
+    .post('/api/message', messageData)
     .then(res =>
       dispatch({
         type: ADD_MESSAGE,
@@ -27,12 +28,30 @@ export const addMessage = messageData => dispatch => {
       })
     );
 };
-
 // Get Posts
-export const getMessage = () => dispatch => {
+export const getMessages = () => dispatch => {
   dispatch(setMessageLoading());
   axios
-    .get('/api/chat')
+    .get('/api/messages')
+    .then(res =>
+      dispatch({
+        type: GET_MESSAGES,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_MESSAGES,
+        payload: null
+      })
+    );
+};
+
+// Get Post
+export const getMessage = id => dispatch => {
+  dispatch(setMessageLoading());
+  axios
+    .get(`/api/messages/${id}`)
     .then(res =>
       dispatch({
         type: GET_MESSAGE,
@@ -41,8 +60,8 @@ export const getMessage = () => dispatch => {
     )
     .catch(err =>
       dispatch({
-        //type: GET_POSTS,
-        //payload: null
+        type: GET_MESSAGE,
+        payload: null
       })
     );
 };

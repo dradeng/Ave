@@ -19,5 +19,13 @@ class Messages extends Component {
     );
   }
 }
+Messages.propTypes = {
+  getMessages: PropTypes.func.isRequired,
+  message: PropTypes.object.isRequired
+};
 
-export default Messages;
+const mapStateToProps = state => ({
+  message: state.message
+});
+
+export default connect(mapStateToProps, { getMessages })(Messages);
