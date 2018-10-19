@@ -10,11 +10,22 @@ class Message extends Component {
   render() {
 
     const {message} = this.props;
+    const { user } = this.props.auth;
+
+    let messageStyle;
+    console.log(message.user)
+    console.log(user.id)
+    if( message.user === user.id) {
+      messageStyle = <div align="right">{message.content}</div>
+    } else {
+      messageStyle = <div align="left">{message.content}</div>
+    }
+
 
     return (
       
         <div>
-          {message.content}
+          {messageStyle}
         </div>
       
     );
