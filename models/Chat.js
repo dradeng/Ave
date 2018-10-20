@@ -14,7 +14,7 @@ const ChatSchema = new Schema({
   messages: [
     {
       type: Schema.Types.ObjectId,
-    ref: 'message'
+      ref: 'message'
     }
   ],
   date: {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
 import ChatFeed from './ChatFeed';
 import { getChats } from '../../actions/chatActions';
 import Spinner from '../common/Spinner';
@@ -11,7 +12,7 @@ class Chats extends Component {
   }
   render() {
 
-    const { chats, loading } = this.props.chats;
+    const { chats, loading } = this.props.chat;
     let chatContent;
 
     if(chats === null || loading) {
@@ -21,11 +22,10 @@ class Chats extends Component {
       chatContent = <ChatFeed chats={chats} />;
     }
 
-
     return (
       <div>
-
         {chatContent}
+       
 
       </div>
     );

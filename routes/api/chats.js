@@ -4,8 +4,6 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 
 
-//const upload = require('../../server').upload;
-
 // Post model
 const Chat = require('../../models/Chat');
 // Profile model

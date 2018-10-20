@@ -44,6 +44,7 @@ app.use('/api/users', users);
 app.use('/api/profile', profile);
 app.use('/api/posts', posts);
 app.use('/api/messages', messages);
+app.use('/api/chats', chats);
 
 
 

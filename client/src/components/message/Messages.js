@@ -25,7 +25,6 @@ class Messages extends Component {
 
     return (
       <div>
-
         {messageContent}
         <MessageForm />
 
