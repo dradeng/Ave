@@ -31,78 +31,86 @@ class PostItem extends Component {
     const { post, auth, showActions } = this.props;
 
     const allImage = post.images.map((item, index) => (
-      <img src={item} /> )
+      <img className="img-responsive" style={{borderRadius: 5}} src={item} /> )
     );
 
-    return (
-      <div className="card card-body mb-3">
-        <div className="row">
-          <div className="col-md-2">
-            <a href="profile.html">
-              <img
-                className="rounded-circle d-none d-md-block"
-                src={post.avatar}
-                alt=""
-              />
-            </a>
-            <br />
-            <p className="text-center">{post.name}</p>
+      return (
+          <div className="card card-body mb-3">
 
-          </div>
-          <div className="col-md-10">
-            <div className="row">
-              <p className="lead col-md-8">{post.title}</p>
-              <div className="col-md-4 row">
-                <Month month="nov" date={11}/>
-                  <Month month="may" date={9}/>
+            <div style={{ float: 'left',position: 'relative'}}>
+            {allImage}
+              <div className="row" style={{position: 'absolute', top: 0, right: 20, }}>
+              <Month month="nov" period="start" date={11}/>
+                  <Month month="feb"  period="end" date={1}/>
 
               </div>
-
             </div>
-            <p className="lead">{post.text}</p>
-            
-            
-            {allImage}
-            {showActions ? (
-              <span>
+
+            <div className="row">
+                  <div className="col-md-2">
+                      <a href="profile.html">
+                          <img
+                              className="rounded-circle d-none d-md-block"
+                              src={post.avatar}
+                              alt=""
+                          />
+                      </a>
+                      <br/>
+                      <p className="text-center">{post.name}</p>
+
+                  </div>
+                  <div className="col-md-10">
+                      <div className="row">
+                          <p className="lead col-md-8">{post.title}</p>
+
+
+                      </div>
+                      <p className="lead">{post.text}</p>
+
+
+                      {showActions ? (
+                          <span>
                 <button
-                  onClick={this.onLikeClick.bind(this, post._id)}
-                  type="button"
-                  className="btn btn-light mr-1"
+                    onClick={this.onLikeClick.bind(this, post._id)}
+                    type="button"
+                    className="btn btn-light mr-1"
                 >
                   <i
-                    className={classnames('fas fa-thumbs-up', {
-                      'text-info': this.findUserLike(post.likes)
-                    })}
+                      className={classnames('fas fa-thumbs-up', {
+                          'text-info': this.findUserLike(post.likes)
+                      })}
                   />
                   <span className="badge badge-light">{post.likes.length}</span>
                 </button>
                 <button
-                  onClick={this.onUnlikeClick.bind(this, post._id)}
-                  type="button"
-                  className="btn btn-light mr-1"
+                    onClick={this.onUnlikeClick.bind(this, post._id)}
+                    type="button"
+                    className="btn btn-light mr-1"
                 >
-                  <i className="text-secondary fas fa-thumbs-down" />
+                  <i className="text-secondary fas fa-thumbs-down"/>
                 </button>
+
                 <Link to={`/post/${post._id}`} className="btn btn-info mr-1">
                   Comments
                 </Link>
-                {post.user === auth.user.id ? (
-                  <button
-                    onClick={this.onDeleteClick.bind(this, post._id)}
-                    type="button"
-                    className="btn btn-danger mr-1"
-                  >
-                    <i className="fas fa-times" />
-                  </button>
-                ) : null}
-              </span>
-            ) : null}
-          </div>
 
-        </div>
-      </div>
-    );
+                              {post.user === auth.user.id ? (
+                                  <button
+                                      onClick={this.onDeleteClick.bind(this, post._id)}
+                                      type="button"
+                                      className="btn btn-danger mr-1"
+                                  >
+                                      <i className="fas fa-times"/>
+                                  </button>
+                              ) : null}
+              </span>
+                      ) : null}
+
+                  </div>
+
+              </div>
+          </div>
+      );
   }
 }
 

@@ -12,17 +12,16 @@ const styles = {
         position: 'relative',
         margin: 2,
 
-},
+        },
     textStyle: {
         color: 'grey',
         fontSize: 11,
         padding: 2,
-        paddingTop: 5,
     },
     dateStyle: {
         color: 'grey',
         fontSize: 14,
-        padding: 2,
+        paddingRight: 2,
         paddingLeft: 2,
     },
     left: {
@@ -59,6 +58,9 @@ class Month extends Component {
 
         return (
             <div style={styles.month} className="card container-fluid">
+                <div style={{...styles.textStyle, fontSize: 5, paddingTop: 1 }} className="row">
+                    {this.props.period}
+                </div>
                 <div  style={styles.textStyle} className="row">
                 <div className="co-md-7" style={styles.textStyle}>
                     {this.props.month}
@@ -89,6 +91,7 @@ class Month extends Component {
 Month.propTypes = {
     month: PropTypes.string.isRequired,
     date: PropTypes.number.isRequired,
+    period: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({
