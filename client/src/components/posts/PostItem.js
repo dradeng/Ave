@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import classnames from 'classnames';
 import { Link } from 'react-router-dom';
 import { deletePost, addLike, removeLike } from '../../actions/postActions';
-
+import Month from '../availability/Month';
 
 class PostItem extends Component {
   onDeleteClick(id) {
@@ -50,12 +50,19 @@ class PostItem extends Component {
 
           </div>
           <div className="col-md-10">
-            <p className="lead">{post.title}</p>
+            <div className="row">
+              <p className="lead col-md-8">{post.title}</p>
+              <div className="col-md-4 row">
+                <Month month="nov" date={11}/>
+                  <Month month="may" date={9}/>
+
+              </div>
+
+            </div>
             <p className="lead">{post.text}</p>
             
             
             {allImage}
-
             {showActions ? (
               <span>
                 <button
@@ -92,6 +99,7 @@ class PostItem extends Component {
               </span>
             ) : null}
           </div>
+
         </div>
       </div>
     );

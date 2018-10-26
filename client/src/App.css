@@ -37,3 +37,18 @@ img {
 .form-control::placeholder {
   color: #bbb !important;
 }
+
+
+/*HALF CIRCLE */
+
+i.fa.fa-circle.half {
+  position: relative;
+}
+
+i.fa.fa-circle.half:after {
+  content: "";
+  background: #fff;
+  width: 50%;
+  height: 100%;
+
+}

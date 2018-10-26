@@ -6,6 +6,7 @@ import PostFeed from './PostFeed';
 import Spinner from '../common/Spinner';
 import { getPosts } from '../../actions/postActions';
 import Map from "../map/Map";
+import Month from '../availability/Month';
 
 class Posts extends Component {
   componentDidMount() {
