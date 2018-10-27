@@ -52,14 +52,18 @@ class Posts extends Component {
     }
 
     return (
-      <div className="feed">
-        <div className="container">
-          <div className="row">
-            <div style={{overflow: 'scroll', height: '100vh'}} className="col-md-7">
-              <PostForm />
-              {postContent}
+      <div style={{margin: 5, marginTop: -5}}  className="feed">
+        <div >
+            <div  style={{overflow: 'scroll',background: '#FFFFFF',position: 'absolute',zIndex: 100, maxWidth: 840, height: '100vh'}} className="col-md-8 row">
+                {postContent}
+                <PostForm className="col-lg-12 col-md-8" />
+
             </div>
-              <div style={{overflow: 'hidden', height: '100vh',width: '100vh'}} className="col-md-5">
+          <div className="row">
+            <div className="col-md-4">
+
+            </div>
+              <div id="map" style={{overflow: 'hidden', height: '100vh',width: '100vh', right: 5,top: 0}} className="col-md-8">
                   <Map geojson={geojson}/>
               </div>
           </div>

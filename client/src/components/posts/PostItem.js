@@ -35,9 +35,9 @@ class PostItem extends Component {
     );
 
       return (
-          <div className="card card-body mb-3">
+          <div style={{border: 'none', backgroundColor: '#FFFFFF'}} className="card card-body mb-3 col-md-6">
 
-            <div style={{ float: 'left',position: 'relative'}}>
+            <div style={{float: 'left',position: 'relative'}}>
             {allImage}
               <div className="row" style={{position: 'absolute', top: 0, right: 20, }}>
               <Month month="nov" period="start" date={11}/>
@@ -56,16 +56,15 @@ class PostItem extends Component {
                           />
                       </a>
                       <br/>
-                      <p className="text-center">{post.name}</p>
+                      <p style={{fontSize: 7}} className="text-center">{post.name}</p>
 
                   </div>
                   <div className="col-md-10">
                       <div className="row">
-                          <p className="lead col-md-8">{post.title}</p>
+                          <p className="lead col-md-10">{post.title}</p>
 
 
                       </div>
-                      <p className="lead">{post.text}</p>
 
 
                       {showActions ? (

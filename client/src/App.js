@@ -106,19 +106,23 @@ class App extends Component {
                       component={AddReview}
                   />
               </Switch>
-              <Switch>
-                <PrivateRoute exact path="/feed" component={Posts} />
-              </Switch>
+
+                <Switch>
+                    <PrivateRoute exact path="/post/:id" component={Post} />
+                </Switch>
               <Switch>
                 <PrivateRoute exact path="/messages" component={Messages} />
               </Switch>
               <Switch>
                 <PrivateRoute exact path="/chats" component={Chats} />
               </Switch>
-              <Switch>
-                <PrivateRoute exact path="/post/:id" component={Post} />
-              </Switch>
+
               <Route exact path="/not-found" component={NotFound} />
+            </div>
+            <div>
+                <Switch>
+                    <PrivateRoute exact path="/feed" component={Posts} />
+                </Switch>
             </div>
             <Footer />
           </div>
