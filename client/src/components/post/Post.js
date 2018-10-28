@@ -30,11 +30,6 @@ class Post extends Component {
     const { user } = this.props.auth;
     const { post } = this.props.post;
 
-
-    console.log('new info');
-    console.log(post.user);
-    console.log(user);
-
     const newChat = {
       
       user1: user.id,
@@ -91,11 +86,13 @@ Post.propTypes = {
   addChat: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
+  chat: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
   post: state.post,
-  auth: state.auth
+  auth: state.auth,
+  chat: state.chat,
 });
 
 export default connect(mapStateToProps, { getPost, addChat })(Post);

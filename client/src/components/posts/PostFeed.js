@@ -30,10 +30,9 @@ class PostFeed extends Component {
     );
 
     let feedContent = newPosts.map(post => <PostItem className="col-md-6" key={post._id} post={post} />);
+    
     return (
     	<div>
-
-    	
               <div className="form-group">
                 <TextAreaFieldGroup
                   placeholder="Max price"

@@ -12,11 +12,10 @@ class Chat extends Component {
     const { chat } = this.props;
     const { user } = this.props.auth;
 
-
     return (
       
         <div>
-          Hello
+          chat mult
         </div>
       
     );
@@ -27,13 +26,12 @@ Chat.defaultProps = {
 };
 
 Chat.propTypes = {
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  chat: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { })(
-  Chat
-);
+export default connect(mapStateToProps, { })(Chat);

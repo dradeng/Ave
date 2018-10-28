@@ -9,12 +9,14 @@ import Spinner from '../common/Spinner';
 class Chats extends Component {
   componentDidMount() {
     this.props.getChats();
+    console.log('mount');
+    console.log(this.props);
   }
   render() {
-
+ 
     const { chats, loading } = this.props.chat;
     let chatContent;
-
+   
     if(chats === null || loading) {
       chatContent = <Spinner />;
 
@@ -24,6 +26,7 @@ class Chats extends Component {
 
     return (
       <div>
+        hello
         {chatContent}
        
 
@@ -31,6 +34,7 @@ class Chats extends Component {
     );
   }
 }
+
 
 Chats.propTypes = {
   getChats: PropTypes.func.isRequired,
