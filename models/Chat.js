@@ -13,8 +13,13 @@ const ChatSchema = new Schema({
   },
   messages: [
     {
-      type: Schema.Types.ObjectId,
-      ref: 'message'
+      content: {
+        type: String,
+        required: true
+    },
+      date: {
+      type: Date,
+      default: Date.now
     }
   ],
   date: {

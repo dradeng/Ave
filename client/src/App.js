@@ -27,7 +27,7 @@ import Profile from './components/profile/Profile';
 import Posts from './components/posts/Posts';
 import Post from './components/post/Post';
 import NotFound from './components/not-found/NotFound';
-import Messages from './components/message/Messages';
+
 import Chats from './components/chat/Chats';
 
 import './App.css';
@@ -110,9 +110,6 @@ class App extends Component {
                 <Switch>
                     <PrivateRoute exact path="/post/:id" component={Post} />
                 </Switch>
-              <Switch>
-                <PrivateRoute exact path="/messages" component={Messages} />
-              </Switch>
               <Switch>
                 <PrivateRoute exact path="/chats" component={Chats} />
               </Switch>

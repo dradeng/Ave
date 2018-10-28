@@ -38,10 +38,7 @@ router.post('/uploads', upload.any(), awsWorker.doUpload);
 router.get('/', (req, res) => {
   Post.find()
     .sort({ date: -1 })
-    .then(posts => {
-      var newPosts = posts.filter((post) => (post.rent > 900 && post.rent < 1100)); 
-      res.json(newPosts);
-    })
+    .then(posts => res.json(posts))
     .catch(err => res.status(404).json({ nopostsfound: 'No posts found' }));
 });
 
