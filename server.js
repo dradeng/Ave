@@ -11,7 +11,7 @@ const methodOverride = require('method-override');
 const users = require('./routes/api/users');
 const profile = require('./routes/api/profile');
 const posts = require('./routes/api/posts');
-//const chats = require('./routes/api/chats');
+const chats = require('./routes/api/chats');
 
 
 const app = express();
@@ -42,8 +42,7 @@ require('./config/passport')(passport);
 app.use('/api/users', users);
 app.use('/api/profile', profile);
 app.use('/api/posts', posts);
-//app.use('/api/messages', messages);
-//app.use('/api/chats', chats);
+app.use('/api/chats', chats);
 
 
 
