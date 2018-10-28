@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import classnames from 'classnames';
 import { Link } from 'react-router-dom';
 import { addMessage } from '../../actions/chatActions';
+import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 
 
 class Chat extends Component {
@@ -57,11 +58,18 @@ class Chat extends Component {
           Messages:
           {chat.messages}<br />
           <form onSubmit={this.onSubmit}>
-            <input type="text" name="message" /><br />
-            <button type="submit" className="btn btn-dark">
-              Submit
-            </button>
-          </form>
+              <div className="form-group">
+                <TextAreaFieldGroup
+                  placeholder="Send Message"
+                  name="content"
+                  value={this.state.content}
+                  onChange={this.onChange}
+                />
+              </div>
+              <button type="submit" className="btn btn-dark">
+                Submit
+              </button>
+            </form>
         </div>
       
     );

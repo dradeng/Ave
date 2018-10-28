@@ -53,36 +53,43 @@ router.post(
   }
 );
 
-// @route   POST api/posts/comment/:id
-// @desc    Add comment to post
+// @route   POST api/chats/:id
+// @desc    Add message to chat
 // @access  Private
 router.post(
   '/:id',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    const { errors, isValid } = validatePostInput(req.body);
 
-    // Check Validation
-    if (!isValid) {
-      // If any errors, send 400 with errors object
-      return res.status(400).json(errors);
-    }
 
     Chat.findById(req.params.id)
       .then(chat => {
         const newMessage = {
           content: req.body.content,
         };
-
+        console.log(newMessage);
         // Add to comments array
         chat.messages.unshift(newMessage);
-
+        console.log('message aobeve, lust below');
+        console.log(chat.messages);
         // Save
         chat.save().then(chat => res.json(chat));
       })
       .catch(err => res.status(404).json({ chatnotfound: 'No chat found' }));
   }
 );
+
+
+// @route   GET api/chats/:id
+// @desc    Get chat by id
+// @access  Public
+router.get('/:id', (req, res) => {
+  Chat.findById(req.params.id)
+    .then(chat => res.json(chat))
+    .catch(err =>
+      res.status(404).json({ nochatfound: 'No chat found with that ID' })
+    );
+});
 
 
 module.exports = router;
