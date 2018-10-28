@@ -62,7 +62,7 @@ class PostItem extends Component {
                   <div className="col-md-10">
                       <div className="row">
                           <p className="lead col-md-10">{post.title}</p>
-
+                          <p className="lead col-md-10">{post.rent}</p>
 
                       </div>
 
