@@ -9,8 +9,7 @@ import Spinner from '../common/Spinner';
 class Chats extends Component {
   componentDidMount() {
     this.props.getChats();
-    console.log('mount');
-    console.log(this.props);
+    
   }
   render() {
  
@@ -26,7 +25,7 @@ class Chats extends Component {
 
     return (
       <div>
-        hello
+        
         {chatContent}
        
 
