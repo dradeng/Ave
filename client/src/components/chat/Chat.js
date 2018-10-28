@@ -48,6 +48,11 @@ class Chat extends Component {
     const { chat } = this.props;
     const { user } = this.props.auth;
 
+    let messageContent;
+
+    messageContent = chat.messages.map(
+      message => ( <p key={message._id} message={message}> {message.content} </p>
+    ));
     return (
       
         <div>
@@ -56,7 +61,8 @@ class Chat extends Component {
           User2:
           {chat.user2}<br />
           Messages:
-          {chat.messages}<br />
+          <br />
+          {messageContent}
           <form onSubmit={this.onSubmit}>
               <div className="form-group">
                 <TextAreaFieldGroup
