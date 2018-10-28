@@ -29,12 +29,13 @@ class Chat extends Component {
 
     const { user } = this.props.auth;
     const { chatId } = this.props;
+    const { chat } = this.props;
 
     const newMessage = {
       content: this.state.content,
     };
 
-    this.props.addComment(chatId, newMessage);
+    this.props.addMessage(chat._id, newMessage);
     this.setState({ content: '' });
   }
 
@@ -71,8 +72,10 @@ Chat.defaultProps = {
 };
 
 Chat.propTypes = {
+  addChat: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   chat: PropTypes.object.isRequired,
+  chatId: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({

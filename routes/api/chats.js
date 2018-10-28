@@ -53,5 +53,36 @@ router.post(
   }
 );
 
+// @route   POST api/posts/comment/:id
+// @desc    Add comment to post
+// @access  Private
+router.post(
+  '/:id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const { errors, isValid } = validatePostInput(req.body);
+
+    // Check Validation
+    if (!isValid) {
+      // If any errors, send 400 with errors object
+      return res.status(400).json(errors);
+    }
+
+    Chat.findById(req.params.id)
+      .then(chat => {
+        const newMessage = {
+          content: req.body.content,
+        };
+
+        // Add to comments array
+        chat.messages.unshift(newMessage);
+
+        // Save
+        chat.save().then(chat => res.json(chat));
+      })
+      .catch(err => res.status(404).json({ chatnotfound: 'No chat found' }));
+  }
+);
+
 
 module.exports = router;
