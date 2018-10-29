@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
+import Carousel from 'react-responsive-carousel';
+import ReactDom from 'react-dom';
 import { Link } from 'react-router-dom';
 import { deletePost, addLike, removeLike } from '../../actions/postActions';
 import Month from '../availability/Month';
@@ -31,14 +33,19 @@ class PostItem extends Component {
     const { post, auth, showActions } = this.props;
 
     const allImage = post.images.map((item, index) => (
-      <img className="img-responsive" style={{borderRadius: 5}} src={item} /> )
+        <div>
+      <img className="img-responsive" style={{borderRadius: 5}} src={item} />
+        </div>)
     );
 
       return (
           <div style={{border: 'none', backgroundColor: '#FFFFFF'}} className="card card-body mb-3 col-md-6">
 
             <div style={{float: 'left',position: 'relative'}}>
-            {allImage}
+
+                <Carousel>
+                    {allImage}
+                </Carousel>
               <div className="row" style={{position: 'absolute', top: 0, right: 20, }}>
               <Month month="nov" period="start" date={11}/>
                   <Month month="feb"  period="end" date={1}/>
