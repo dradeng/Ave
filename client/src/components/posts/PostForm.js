@@ -15,6 +15,7 @@ class PostForm extends Component {
       address: '',
       longitude: 0,
       latitude: 0,
+      rent: 0,
       images: [],
       errors: {}
     };
@@ -42,7 +43,8 @@ class PostForm extends Component {
       latitude: this.state.latitude, 
       name: user.name,
       avatar: user.avatar,
-      images: this.state.images
+      images: this.state.images,
+      rent: this.state.rent
     };
 
     this.props.addPost(newPost);
@@ -52,6 +54,7 @@ class PostForm extends Component {
     this.setState({ images: [] });
     this.setState({ latitude: 0 });
     this.setState({ longitude: 0 });
+    this.setState({ rent: 0 });
     
     
   }
@@ -149,6 +152,15 @@ class PostForm extends Component {
                   value={this.state.address}
                   onChange={this.onChange}
                   error={errors.address}
+                />
+              </div>
+              <div className="form-group">
+                <TextAreaFieldGroup
+                  placeholder="Enter number for rent"
+                  name="rent"
+                  value={this.state.rent}
+                  onChange={this.onChange}
+                  error={errors.rent}
                 />
               </div>
               

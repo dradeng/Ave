@@ -11,7 +11,6 @@ const methodOverride = require('method-override');
 const users = require('./routes/api/users');
 const profile = require('./routes/api/profile');
 const posts = require('./routes/api/posts');
-const messages = require('./routes/api/messages');
 const chats = require('./routes/api/chats');
 
 
@@ -43,7 +42,6 @@ require('./config/passport')(passport);
 app.use('/api/users', users);
 app.use('/api/profile', profile);
 app.use('/api/posts', posts);
-app.use('/api/messages', messages);
 app.use('/api/chats', chats);
 
 
@@ -62,14 +60,6 @@ if (process.env.NODE_ENV === 'production') {
 const port = process.env.PORT || 5000;
 
 
-io.on('connection', function () {
-  console.log('connected to server from node backend');
-});
-io.on('11', function(data){
-  console.log('got emit');
-  console.log(data.playerID);
-  console.log(data.otherVariable);
-});
 
 //Changed from app.listen to server.listen to enable socket messaging
 

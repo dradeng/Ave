@@ -66,6 +66,25 @@ export const getChat = id => dispatch => {
       })
     );
 };
+// Add Comment
+export const addMessage = (chatId, messageData) => dispatch => {
+  dispatch(clearChatErrors());
+  axios
+    .post(`/api/chats/${chatId}`, messageData)
+    .then(res =>
+      dispatch({
+        type: GET_CHAT,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_CHAT_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
 
 // Profile loading
 export const setChatLoading = () => {

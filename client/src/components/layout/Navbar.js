@@ -89,7 +89,7 @@ class Navbar extends Component {
               <li className="nav-item">
                 <Link className="nav-link" to="/profiles">
                   {' '}
-                    <span style={{color: '#B4B4B4'}}> Developers </span>
+                    <span style={{color: '#B4B4B4'}}> Profiles </span>
                 </Link>
               </li>
             </ul>

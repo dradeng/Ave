@@ -74,6 +74,7 @@ router.post(
       address: req.body.address,
       text: req.body.text,
       name: req.body.name,
+      rent: req.body.rent,
       avatar: req.body.avatar,
       user: req.user.id,
       latitude: req.body.latitude,

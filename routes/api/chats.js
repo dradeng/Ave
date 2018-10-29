@@ -53,5 +53,41 @@ router.post(
   }
 );
 
+// @route   POST api/chats/:id
+// @desc    Add message to chat
+// @access  Private
+router.post(
+  '/:id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+
+
+    Chat.findById(req.params.id)
+      .then(chat => {
+        const newMessage = {
+          content: req.body.content,
+          sender: req.user.id
+        };
+        chat.messages.push(newMessage);
+
+        // Save
+        chat.save().then(chat => res.json(chat));
+      })
+      .catch(err => res.status(404).json({ chatnotfound: 'No chat found' }));
+  }
+);
+
+
+// @route   GET api/chats/:id
+// @desc    Get chat by id
+// @access  Public
+/*router.get('/:id', (req, res) => {
+  Chat.findById(req.params.id)
+    .then(chat => res.json(chat))
+    .catch(err =>
+      res.status(404).json({ nochatfound: 'No chat found with that ID' })
+    );
+});*/
+
 
 module.exports = router;
