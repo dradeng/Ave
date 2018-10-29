@@ -12,17 +12,15 @@ class ChatItem extends Component {
     super(props);
     this.state = {
       content: '',
-      errors: {}
+      errors: {},
     };
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentWillReceiveProps(newProps) {
-    if (newProps.errors) {
-      this.setState({ errors: newProps.errors });
-    }
+  componentDidMount() {
+    this.props.getChat();
   }
 
   onSubmit(e) {
@@ -45,10 +43,11 @@ class ChatItem extends Component {
   }
   render() {
 
-    const { chat } = this.props;
+    const { chat } = this.props.chat;
     const { user } = this.props.auth;
-
-    let messageContent;
+    console.log('MESSAGE');
+    console.log(chat);
+    /*let messageContent;
     messageContent = chat.messages.map(
       message => 
       { 
@@ -60,17 +59,17 @@ class ChatItem extends Component {
           return <p key={message._id} align="right" message={message}> {message.content} </p> 
         }
       }
-    );
+    );*/
     return (
       
         <div>
           User1:
-          {chat.user1}<br />
+          <br />
           User2:
-          {chat.user2}<br />
+          <br />
           Messages:
           <br />
-          {messageContent}
+          
           <form onSubmit={this.onSubmit}>
               <div className="form-group">
                 <TextAreaFieldGroup
@@ -94,15 +93,16 @@ ChatItem.defaultProps = {
 };
 
 ChatItem.propTypes = {
+  addMessage: PropTypes.func.isRequired,
   getChat: PropTypes.func.isRequired,
-  addChat: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   chat: PropTypes.object.isRequired,
   chatId: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  chat: state.chat
 });
 
 export default connect(mapStateToProps, { addMessage, getChat })(ChatItem);

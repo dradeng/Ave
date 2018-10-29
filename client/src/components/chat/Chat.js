@@ -94,7 +94,7 @@ Chat.defaultProps = {
 };
 
 Chat.propTypes = {
-  addChat: PropTypes.func.isRequired,
+  addMessage: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   chat: PropTypes.object.isRequired,
   chatId: PropTypes.string.isRequired,

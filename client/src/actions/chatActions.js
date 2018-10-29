@@ -48,22 +48,28 @@ export const getChats = () => dispatch => {
     );
 };
 
-// Get Post
+// Get Chat
 export const getChat = id => dispatch => {
   dispatch(setChatLoading());
   axios
     .get(`/api/chats/${id}`)
-    .then(res =>
+    .then(res => {
       dispatch({
         type: GET_CHAT,
         payload: res.data
-      })
+      });
+      console.log("FUCK YES");
+
+      }
     )
-    .catch(err =>
+    .catch(err => {
       dispatch({
         type: GET_CHAT,
         payload: null
-      })
+      });
+      console.log("FUCK NO");
+      console.log(err);
+      }
     );
 };
 // Add Comment
