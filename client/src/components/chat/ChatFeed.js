@@ -6,7 +6,11 @@ class ChatFeed extends Component {
   render() {
     const { chats, chatId } = this.props;
     
-    return chats.map(chat => <Chat key={chat._id} chat={chat} chatId={chatId} />);
+    return chats.map(chat => 
+    	<div>
+    		<Chat key={chat._id} chat={chat} chatId={chatId} />
+    	</div>
+    );
   }
 }
 
