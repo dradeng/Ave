@@ -66,6 +66,7 @@ router.post(
       .then(chat => {
         const newMessage = {
           content: req.body.content,
+          sender: req.user.id
         };
         console.log(newMessage);
         // Add to comments array

@@ -49,10 +49,19 @@ class Chat extends Component {
     const { user } = this.props.auth;
 
     let messageContent;
-
+    let decision = 'left';
     messageContent = chat.messages.map(
-      message => ( <p key={message._id} message={message}> {message.content} </p>
-    ));
+      message => 
+      { 
+        if (user.id == message.sender)
+        {
+          decision = "right";
+        }
+        return (
+          <p key={message._id} align={decision} message={message}> {message.content} </p> 
+        );
+      }
+    );
     return (
       
         <div>
