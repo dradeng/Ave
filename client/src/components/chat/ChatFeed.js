@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Chat from './Chat';
+import ChatItem from './ChatItem';
 import { Link } from 'react-router-dom';
 
 class ChatFeed extends Component {

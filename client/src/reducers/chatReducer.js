@@ -18,16 +18,16 @@ export default function(state = initialState, action) {
         ...state,
         loading: true
       };
-    case GET_CHAT:
-      return {
-        ...state,
-        chat: action.payload,
-        loading: false
-      };
     case GET_CHATS:
       return {
         ...state,
         chats: action.payload,
+        loading: false
+      };
+    case GET_CHAT:
+      return {
+        ...state,
+        chat: action.payload,
         loading: false
       };
     case ADD_CHAT:
