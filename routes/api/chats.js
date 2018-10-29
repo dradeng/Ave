@@ -78,16 +78,17 @@ router.post(
 );
 
 
+
 // @route   GET api/chats/:id
 // @desc    Get chat by id
 // @access  Public
-/*router.get('/:id', (req, res) => {
+router.get('/:id', (req, res) => {
   Chat.findById(req.params.id)
     .then(chat => res.json(chat))
     .catch(err =>
       res.status(404).json({ nochatfound: 'No chat found with that ID' })
     );
-});*/
+});
 
 
 module.exports = router;

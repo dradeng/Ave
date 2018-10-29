@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 import { Link } from 'react-router-dom';
-import { addMessage } from '../../actions/chatActions';
+import { addMessage, getChat } from '../../actions/chatActions';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 
 
@@ -94,6 +94,7 @@ ChatItem.defaultProps = {
 };
 
 ChatItem.propTypes = {
+  getChat: PropTypes.func.isRequired,
   addChat: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   chat: PropTypes.object.isRequired,
@@ -104,4 +105,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { addMessage })(ChatItem);
+export default connect(mapStateToProps, { addMessage, getChat })(ChatItem);
