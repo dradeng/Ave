@@ -48,15 +48,15 @@ class Posts extends Component {
     if (posts === null || loading) {
       postContent = <Spinner />;
     } else {
-      postContent = <PostFeed posts={posts} />;
+      postContent = <PostFeed  posts={posts} />;
     }
 
     return (
       <div style={{margin: 5, marginTop: -5}}  className="feed">
         <div >
             <div  style={{overflow: 'scroll',background: '#FFFFFF',position: 'absolute',zIndex: 100, maxWidth: 840, height: '100vh'}} className="col-md-8 row">
-                {postContent}
                 <PostForm className="col-lg-12 col-md-8" />
+                {postContent}
 
             </div>
           <div className="row">

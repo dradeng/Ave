@@ -52,8 +52,9 @@ class PostFeed extends Component {
                 />
               </div>
             
-    		
+    		<div className="row">
     		{feedContent}
+            </div>
     	</div>
     );
   }

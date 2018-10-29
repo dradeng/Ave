@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
-import Carousel from 'react-responsive-carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import {Carousel} from 'react-responsive-carousel';
 import ReactDom from 'react-dom';
 import { Link } from 'react-router-dom';
 import { deletePost, addLike, removeLike } from '../../actions/postActions';
@@ -42,15 +43,13 @@ class PostItem extends Component {
           <div style={{border: 'none', backgroundColor: '#FFFFFF'}} className="card card-body mb-3 col-md-6">
 
             <div style={{float: 'left',position: 'relative'}}>
-
-                <Carousel>
+                <Carousel showThumbs={false}  showIndicators={false} showStatus={false}>
                     {allImage}
                 </Carousel>
-              <div className="row" style={{position: 'absolute', top: 0, right: 20, }}>
-              <Month month="nov" period="start" date={11}/>
-                  <Month month="feb"  period="end" date={1}/>
-
-              </div>
+                <div className="row" style={{position: 'absolute', top: 0, right: 20, }}>
+                 <Month month="nov" period="start" date={11}/>
+                    <Month month="feb"  period="end" date={1}/>
+                </div>
             </div>
 
             <div className="row">
