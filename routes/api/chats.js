@@ -68,11 +68,8 @@ router.post(
           content: req.body.content,
           sender: req.user.id
         };
-        console.log(newMessage);
-        // Add to comments array
-        chat.messages.unshift(newMessage);
-        console.log('message aobeve, lust below');
-        console.log(chat.messages);
+        chat.messages.push(newMessage);
+
         // Save
         chat.save().then(chat => res.json(chat));
       })

@@ -35,7 +35,7 @@ class Chat extends Component {
     const newMessage = {
       content: this.state.content,
     };
-
+    console.log(newMessage);
     this.props.addMessage(chat._id, newMessage);
     this.setState({ content: '' });
   }
@@ -49,17 +49,16 @@ class Chat extends Component {
     const { user } = this.props.auth;
 
     let messageContent;
-    let decision = 'left';
     messageContent = chat.messages.map(
       message => 
       { 
         if (user.id == message.sender)
         {
-          decision = "right";
+          return <p key={message._id} align="left" message={message}> {message.content} </p> 
         }
-        return (
-          <p key={message._id} align={decision} message={message}> {message.content} </p> 
-        );
+        else{
+          return <p key={message._id} align="right" message={message}> {message.content} </p> 
+        }
       }
     );
     return (
