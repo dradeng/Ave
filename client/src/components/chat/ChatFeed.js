@@ -9,7 +9,7 @@ class ChatFeed extends Component {
     const { chats, chatId } = this.props;
     
     return chats.map(chat => 
-    	<Link to={`/chats/${chat._id}`} className="btn btn-info mr-1">
+    	<Link to={`/chat/${chat._id}`} className="btn btn-info mr-1">
     		<Chat key={chat._id} chat={chat} chatId={chatId} />
     	</Link>
     );

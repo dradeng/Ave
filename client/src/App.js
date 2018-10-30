@@ -115,7 +115,7 @@ class App extends Component {
                 <PrivateRoute exact path="/chats" component={Chats} />
               </Switch>
               <Switch>
-                <PrivateRoute exact path="/chats/:id" component={ChatItem} />
+                <PrivateRoute exact path="/chat/:id" component={ChatItem} />
               </Switch>
 
               <Route exact path="/not-found" component={NotFound} />

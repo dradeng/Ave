@@ -45,7 +45,7 @@ class Chat extends Component {
   }
   render() {
 
-    const { chat } = this.props;
+    const { chat, loading } = this.props;
     const { user } = this.props.auth;
 
     let messageContent;

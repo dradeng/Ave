@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
+import Spinner from '../common/Spinner';
 import { Link } from 'react-router-dom';
 import { addMessage, getChat } from '../../actions/chatActions';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
@@ -20,7 +21,7 @@ class ChatItem extends Component {
   }
 
   componentDidMount() {
-    this.props.getChat();
+    this.props.getChat(this.props.match.params.id);
   }
 
   onSubmit(e) {
@@ -43,23 +44,29 @@ class ChatItem extends Component {
   }
   render() {
 
-    const { chat } = this.props.chat;
+    const { chat, loading } = this.props.chat;
     const { user } = this.props.auth;
     console.log('MESSAGE');
-    console.log(chat);
-    /*let messageContent;
-    messageContent = chat.messages.map(
-      message => 
-      { 
-        if (user.id == message.sender)
-        {
-          return <p key={message._id} align="left" message={message}> {message.content} </p> 
+    var cars = ["Saab", "Volvo", "BMW"];
+    
+    let messageContent;
+    if (chat === null || loading || Object.keys(chat).length === 0) {
+      messageContent = <Spinner />;
+    }
+    else {
+      messageContent = chat.messages.map(
+        message => 
+        { 
+          if (user.id == message.sender)
+          {
+            return <p key={message._id} align="left" message={message}> {message.content} </p> 
+          }
+          else{
+            return <p key={message._id} align="right" message={message}> {message.content} </p> 
+          }
         }
-        else{
-          return <p key={message._id} align="right" message={message}> {message.content} </p> 
-        }
-      }
-    );*/
+      );
+    }
     return (
       
         <div>
@@ -69,7 +76,7 @@ class ChatItem extends Component {
           <br />
           Messages:
           <br />
-          
+          {messageContent}
           <form onSubmit={this.onSubmit}>
               <div className="form-group">
                 <TextAreaFieldGroup

@@ -84,7 +84,10 @@ router.post(
 // @access  Public
 router.get('/:id', (req, res) => {
   Chat.findById(req.params.id)
-    .then(chat => res.json(chat))
+    .then(chat => {
+      res.json(chat);
+      console.log('FUCK FIND ME');
+    })
     .catch(err =>
       res.status(404).json({ nochatfound: 'No chat found with that ID' })
     );

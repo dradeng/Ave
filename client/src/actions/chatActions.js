@@ -68,6 +68,7 @@ export const getChat = id => dispatch => {
         payload: null
       });
       console.log("FUCK NO");
+      console.log(id);
       console.log(err);
       }
     );
