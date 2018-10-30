@@ -93,7 +93,7 @@ export default class Map extends Component {
         return (
             <MapGL
                 {...viewport}
-                mapStyle="mapbox://styles/mapbox/dark-v9"
+                mapStyle="mapbox://styles/mapbox/streets-v9"
                 onViewportChange={this._updateViewport}
                 mapboxApiAccessToken={TOKEN} >
 
