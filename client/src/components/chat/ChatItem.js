@@ -29,12 +29,13 @@ class ChatItem extends Component {
 
     const { user } = this.props.auth;
     const { chatId } = this.props;
-    const { chat } = this.props;
+    const { chat } = this.props.chat;
 
     const newMessage = {
       content: this.state.content,
     };
-    console.log(newMessage);
+    console.log('WHATS UP');
+    console.log(chat._id);
     this.props.addMessage(chat._id, newMessage);
     this.setState({ content: '' });
   }
@@ -46,8 +47,6 @@ class ChatItem extends Component {
 
     const { chat, loading } = this.props.chat;
     const { user } = this.props.auth;
-    console.log('MESSAGE');
-    var cars = ["Saab", "Volvo", "BMW"];
     
     let messageContent;
     if (chat === null || loading || Object.keys(chat).length === 0) {
@@ -70,9 +69,9 @@ class ChatItem extends Component {
     return (
       
         <div>
-          User1:
+          User1: {chat.user1}
           <br />
-          User2:
+          User2: {chat.user2}
           <br />
           Messages:
           <br />

@@ -28,6 +28,28 @@ const PostSchema = new Schema({
   name: {
     type: String
   },
+  calendar: {
+    start: {
+      month: {
+        type: String,
+        required: true,
+        default: 'January'
+      },
+      day: {
+        type: Number,
+        required: true,
+        default: 1
+      }
+    },
+    end: {
+      month: {
+        type: String,
+      },
+      day: {
+        type: Number,
+      }
+    }
+  },
   avatar: {
     type: String
   },
