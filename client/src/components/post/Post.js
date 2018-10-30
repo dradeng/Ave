@@ -73,7 +73,9 @@ class Post extends Component {
               </Link>
               {postContent}
             </div>
-            <button onClick={this.createChat}>Message</button>
+              <button onClick={this.createChat}>
+                <Link to="/chats">Message</Link>
+              </button>
           </div>
         </div>
       </div>

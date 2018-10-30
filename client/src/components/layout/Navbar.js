@@ -29,11 +29,16 @@ class Navbar extends Component {
               <span style={{color: '#B4B4B4'}}>Dashboard</span>
           </Link>
         </li>
-          <li className="nav-item">
-              <Link className="nav-link" to="/favorites">
-                  <span style={{color: '#B4B4B4'}}>Favorites</span>
-              </Link>
-          </li>
+        <li className="nav-item">
+            <Link className="nav-link" to="/favorites">
+                <span style={{color: '#B4B4B4'}}>Favorites</span>
+            </Link>
+        </li>
+        <li className="nav-item">
+            <Link className="nav-link" to="/chats">
+                <span style={{color: '#B4B4B4'}}>Messages</span>
+            </Link>
+        </li>
         <li className="nav-item">
           <a
             href=""
