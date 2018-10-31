@@ -26,7 +26,7 @@ const mongoURI = require('./config/keys').mongoURI;
 const publicPath = path.join(__dirname, '../public');
 var server = http.createServer(app);
 var io = socketIO(server);
-
+app.set('io', io);
 
 mongoose
   .connect(mongoURI)

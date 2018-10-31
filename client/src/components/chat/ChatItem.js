@@ -4,8 +4,10 @@ import { connect } from 'react-redux';
 import classnames from 'classnames';
 import Spinner from '../common/Spinner';
 import { Link } from 'react-router-dom';
+import openSocket from 'socket.io-client';
 import { addMessage, getChat } from '../../actions/chatActions';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
+const socket = openSocket('http://localhost:5000');
 
 
 class ChatItem extends Component {
@@ -34,8 +36,7 @@ class ChatItem extends Component {
     const newMessage = {
       content: this.state.content,
     };
-    console.log('WHATS UP');
-    console.log(chat._id);
+
     this.props.addMessage(chat._id, newMessage);
     this.setState({ content: '' });
   }
