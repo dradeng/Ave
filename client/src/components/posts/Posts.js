@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps";
 import PostForm from './PostForm';
 import PostFeed from './PostFeed';
 import Spinner from '../common/Spinner';
 import { getPosts } from '../../actions/postActions';
-import Map from "../map/Map";
+import MapContainer from "../map/MapContainer";
+
 import Month from '../availability/Month';
+
 
 class Posts extends Component {
   componentDidMount() {
@@ -55,7 +58,7 @@ class Posts extends Component {
       <div style={{margin: 5, marginTop: -5}}  className="feed">
         <div >
             <div  style={{overflow: 'scroll',background: '#FFFFFF',position: 'absolute',zIndex: 100, maxWidth: 840, height: '100vh'}} className="col-md-8 row">
-                <PostForm className="col-lg-12 col-md-8" />
+                <PostForm className=" col-lg-12 col-md-8" />
                 {postContent}
 
             </div>
@@ -63,8 +66,8 @@ class Posts extends Component {
             <div className="col-md-4">
 
             </div>
-              <div id="map" style={{height: '100vh',width: '100vh', right: 5,top: 0}} className="col-md-8">
-                  <Map geojson={geojson}/>
+              <div style={{height: '100vh',width: '100vh', right: 5,top: 0}} className="col-md-8">
+                  <MapContainer id="map" geojson={geojson}/>
               </div>
           </div>
         </div>

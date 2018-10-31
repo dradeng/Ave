@@ -25,11 +25,7 @@ img {
   height: 100%;
 }
 
-@media only screen and (max-width: 800px) {
-  #map {
-    display: none;
-  }
-}
+
 
 .card-form {
   opacity: 0.9;
@@ -57,4 +53,47 @@ i.fa.fa-circle.half:after {
   width: 50%;
   height: 100%;
 
+}
+
+/* MAP CSS */
+
+#map{
+  width:auto;
+  height:100%;
+  z-index:110;
+  float:none;
+  overflow:hidden;
+  position:relative;
+  margin-left:840px
+}
+._find #map:before{
+  content:'';
+  box-shadow:1px 0 3px rgba(0,0,0,0.2);
+  width:4px;
+  top:0;
+  bottom:0;
+  position:absolute;
+  left:-4px;
+  z-index:500
+}
+._find #map.two-col-l{
+  margin-left:980px
+}
+._find #map.two-col-m{
+  margin-left:980px
+}
+._find #map.two-col-s{
+  margin-left:576px
+}
+._find #map.two-col-xs{
+  margin-left:488px
+}
+._find #map.one-col-l{
+  margin-left:488px
+}
+._find #map.one-col-m{
+  margin-left:418px
+}
+._find #main.one-col-s{
+  margin-left:358px
 }
