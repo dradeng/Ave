@@ -99,10 +99,18 @@ class PostForm extends Component {
 
   }
   onStartDateChange(dateValue){
-    this.setState({ 'startDate' : dateValue });
+    
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+    var startDate = months[dateValue.getMonth()] + ' ' + dateValue.getDay();
+
+    this.setState({ 'startDate' : startDate });
   }
   onEndDateChange(dateValue){
-    this.setState({ 'endDate' : dateValue });
+
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+    var endDate = months[dateValue.getMonth()] + ' ' + dateValue.getDay();
+
+    this.setState({ 'endDate' : endDate });
   }
 
   onChange(e) {

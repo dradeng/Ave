@@ -39,8 +39,8 @@ class PostItem extends Component {
         </div>)
     );
     let endDateContent = null;
-    if(post.endDate != null){
-      endDateContent = <Month month={post.endDate}  period="end" date={post.endDate}/>
+    if(post.endDate != null || post.endDate != ''){
+      endDateContent = <Month period="end" month={post.endDate}/>
     }
 
       return (
@@ -51,7 +51,7 @@ class PostItem extends Component {
                     {allImage}
                 </Carousel>
                 <div className="row" style={{position: 'absolute', top: 0, right: 20, }}>
-                 <Month month={post.startDate} period="start" date={post.startDate}/>
+                 <Month period="start" month={post.startDate}/>
                     {endDateContent}
                 </div>
             </div>
