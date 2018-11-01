@@ -55,11 +55,6 @@ class PostForm extends Component {
       endDate: this.state.endDate,
     };
 
-
-    console.log('WASSSSUPPPP');
-    console.log(this.state.startDate);
-    console.log(this.state.endDate);
-
     this.props.addPost(newPost);
     this.setState({ text: '' });
     this.setState({ title: '' });

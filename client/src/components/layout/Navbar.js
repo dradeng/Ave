@@ -19,9 +19,14 @@ class Navbar extends Component {
 
     const authLinks = (
       <ul  className="navbar-nav ml-auto">
+        <li className="nav-item">
+            <Link className="nav-link" to="/sublet">
+                <span style={{color: '#B4B4B4'}}>Post a Sublet</span>
+            </Link>
+        </li>
         <li  className="nav-item">
           <Link className="nav-link" to="/feed">
-              <span style={{color: '#B4B4B4'}}> Post Feed </span>
+              <span style={{color: '#B4B4B4'}}> Sublet Feed </span>
           </Link>
         </li>
         <li className="nav-item">
@@ -90,14 +95,7 @@ class Navbar extends Component {
           </button>
 
           <div className="collapse navbar-collapse" id="mobile-nav">
-            <ul className="navbar-nav mr-auto">
-              <li className="nav-item">
-                <Link className="nav-link" to="/profiles">
-                  {' '}
-                    <span style={{color: '#B4B4B4'}}> Profiles </span>
-                </Link>
-              </li>
-            </ul>
+          
             {isAuthenticated ? authLinks : guestLinks}
           </div>
         </div>

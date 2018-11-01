@@ -25,6 +25,7 @@ import AddReview from './components/add-credentials/AddReview';
 import Profiles from './components/profiles/Profiles';
 import Profile from './components/profile/Profile';
 import Posts from './components/posts/Posts';
+import PostForm from './components/posts/PostForm';
 import Post from './components/post/Post';
 import NotFound from './components/not-found/NotFound';
 
@@ -71,6 +72,9 @@ class App extends Component {
               <Route exact path="/profile/:handle" component={Profile} />
               <Switch>
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              </Switch>
+              <Switch>
+                <PrivateRoute exact path="/sublet" component={PostForm} />
               </Switch>
               <Switch>
                 <PrivateRoute
