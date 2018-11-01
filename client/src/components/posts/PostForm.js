@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import Geocode from 'react-geocode';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import { addPost } from '../../actions/postActions';
 
@@ -17,7 +19,9 @@ class PostForm extends Component {
       latitude: 0,
       rent: 0,
       images: [],
-      errors: {}
+      errors: {},
+      startDate: '',
+      endDate: '',
     };
 
     this.onChange = this.onChange.bind(this);
@@ -44,8 +48,15 @@ class PostForm extends Component {
       name: user.name,
       avatar: user.avatar,
       images: this.state.images,
-      rent: this.state.rent
+      rent: this.state.rent,
+      startDate: this.state.startDate,
+      endDate: this.state.endDate,
     };
+
+
+    console.log('WASSSSUPPPP');
+    console.log(this.state.startDate);
+    console.log(this.state.endDate);
 
     this.props.addPost(newPost);
     this.setState({ text: '' });
@@ -55,6 +66,8 @@ class PostForm extends Component {
     this.setState({ latitude: 0 });
     this.setState({ longitude: 0 });
     this.setState({ rent: 0 });
+    this.setState({ startDate: '' });
+    this.setState({ endDate: '' });
     
     
   }
@@ -85,6 +98,11 @@ class PostForm extends Component {
   }
 
   onChange(e) {
+
+    console.log('TARGET');
+    console.log(e.target);
+    console.log(e.target.value);
+
 
     this.setState({ [e.target.name]: e.target.value });
  
@@ -164,7 +182,18 @@ class PostForm extends Component {
                 />
               </div>
               
-              
+
+              <p>Start Date:</p>
+              <DatePicker
+                name="startDate"
+                value={this.state.startDate}
+                onChange={this.onChange}/>
+              <DatePicker
+                name="endDate"
+                value={this.state.endDate}
+                onChange={this.onChange}/>
+              <br/>
+
               <input type="file" name="file" id="file" onChange={this.fileChangedHandler}/>
 
               <button type="submit" className="btn btn-dark">

@@ -69,6 +69,15 @@ router.post(
       return res.status(400).json(errors);
     }
 
+
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+    var startDate = months[req.body.startDate.getMonth()] + ' ' + req.body.startDate.getDay();
+    var endDate = months[req.body.endDate.getMonth()] + ' ' + req.body.endDate.getDay();
+
+    console.log('NEW DATES');
+    console.log(startDate);
+    console.log(endDate);
+
     const newPost = new Post({
       title: req.body.title,
       address: req.body.address,
@@ -79,7 +88,9 @@ router.post(
       user: req.user.id,
       latitude: req.body.latitude,
       longitude: req.body.longitude,
-      images: req.body.images
+      images: req.body.images,
+      startDate: startDate,
+      endDate: endDate
     });
 
     newPost.save().then(post => res.json(post));

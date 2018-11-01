@@ -38,6 +38,10 @@ class PostItem extends Component {
       <img className="img-responsive" style={{borderRadius: 5}} src={item} />
         </div>)
     );
+    let endDateContent = null;
+    if(post.endDate != null){
+      endDateContent = <Month month={post.endDate}  period="end" date={post.endDate}/>
+    }
 
       return (
           <div style={{border: 'none', backgroundColor: '#FFFFFF'}} className="card card-body mb-3 col-md-6">
@@ -47,8 +51,8 @@ class PostItem extends Component {
                     {allImage}
                 </Carousel>
                 <div className="row" style={{position: 'absolute', top: 0, right: 20, }}>
-                 <Month month="nov" period="start" date={11}/>
-                    <Month month="feb"  period="end" date={1}/>
+                 <Month month={post.startDate} period="start" date={post.startDate}/>
+                    {endDateContent}
                 </div>
             </div>
 
