@@ -37,7 +37,6 @@ class CreateProfile extends Component {
   componentDidMount() {
     this.props.getCurrentProfile();
   }
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
@@ -88,7 +87,7 @@ class CreateProfile extends Component {
         facebook: profile.facebook,
         linkedin: profile.linkedin,
         youtube: profile.youtube,
-        instagram: profile.instagram
+        instagram: profile.instagram,
       });
     }
   }
@@ -109,7 +108,7 @@ class CreateProfile extends Component {
       facebook: this.state.facebook,
       linkedin: this.state.linkedin,
       youtube: this.state.youtube,
-      instagram: this.state.instagram
+      instagram: this.state.instagram,
     };
 
     this.props.createProfile(profileData, this.props.history);
@@ -281,6 +280,8 @@ class CreateProfile extends Component {
                   <span className="text-muted">Optional</span>
                 </div>
                 {socialInputs}
+
+
                 <input
                   type="submit"
                   value="Submit"

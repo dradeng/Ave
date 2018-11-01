@@ -69,32 +69,7 @@ class PostForm extends Component {
     this.setState({ currFile: null});
     
     
-  }/*
-  //THIS IS FOR A FILE BE UPLOADED
-  fileChangedHandler = (event) => {
-    
-    const file = event.target.files[0];
-    
-    // this.setState({selectedFile: event.target.files[0]});
-    const uuidv4 = require('uuid/v4');
-    const formData = new FormData();
-    var fileName = uuidv4();
-
-    formData.append('file', file, fileName);
-
-    // I do this after so it only affects the state, not whats uploaded to s3
-    // The state & model in the db stores the whole url
-    fileName = 'https://s3.us-east-2.amazonaws.com/aveneu/' + fileName;
-    
-
-    
-    this.setState({ images: [...this.state.images, fileName] });
-    
-    
-    axios.post('api/posts/uploads', formData);
-
-
-  }*/
+  }
   //THIS IS FOR A FILE BE UPLOADED
   fileChangedHandler = (event) => {
     

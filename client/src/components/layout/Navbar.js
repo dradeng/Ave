@@ -17,7 +17,6 @@ class Navbar extends Component {
       dropdownOpen: false
     };
   }
-
   toggle() {
     this.setState(prevState => ({
       dropdownOpen: !prevState.dropdownOpen
@@ -71,7 +70,7 @@ class Navbar extends Component {
               <DropdownToggle style={{backgroundColor: 'transparent', borderWidth:0, padding:0,margin:0}}>
                 <img
                   className="rounded-circle"
-                  src={user.avatar}
+                  src={user.profilePic}
                   alt={user.name}
                   style={{ width: '25px', marginRight: '5px' }}
                   title="You must have a Gravatar connected to your email to display an image"
@@ -142,11 +141,11 @@ class Navbar extends Component {
 
 Navbar.propTypes = {
   logoutUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, { logoutUser, clearCurrentProfile })(

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import { registerUser } from '../../actions/authActions';
 import TextFieldGroup from '../common/TextFieldGroup';
 
@@ -13,6 +14,7 @@ class Register extends Component {
       email: '',
       password: '',
       password2: '',
+      profilePic: '',
       errors: {}
     };
 
@@ -31,7 +33,30 @@ class Register extends Component {
       this.setState({ errors: nextProps.errors });
     }
   }
+  fileChangedHandler = (event) => {
+    
+    if(event.target.files[0] != null) {
+      const file = event.target.files[0];
+      
+      // this.setState({selectedFile: event.target.files[0]});
+      const uuidv4 = require('uuid/v4');
+      const formData = new FormData();
+      var fileName = uuidv4();
 
+      formData.append('file', file, fileName);
+
+      // I do this after so it only affects the state, not whats uploaded to s3
+      // The state & model in the db stores the whole url
+      fileName = 'https://s3.us-east-2.amazonaws.com/aveneu/' + fileName;
+      
+
+      console.log("PROFILE PIC" + fileName);
+      this.setState({profilePic: fileName});
+     
+      
+      axios.post('api/posts/uploads', formData);
+    }
+  }
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -43,7 +68,8 @@ class Register extends Component {
       name: this.state.name,
       email: this.state.email,
       password: this.state.password,
-      password2: this.state.password2
+      password2: this.state.password2,
+      profilePic: this.state.profilePic,
     };
 
     this.props.registerUser(newUser, this.props.history);
@@ -94,6 +120,12 @@ class Register extends Component {
                   onChange={this.onChange}
                   error={errors.password2}
                 />
+
+                Profile Picture
+                IMAGE {this.state.profilePic}
+                <br />
+                <input type="file" name="file" id="file" onChange={this.fileChangedHandler}/>
+
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
             </div>
