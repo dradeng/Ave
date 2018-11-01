@@ -26,12 +26,7 @@ class Navbar extends Component {
         </li>
         <li  className="nav-item">
           <Link className="nav-link" to="/feed">
-              <span style={{color: '#B4B4B4'}}> Sublet Feed </span>
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link" to="/dashboard">
-              <span style={{color: '#B4B4B4'}}>Dashboard</span>
+              <span style={{color: '#B4B4B4'}}> Sublets </span>
           </Link>
         </li>
         <li className="nav-item">

@@ -22,6 +22,7 @@ class PostForm extends Component {
       errors: {},
       startDate: '',
       endDate: '',
+      currFile: null,
     };
 
     this.onChange = this.onChange.bind(this);
@@ -65,9 +66,10 @@ class PostForm extends Component {
     this.setState({ rent: 0 });
     this.setState({ startDate: '' });
     this.setState({ endDate: '' });
+    this.setState({ currFile: null});
     
     
-  }
+  }/*
   //THIS IS FOR A FILE BE UPLOADED
   fileChangedHandler = (event) => {
     
@@ -88,6 +90,31 @@ class PostForm extends Component {
     
     this.setState({ images: [...this.state.images, fileName] });
     
+    
+    axios.post('api/posts/uploads', formData);
+
+
+  }*/
+  //THIS IS FOR A FILE BE UPLOADED
+  fileChangedHandler = (event) => {
+    
+    const file = event.target.files[0];
+    
+    // this.setState({selectedFile: event.target.files[0]});
+    const uuidv4 = require('uuid/v4');
+    const formData = new FormData();
+    var fileName = uuidv4();
+
+    formData.append('file', file, fileName);
+
+    // I do this after so it only affects the state, not whats uploaded to s3
+    // The state & model in the db stores the whole url
+    fileName = 'https://s3.us-east-2.amazonaws.com/aveneu/' + fileName;
+    
+
+    
+    this.setState({ images: [...this.state.images, fileName] });
+    this.setState({ currFile: URL.createObjectURL(event.target.files[0])});
     
     axios.post('api/posts/uploads', formData);
 
@@ -145,6 +172,11 @@ class PostForm extends Component {
 
   render() {
     const { errors } = this.state;
+    let imagePreviewContent = null;
+
+    if(this.state.currFile != null) {
+      imagePreviewContent = <img style={{width: 100, height: 100, border:0}} src={this.state.currFile}/>;
+    }
 
     return (
       <div className="post-form mb-3">
@@ -203,13 +235,14 @@ class PostForm extends Component {
 
               <input type="file" name="file" id="file" onChange={this.fileChangedHandler}/>
 
+              {imagePreviewContent}
+
+              <br />
               <button type="submit" className="btn btn-dark">
                 Submit
               </button>
          
             </form>
-            <p>{this.state.images}</p>
-
           </div>
         </div>
       </div>
