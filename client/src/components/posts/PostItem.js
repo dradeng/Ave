@@ -39,7 +39,7 @@ class PostItem extends Component {
         </div>)
     );
     let endDateContent = null;
-    if(post.endDate != null || post.endDate != ''){
+    if(post.endDate != null && post.endDate.length > 1){
       endDateContent = <Month period="end" month={post.endDate}/>
     }
 
