@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import Geocode from 'react-geocode';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+import 'react-day-picker/lib/style.css';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import { addPost } from '../../actions/postActions';
 
@@ -25,6 +25,8 @@ class PostForm extends Component {
     };
 
     this.onChange = this.onChange.bind(this);
+    this.onStartDateChange = this.onStartDateChange.bind(this);
+    this.onEndDateChange = this.onEndDateChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
@@ -96,12 +98,14 @@ class PostForm extends Component {
 
 
   }
+  onStartDateChange(dateValue){
+    this.setState({ 'startDate' : dateValue });
+  }
+  onEndDateChange(dateValue){
+    this.setState({ 'endDate' : dateValue });
+  }
 
   onChange(e) {
-
-    console.log('TARGET');
-    console.log(e.target);
-    console.log(e.target.value);
 
 
     this.setState({ [e.target.name]: e.target.value });
@@ -184,14 +188,14 @@ class PostForm extends Component {
               
 
               <p>Start Date:</p>
-              <DatePicker
+              <DayPickerInput
                 name="startDate"
                 value={this.state.startDate}
-                onChange={this.onChange}/>
-              <DatePicker
+                onDayChange={this.onStartDateChange}/>
+              <DayPickerInput
                 name="endDate"
                 value={this.state.endDate}
-                onChange={this.onChange}/>
+                onDayChange={this.onEndDateChange}/>
               <br/>
 
               <input type="file" name="file" id="file" onChange={this.fileChangedHandler}/>
