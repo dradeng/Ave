@@ -50,9 +50,7 @@ class PostItem extends Component {
                 <Carousel showThumbs={false}  showIndicators={false} showStatus={false}>
                     {allImage}
                 </Carousel>
-                <div className='row' style={{position: 'absolute', top: 0, right:0 }}>
-                  <img src='../../img/heart.png' style={{width:30, height:30 }}/>
-                </div>
+                
                 <div className="row" style={{position: 'absolute', top: 0, right: 20, }}>
                   <Month period="start" month={post.startDate}/>
                   {endDateContent}
