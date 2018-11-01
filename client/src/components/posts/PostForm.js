@@ -98,25 +98,27 @@ class PostForm extends Component {
   //THIS IS FOR A FILE BE UPLOADED
   fileChangedHandler = (event) => {
     
-    const file = event.target.files[0];
-    
-    // this.setState({selectedFile: event.target.files[0]});
-    const uuidv4 = require('uuid/v4');
-    const formData = new FormData();
-    var fileName = uuidv4();
+    if(event.target.files[0] != null) {
+      const file = event.target.files[0];
+      
+      // this.setState({selectedFile: event.target.files[0]});
+      const uuidv4 = require('uuid/v4');
+      const formData = new FormData();
+      var fileName = uuidv4();
 
-    formData.append('file', file, fileName);
+      formData.append('file', file, fileName);
 
-    // I do this after so it only affects the state, not whats uploaded to s3
-    // The state & model in the db stores the whole url
-    fileName = 'https://s3.us-east-2.amazonaws.com/aveneu/' + fileName;
-    
+      // I do this after so it only affects the state, not whats uploaded to s3
+      // The state & model in the db stores the whole url
+      fileName = 'https://s3.us-east-2.amazonaws.com/aveneu/' + fileName;
+      
 
-    
-    this.setState({ images: [...this.state.images, fileName] });
-    this.setState({ currFile: URL.createObjectURL(event.target.files[0])});
-    
-    axios.post('api/posts/uploads', formData);
+      
+      this.setState({ images: [...this.state.images, fileName] });
+      this.setState({ currFile: URL.createObjectURL(event.target.files[0])});
+      
+      axios.post('api/posts/uploads', formData);
+    }
 
 
   }
