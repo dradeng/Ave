@@ -94,9 +94,9 @@ const ProfileSchema = new Schema({
             }
         }
     ],
-    favoriteProfile: [
+    favorites: [
         {
-            user: {
+            postID: {
                 type: String,
                 required: true
             }

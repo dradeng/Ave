@@ -1,7 +1,6 @@
 import {
   GET_PROFILE,
   GET_PROFILES,
-    GET_FAVORITE,
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE
 } from '../actions/types';
@@ -33,17 +32,6 @@ export default function(state = initialState, action) {
         profiles: action.payload,
         loading: false
       };
-      case GET_FAVORITE:
-          if (action.payload._id in state.favoriteHash)
-          {
-            return state;
-          }
-
-      return { ...state, favoriteProfile: [...state.favoriteProfile, action.payload],  favoriteHash: {
-              ...state.favoriteHash,
-              [action.payload._id]: 1
-          }};
-
       case CLEAR_CURRENT_PROFILE:
       return {
         ...state,

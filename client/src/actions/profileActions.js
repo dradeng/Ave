@@ -6,7 +6,7 @@ import {
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
   GET_ERRORS,
-   GET_FAVORITE,
+  GET_POST,
   SET_CURRENT_USER
 } from './types';
 
@@ -48,21 +48,21 @@ export const getProfileByHandle = handle => dispatch => {
     );
 };
 
-// Get profile by handle
-export const getProfileByID = userID => dispatch => {
+// Get favorites
+export const getFavorites = userID => dispatch => {
 
     dispatch(setProfileLoading());
     axios
-        .get(`/api/profile/user/${userID}`)
+        .get(`/api/profile/favorites/${userID}`)
         .then(res =>
             dispatch({
-                type: GET_FAVORITE,
+                type: GET_POST,
                 payload: res.data
             })
         )
         .catch(err =>
             dispatch({
-                type: GET_FAVORITE,
+                type: GET_POST,
                 payload: null
             })
         );
@@ -110,7 +110,7 @@ export const addEducation = (eduData, history) => dispatch => {
 // Add Favorite
 export const addFavorite = userID => dispatch => {
     axios
-        .post(`/api/profile/favoriteProfile/${userID}`)
+        .post(`/api/profile/favorites/${userID}`)
         .catch(err => {
             dispatch({
                 type: GET_ERRORS,
@@ -123,7 +123,7 @@ export const addFavorite = userID => dispatch => {
 // Remove favorite
 export const removeFavorite = userID => dispatch => {
     axios
-        .post(`/api/profile/unfavoriteProfile/${userID}`)
+        .delete(`/api/profile/favorites/${userID}`)
         .catch(err => {
             dispatch({
                 type: GET_ERRORS,

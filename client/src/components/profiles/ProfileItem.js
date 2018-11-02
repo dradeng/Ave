@@ -2,31 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import isEmpty from '../../validation/is-empty';
-import connect from "react-redux/es/connect/connect";
-import { addFavorite, removeFavorite } from "../../actions/profileActions";
-import '../../index.css';
 
 class ProfileItem extends Component {
+  render() {
+    const { profile } = this.props;
 
-
-    constructor() {
-        super();
-        this.state = {
-            showOpposite: false,
-        };
-    }
-    onFavoriteClick(id) {
-     this.props.addFavorite(id);
-     this.setState({showOpposite: !this.state.showOpposite});
-    }
-    unfavoriteClick(id) {
-        this.props.removeFavorite(id);
-        this.setState({showOpposite: !this.state.showOpposite});
-
-    }
-
-    render() {
-    const { profile, isFavorited } = this.props;
     return (
       <div className="card card-body bg-light mb-3">
         <div className="row">
@@ -51,46 +31,7 @@ class ProfileItem extends Component {
             </Link>
           </div>
           <div className="col-md-4 d-none d-md-block">
-            <div className="row">
             <h4>Skill Set</h4>
-                {!this.state.showOpposite && !isFavorited &&
-                <button
-                    onClick={this.onFavoriteClick.bind(this, profile.user._id)}
-                    type="button"
-                    className="btn btn-light mr-1"
-                >
-                    <i className="text-secondary fas fa-star"/>
-                </button>
-                }
-                {this.state.showOpposite && !isFavorited &&
-                <button
-                    onClick={this.unfavoriteClick.bind(this, profile.user._id)}
-                    type="button"
-                    className="btn btn-dark mr-1"
-                >
-                    <i className="text-secondary fas fa-star iconLight"/>
-                </button>
-                }
-                {!this.state.showOpposite && isFavorited &&
-                <button
-                    onClick={this.unfavoriteClick.bind(this, profile.user._id)}
-                    type="button"
-                    className="btn btn-dark mr-1"
-                >
-                    <i className="text-secondary fas fa-star iconLight"/>
-                </button>
-                }
-                {this.state.showOpposite && isFavorited &&
-                <button
-                    onClick={this.onFavoriteClick.bind(this, profile.user._id)}
-                    type="button"
-                    className="btn btn-light mr-1"
-                >
-                    <i className="text-secondary fas fa-star"/>
-                </button>
-                }
-
-            </div>
             <ul className="list-group">
               {profile.skills.slice(0, 4).map((skill, index) => (
                 <li key={index} className="list-group-item">
@@ -107,15 +48,7 @@ class ProfileItem extends Component {
 }
 
 ProfileItem.propTypes = {
-  profile: PropTypes.object.isRequired,
-  addFavorite: PropTypes.func.isRequired,
-  removeFavorite: PropTypes.func.isRequired,
-  isFavorited: PropTypes.bool.isRequired
-
+  profile: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => ({
-    auth: state.auth
-});
-
-export default  connect(mapStateToProps, { addFavorite, removeFavorite })(ProfileItem);
+export default ProfileItem;
