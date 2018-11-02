@@ -8,13 +8,12 @@ import openSocket from 'socket.io-client';
 import { addMessage, getChat } from '../../actions/chatActions';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 
-
 class ChatItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
       content: '',
-      count: 0,
+      newMessages: [],
       errors: {},
     };
 
@@ -25,15 +24,11 @@ class ChatItem extends Component {
   componentDidMount() {
     this.props.getChat(this.props.match.params.id);
 
-  }
-  send = () => {
-    const socket = openSocket('http://localhost:5000');//NEED TO NOT HARD CODE THIS
-    console.log('EMITE' + this.state.count);
-    socket.emit('change color', this.state.count); // change 'red' to this.state.color
-  }
-  // adding the function
-  setColor = (count) => {
-    this.setState({ count })
+  } 
+  setMessage = (message) => {
+    var key = require('uuid/v4');
+    var newArr = this.state.newMessages[key] = message;
+    this.setState({ newMessages: newArr });
   }
   onSubmit(e) {
     e.preventDefault();
@@ -44,10 +39,19 @@ class ChatItem extends Component {
 
     const newMessage = {
       content: this.state.content,
+      sender: user.id,
+      date: Date.now
     };
 
+    const socket = openSocket('http://localhost:5000');//NEED TO NOT HARD CODE THIS
+    console.log('EMITE' + newMessage);
+    socket.emit('addMessage', newMessage); // change 'red' to this.state.color
+
+
     this.props.addMessage(chat._id, newMessage);
+    this.props.getChat(this.props.match.params.id);
     this.setState({ content: '' });
+    this.setState({ newMessages: []});
   }
 
   onChange(e) {
@@ -60,13 +64,18 @@ class ChatItem extends Component {
     
 
     const socket = openSocket('http://localhost:5000');//NEED TO NOT HARD CODE THIS
-    socket.on('change color', (count) => {
-      console.log('RENDER ' + count);
-      this.setColor(count);
+    socket.on('addMessage', (message) => {
+      console.log('NEW RENDER RECIEVED ON client ');
+      console.log(message);
+      console.log('NEW MESSAGE'+message);
+      
+      this.setMessage(message);
+
     });
 
 
     let messageContent;
+    let socketMessagesContent;
     if (chat === null || loading || Object.keys(chat).length === 0) {
       messageContent = <Spinner />;
     }
@@ -76,26 +85,33 @@ class ChatItem extends Component {
         { 
           if (user.id == message.sender)
           {
-            return <p key={message._id} align="left" message={message}> {message.content} </p> 
+            return <p key={message._id} align="left" > {message.content} </p> 
           }
           else{
-            return <p key={message._id} align="right" message={message}> {message.content} </p> 
+            return <p key={message._id} align="right" > {message.content} </p> 
           }
         }
       );
     }
+    console.log('SOCKET CONTENT '+this.state.newMessages);
+    socketMessagesContent = Object.keys(this.state.newMessages).map((key) =>
+      { 
+        /*if (user.id == this.state.newMessages[key].sender)
+        {
+          return <p key={key} align="left"> {this.state.newMessages[key]}.content </p> 
+        }
+        else {
+          return <p key={key} align="right"> {this.state.newMessages[key]}.content </p> 
+        }*/
+        return <p>WHATS UP{this.state.newMessages[key]}</p>
+      }
+    );
+    console.log('socketMessagesContent');
+    console.log(socketMessagesContent);
     return (
       
         <div>
-          
-          {this.state.count}
-
-          <button onClick={() => this.send() }>Change Color</button>
-          <button id="blue" onClick={() => this.setColor(1)}>Uno</button>
-          <button id="red" onClick={() => this.setColor(2)}>Dos</button>
-
-
-
+      
           User1: {chat.user1}
           <br />
           User2: {chat.user2}
@@ -103,6 +119,8 @@ class ChatItem extends Component {
           Messages:
           <br />
           {messageContent}
+          SPLITTTTTTTT
+          {socketMessagesContent}
           <form onSubmit={this.onSubmit}>
               <div className="form-group">
                 <TextAreaFieldGroup
