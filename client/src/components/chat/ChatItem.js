@@ -5,16 +5,19 @@ import classnames from 'classnames';
 import Spinner from '../common/Spinner';
 import { Link } from 'react-router-dom';
 import openSocket from 'socket.io-client';
+import update from 'immutability-helper';
 import { addMessage, getChat } from '../../actions/chatActions';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
+
+var newMessages = [];
 
 class ChatItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
       content: '',
-      newMessages: [],
       errors: {},
+      socketMessages: [],
     };
 
     this.onChange = this.onChange.bind(this);
@@ -26,9 +29,21 @@ class ChatItem extends Component {
 
   } 
   setMessage = (message) => {
+
     var key = require('uuid/v4');
-    var newArr = this.state.newMessages[key] = message;
-    this.setState({ newMessages: newArr });
+
+    console.log('THIS MESSAGE IS BEING SET');
+    console.log(message);
+    console.log(message.content);
+    const newMessage = {
+      content: message.content,
+      sender: message.sender,
+      date: Date.now
+    };
+
+    newMessages.push(newMessage);
+    this.setState({ socketMessages: newMessages});
+    
   }
   onSubmit(e) {
     e.preventDefault();
@@ -44,14 +59,14 @@ class ChatItem extends Component {
     };
 
     const socket = openSocket('http://localhost:5000');//NEED TO NOT HARD CODE THIS
-    console.log('EMITE' + newMessage);
+
     socket.emit('addMessage', newMessage); // change 'red' to this.state.color
 
 
     this.props.addMessage(chat._id, newMessage);
     this.props.getChat(this.props.match.params.id);
     this.setState({ content: '' });
-    this.setState({ newMessages: []});
+    newMessages = [];
   }
 
   onChange(e) {
@@ -65,10 +80,7 @@ class ChatItem extends Component {
 
     const socket = openSocket('http://localhost:5000');//NEED TO NOT HARD CODE THIS
     socket.on('addMessage', (message) => {
-      console.log('NEW RENDER RECIEVED ON client ');
-      console.log(message);
-      console.log('NEW MESSAGE'+message);
-      
+      console.log('client got new message');
       this.setMessage(message);
 
     });
@@ -93,21 +105,18 @@ class ChatItem extends Component {
         }
       );
     }
-    console.log('SOCKET CONTENT '+this.state.newMessages);
-    socketMessagesContent = Object.keys(this.state.newMessages).map((key) =>
-      { 
-        /*if (user.id == this.state.newMessages[key].sender)
-        {
-          return <p key={key} align="left"> {this.state.newMessages[key]}.content </p> 
+  
+   var oldMessage = '';
+    socketMessagesContent = newMessages.map(message => { 
+      
+        if(oldMessage != message.content) {
+          oldMessage = message.content;
+          return <p key={message._id}>{message.content}</p>
+          
         }
-        else {
-          return <p key={key} align="right"> {this.state.newMessages[key]}.content </p> 
-        }*/
-        return <p>WHATS UP{this.state.newMessages[key]}</p>
       }
     );
-    console.log('socketMessagesContent');
-    console.log(socketMessagesContent);
+
     return (
       
         <div>

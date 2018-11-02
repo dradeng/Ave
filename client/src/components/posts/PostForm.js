@@ -49,7 +49,7 @@ class PostForm extends Component {
       longitude: this.state.longitude, 
       latitude: this.state.latitude, 
       name: user.name,
-      avatar: user.avatar,
+      avatar: user.profilePic,
       images: this.state.images,
       rent: this.state.rent,
       startDate: this.state.startDate,

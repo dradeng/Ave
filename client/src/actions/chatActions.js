@@ -58,8 +58,7 @@ export const getChat = id => dispatch => {
         type: GET_CHAT,
         payload: res.data
       });
-      console.log("FUCK YES");
-
+      
       }
     )
     .catch(err => {
@@ -67,9 +66,7 @@ export const getChat = id => dispatch => {
         type: GET_CHAT,
         payload: null
       });
-      console.log("FUCK NO");
-      console.log(id);
-      console.log(err);
+
       }
     );
 };
