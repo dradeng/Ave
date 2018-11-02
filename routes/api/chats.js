@@ -124,7 +124,8 @@ router.post(
   (req, res) => {
 
 
-    var socket = req.app.get('io');
+    var socket = req.app.get('socket');
+
 
     Chat.findById(req.params.id)
       .then(chat => {

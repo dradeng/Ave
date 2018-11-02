@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import openSocket from 'socket.io-client';
 import { addMessage, getChat } from '../../actions/chatActions';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
-const socket = openSocket('http://localhost:5000');
 
 
 class ChatItem extends Component {
@@ -15,6 +14,7 @@ class ChatItem extends Component {
     super(props);
     this.state = {
       content: '',
+      count: 0,
       errors: {},
     };
 
@@ -24,8 +24,17 @@ class ChatItem extends Component {
 
   componentDidMount() {
     this.props.getChat(this.props.match.params.id);
-  }
 
+  }
+  send = () => {
+    const socket = openSocket('http://localhost:5000');//NEED TO NOT HARD CODE THIS
+    console.log('EMITE' + this.state.count);
+    socket.emit('change color', this.state.count); // change 'red' to this.state.color
+  }
+  // adding the function
+  setColor = (count) => {
+    this.setState({ count })
+  }
   onSubmit(e) {
     e.preventDefault();
 
@@ -49,6 +58,14 @@ class ChatItem extends Component {
     const { chat, loading } = this.props.chat;
     const { user } = this.props.auth;
     
+
+    const socket = openSocket('http://localhost:5000');//NEED TO NOT HARD CODE THIS
+    socket.on('change color', (count) => {
+      console.log('RENDER ' + count);
+      this.setColor(count);
+    });
+
+
     let messageContent;
     if (chat === null || loading || Object.keys(chat).length === 0) {
       messageContent = <Spinner />;
@@ -70,6 +87,15 @@ class ChatItem extends Component {
     return (
       
         <div>
+          
+          {this.state.count}
+
+          <button onClick={() => this.send() }>Change Color</button>
+          <button id="blue" onClick={() => this.setColor(1)}>Uno</button>
+          <button id="red" onClick={() => this.setColor(2)}>Dos</button>
+
+
+
           User1: {chat.user1}
           <br />
           User2: {chat.user2}
