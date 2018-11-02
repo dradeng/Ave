@@ -24,26 +24,7 @@ app.use(bodyParser.json());
 
 const mongoURI = require('./config/keys').mongoURI;
 const publicPath = path.join(__dirname, '../public');
-var server = http.createServer(app);
-var io = socketIO(server);
-app.set('io', io);
-// This is what the socket.io syntax is like, we will work this later
-io.on('connection', socket => {
-  app.set('socket', socket);
-  console.log('connect');
 
-  // just like on the client side, we have a socket.on method that takes a callback function
-    socket.on('addMessage', (message) => {
-    
-      io.sockets.emit('addMessage', message)
-    });
-    
-    // disconnect is fired when a client leaves the server
-    socket.on('disconnect', () => {
-      console.log('user disconnected')
-    });
-
- });
 mongoose
   .connect(mongoURI)
   .then(() => console.log('MongoDB Connected'))
@@ -72,6 +53,28 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
+
+var server = http.createServer(app);
+var io = socketIO(server);
+app.set('io', io);
+// This is what the socket.io syntax is like, we will work this later
+io.on('connection', socket => {
+  app.set('socket', socket);
+  console.log('connect');
+
+  // just like on the client side, we have a socket.on method that takes a callback function
+    socket.on('addMessage', (message) => {
+    
+      io.sockets.emit('addMessage', message)
+    });
+    
+    // disconnect is fired when a client leaves the server
+    socket.on('disconnect', () => {
+      console.log('user disconnected')
+    });
+
+ });
+
 
 const port = process.env.PORT || 5000;
 

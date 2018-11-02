@@ -64,7 +64,10 @@ class ChatItem extends Component {
 
 
     this.props.addMessage(chat._id, newMessage);
-    this.props.getChat(this.props.match.params.id);
+    
+    //Might try later to getchat non-noticably later. Not super important but could save so many messages
+    //be saved on client side
+    //this.props.getChat(this.props.match.params.id);
     this.setState({ content: '' });
     newMessages = [];
   }
@@ -88,6 +91,8 @@ class ChatItem extends Component {
 
     let messageContent;
     let socketMessagesContent;
+    let lastMessage = "";
+
     if (chat === null || loading || Object.keys(chat).length === 0) {
       messageContent = <Spinner />;
     }
@@ -95,24 +100,32 @@ class ChatItem extends Component {
       messageContent = chat.messages.map(
         message => 
         { 
+          lastMessage = message.content;
           if (user.id == message.sender)
           {
-            return <p key={message._id} align="left" > {message.content} </p> 
+            return <p key={message._id} align="right" > {message.content} </p> 
           }
           else{
-            return <p key={message._id} align="right" > {message.content} </p> 
+            return <p key={message._id} align="left" > {message.content} </p> 
           }
         }
       );
     }
   
-   var oldMessage = '';
+    var oldMessage = '';
+    //Socket.io does something weird where it will try to add alot of messages
     socketMessagesContent = newMessages.map(message => { 
       
-        if(oldMessage != message.content) {
+        if(oldMessage != message.content && message.content != lastMessage) {
+           
           oldMessage = message.content;
-          return <p key={message._id}>{message.content}</p>
-          
+
+          if (user.id == message.sender)
+          {
+            return <p align="right"  key={message._id}>{message.content}</p>
+          } else {
+            return <p align="left"  key={message._id}>{message.content}</p>
+          }
         }
       }
     );

@@ -18,10 +18,16 @@ const Profile = require('../../models/Profile');
 // @route   GET api/chats
 // @desc    Get chats
 // @access  Public
-router.get('/', (req, res) => {
+router.get('/',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
   Chat.find()
     .sort({ date: 1 })
-    .then(chats => res.json(chats))
+    .then(chats => {
+      var newChats = chats.filter(chat => chat.user1 == req.user.id || req.user.id == chat.user2 );
+
+      res.json(newChats);
+    })
     .catch(err => res.status(404).json({ nochatsfound: 'No Chats found' }));
 });
 
@@ -70,7 +76,7 @@ router.post(
       .then(chat => {
         const newMessage = {
           content: req.body.content,
-          sender: req.user.id
+          sender: req.user.id,
         };
         chat.messages.push(newMessage);
 
