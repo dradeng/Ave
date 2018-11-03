@@ -197,25 +197,28 @@ router.post(
   }
 );
 
-// @route   POST api/profile/favorites/$usedID
+// @route   POST api/profile/favorites/:userID
 // @desc    Add favorite to profile
 // @access  Private
 router.post(
     '/favorites/:userID',
     passport.authenticate('jwt', { session: false }),
     (req, res) => {
+        console.log('MADE IT TO THE ROUTE');
         Profile.findOne({ user: req.user.id }).then(profile => {
-                    if (
+                    /*if (
                         profile.favorites.filter(favorite => favorite.user.toString() === req.body.favorite)
                             .length > 0
                     ) {
                         return res
                             .status(400)
                             .json({ alreadyliked: 'User already favored this post' });
-                    }
+                    }*/
 
                     // Add favorite to favorites array
-                    profile.favoriteProfile.unshift({ postID: req.body.favorite });
+                    console.log('MADE IT TO THE INSIDE' + req.body.favorites);
+                    console.log(req.body);
+                    profile.favorites.unshift(req.body.favorites);
 
                     profile.save().then(profile => res.json(profile));
                 })

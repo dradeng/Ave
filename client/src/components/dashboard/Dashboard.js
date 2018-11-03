@@ -16,7 +16,6 @@ class Dashboard extends Component {
   onDeleteClick(e) {
     this.props.deleteAccount();
   }
-
   render() {
     const { user } = this.props.auth;
     const { profile, loading } = this.props.profile;
@@ -26,6 +25,8 @@ class Dashboard extends Component {
     if (profile === null || loading) {
       dashboardContent = <Spinner />;
     } else {
+      console.log('DONE LOAD');
+      console.log(profile.name);
       // Check if logged in user has profile data
       if (Object.keys(profile).length > 0) {
         dashboardContent = (

@@ -48,25 +48,6 @@ export const getProfileByHandle = handle => dispatch => {
     );
 };
 
-// Get favorites
-export const getFavorites = userID => dispatch => {
-
-    dispatch(setProfileLoading());
-    axios
-        .get(`/api/profile/favorites/${userID}`)
-        .then(res =>
-            dispatch({
-                type: GET_POST,
-                payload: res.data
-            })
-        )
-        .catch(err =>
-            dispatch({
-                type: GET_POST,
-                payload: null
-            })
-        );
-};
 
 // Create Profile
 export const createProfile = (profileData, history) => dispatch => {
@@ -108,9 +89,10 @@ export const addEducation = (eduData, history) => dispatch => {
 };
 
 // Add Favorite
-export const addFavorite = userID => dispatch => {
+export const addFavorite = (userID, favoriteData) => dispatch => {
+    console.log("MADE IT TO THE ACTION"+ favoriteData);
     axios
-        .post(`/api/profile/favorites/${userID}`)
+        .post(`/api/profile/favorites/${userID}`, favoriteData)
         .catch(err => {
             dispatch({
                 type: GET_ERRORS,

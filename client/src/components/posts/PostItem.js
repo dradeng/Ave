@@ -7,9 +7,11 @@ import {Carousel} from 'react-responsive-carousel';
 import ReactDom from 'react-dom';
 import { Link } from 'react-router-dom';
 import { deletePost, addLike, removeLike } from '../../actions/postActions';
+import { addFavorite } from '../../actions/profileActions';
 import Month from '../availability/Month';
 
 class PostItem extends Component {
+  
   onDeleteClick(id) {
     this.props.deletePost(id);
   }
@@ -17,7 +19,15 @@ class PostItem extends Component {
   onLikeClick(id) {
     this.props.addLike(id);
   }
+  onFavorite(userID, postID) {
+   
+    const newFavorite = {
+      favorites: postID,
+    };
 
+    this.props.addFavorite(userID, newFavorite);
+
+  }
   onUnlikeClick(id) {
     this.props.removeLike(id);
   }
@@ -45,6 +55,9 @@ class PostItem extends Component {
 
       return (
           <div style={{border: 'none', backgroundColor: '#FFFFFF'}} className="card card-body mb-3 col-md-6">
+            
+            <button onClick={this.onFavorite.bind(this, auth.user.id, post._id)}>Add to favorites</button>
+            
 
             <div style={{float: 'left',position: 'relative'}}>
                 <Carousel showThumbs={false}  showIndicators={false} showStatus={false}>
@@ -132,6 +145,7 @@ PostItem.propTypes = {
   deletePost: PropTypes.func.isRequired,
   addLike: PropTypes.func.isRequired,
   removeLike: PropTypes.func.isRequired,
+  addFavorite: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired
 };
@@ -140,6 +154,6 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { deletePost, addLike, removeLike })(
+export default connect(mapStateToProps, { deletePost, addLike, removeLike, addFavorite })(
   PostItem
 );
