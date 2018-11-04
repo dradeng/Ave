@@ -27,12 +27,12 @@ class Favorites extends Component {
       favoritesContent = <Spinner />;
     } else {
         favoritesContent = posts.map(post => { 
-            /*if(profile.Favorites.index(post._id)) {
+            if(profile.favorites.indexOf(post._id) >= 0) {
                 return <PostItem className="col-md-6" key={post._id} post={post} />
             } else {
                 return // nothing
             }
-            */
+            
      
         });
     }
