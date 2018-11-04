@@ -21,7 +21,7 @@ class Favorites extends Component {
     if (profile === null || loading) {
       favoritesContent = <Spinner />;
     } else {
-        favoritesContent = profile.favorites.map(post => <PostItem className="col-md-6" key={post._id} post={post} />);
+        favoritesContent = profile.favorites.map(post => <p>ONE </p>);
     }
     return (
       <div className="dashboard">

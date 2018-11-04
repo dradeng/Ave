@@ -90,7 +90,6 @@ export const addEducation = (eduData, history) => dispatch => {
 
 // Add Favorite
 export const addFavorite = (userID, favoriteData) => dispatch => {
-    console.log("MADE IT TO THE ACTION"+ favoriteData);
     axios
         .post(`/api/profile/favorites/${userID}`, favoriteData)
         .catch(err => {

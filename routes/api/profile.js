@@ -216,10 +216,12 @@ router.post(
                     }*/
 
                     // Add favorite to favorites array
-                    console.log('MADE IT TO THE INSIDE' + req.body.favorites);
-                    console.log(req.body);
-                    profile.favorites.unshift(req.body.favorites);
+                   
+                    const newFavorite = {
+                      postID: req.body.favorites,
+                    };
 
+                    profile.favorites.push(newFavorite);
                     profile.save().then(profile => res.json(profile));
                 })
                 .catch(err => res.status(404).json({ favoritenotfound: 'No favorite found' }));
