@@ -61,13 +61,15 @@ class Chat extends Component {
         }
       }
     );
+    console.log('START'+chat.user1);
+    console.log(chat.user2);
     return (
       
         <div>
           User1:
-          {chat.user1}<br />
+          {chat.user1Name}<br />
           User2:
-          {chat.user2}<br />
+          {chat.user2Name}<br />
           Messages:
           <br />
           {messageContent}

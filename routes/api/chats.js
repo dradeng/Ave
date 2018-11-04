@@ -50,6 +50,8 @@ router.post(
     const newChat = new Chat({
     	user1: req.user.id,
     	user2: req.body.user2,
+      user1Name: req.body.user1Name,
+      user2Name: req.body.user2Name,
     	messages: []
 
       //No need to add date

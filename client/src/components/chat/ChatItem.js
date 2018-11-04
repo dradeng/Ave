@@ -32,9 +32,7 @@ class ChatItem extends Component {
 
     var key = require('uuid/v4');
 
-    console.log('THIS MESSAGE IS BEING SET');
-    console.log(message);
-    console.log(message.content);
+    
     const newMessage = {
       content: message.content,
       sender: message.sender,

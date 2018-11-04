@@ -15,6 +15,8 @@ class Post extends Component {
     this.state = {
       user1: null,
       user2: null,
+      user1Name: '',
+      user2Name: '',
       messages: []
     };
     this.createChat = this.createChat.bind(this);
@@ -34,13 +36,17 @@ class Post extends Component {
       
       user1: user.id,
       user2: post.user,
+      user1Name: user.name,
+      user2Name: post.name,
       messages: []
       
     };
-
+  
     this.props.addChat(newChat);
     this.setState({ user1: null });
     this.setState({ user2: null });
+    this.setState({ user1Name: '' });
+    this.setState({ user2Name: '' });
     this.setState({ messages: [] });
     
   }
