@@ -22,7 +22,7 @@ class PostForm extends Component {
       errors: {},
       startDate: '',
       endDate: '',
-      currFile: null,
+      currFile: [],
     };
 
     this.onChange = this.onChange.bind(this);
@@ -66,7 +66,7 @@ class PostForm extends Component {
     this.setState({ rent: 0 });
     this.setState({ startDate: '' });
     this.setState({ endDate: '' });
-    this.setState({ currFile: null});
+    this.setState({ currFile: []});
     
     
   }
@@ -90,7 +90,7 @@ class PostForm extends Component {
 
       
       this.setState({ images: [...this.state.images, fileName] });
-      this.setState({ currFile: URL.createObjectURL(event.target.files[0])});
+      this.setState({ currFile: [...this.state.currFile, URL.createObjectURL(event.target.files[0])] });
       
       axios.post('api/posts/uploads', formData);
     }
@@ -150,9 +150,15 @@ class PostForm extends Component {
   render() {
     const { errors } = this.state;
     let imagePreviewContent = null;
-
-    if(this.state.currFile != null) {
-      imagePreviewContent = <img style={{width: 100, height: 100, border:0}} src={this.state.currFile}/>;
+  
+    //HAVE TO USE CURRFILE IF USE IMAGES THE SRC DOES NOT RECOGNOIZE THE URL FOR SOME REASON
+    //MIGHT COME BACK TO< BUT PAIN IN THE ASS 
+    if(this.state.images != null) {
+     
+      imagePreviewContent = this.state.currFile.map( image => {
+   
+        return <img style={{width: 100, height: 100, border:0}} src={image}/>
+      });
     }
 
     return (
@@ -211,7 +217,6 @@ class PostForm extends Component {
               <br/>
 
               <input type="file" name="file" id="file" onChange={this.fileChangedHandler}/>
-
               {imagePreviewContent}
 
               <br />
