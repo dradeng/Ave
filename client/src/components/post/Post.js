@@ -38,8 +38,6 @@ class Post extends Component {
       
     };
 
-    console.log(newChat);
-
     this.props.addChat(newChat);
     this.setState({ user1: null });
     this.setState({ user2: null });

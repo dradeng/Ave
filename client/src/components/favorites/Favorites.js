@@ -23,7 +23,8 @@ class Favorites extends Component {
     let favoritesContent;
     console.log('LAAAAME');
     console.log(profile);
-    if (profile === null || loading) {
+    console.log(loading);
+    if (profile === null) {
       favoritesContent = <Spinner />;
     } else {
         favoritesContent = posts.map(post => { 
@@ -32,8 +33,6 @@ class Favorites extends Component {
             } else {
                 return // nothing
             }
-            
-     
         });
     }
     return (

@@ -88,23 +88,10 @@ export const addEducation = (eduData, history) => dispatch => {
         );
 };
 
-// Add Favorite
+// Add Favorite or remove if already favorited
 export const addFavorite = (userID, favoriteData) => dispatch => {
     axios
         .post(`/api/profile/favorites/${userID}`, favoriteData)
-        .catch(err => {
-            dispatch({
-                type: GET_ERRORS,
-                payload: err.response.data
-            });
-        });
-};
-
-
-// Remove favorite
-export const removeFavorite = userID => dispatch => {
-    axios
-        .delete(`/api/profile/favorites/${userID}`)
         .catch(err => {
             dispatch({
                 type: GET_ERRORS,

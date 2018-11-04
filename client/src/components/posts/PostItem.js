@@ -7,11 +7,13 @@ import {Carousel} from 'react-responsive-carousel';
 import ReactDom from 'react-dom';
 import { Link } from 'react-router-dom';
 import { deletePost, addLike, removeLike } from '../../actions/postActions';
-import { addFavorite } from '../../actions/profileActions';
+import { addFavorite, getCurrentProfile } from '../../actions/profileActions';
 import Month from '../availability/Month';
 
 class PostItem extends Component {
-  
+  componentDidMount() {
+    this.props.getCurrentProfile();
+  }
   onDeleteClick(id) {
     this.props.deletePost(id);
   }
@@ -19,13 +21,22 @@ class PostItem extends Component {
   onLikeClick(id) {
     this.props.addLike(id);
   }
+  //this covers removing and adding favorite
   onFavorite(userID, postID) {
    
+    const { profile, loading } = this.props.profile;
+
     const newFavorite = {
       favorites: postID,
     };
 
-    this.props.addFavorite(userID, newFavorite);
+    if(loading || profile == null)
+    {
+      //do nothing
+    } else {
+      console.log('MADE IR');
+      this.props.addFavorite(userID, newFavorite);
+    }
 
   }
   onUnlikeClick(id) {
@@ -146,14 +157,16 @@ PostItem.propTypes = {
   addLike: PropTypes.func.isRequired,
   removeLike: PropTypes.func.isRequired,
   addFavorite: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  profile: state.profile
 });
 
-export default connect(mapStateToProps, { deletePost, addLike, removeLike, addFavorite })(
+export default connect(mapStateToProps, { deletePost, addLike, removeLike, addFavorite, getCurrentProfile })(
   PostItem
 );

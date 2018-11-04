@@ -198,7 +198,7 @@ router.post(
 );
 
 // @route   POST api/profile/favorites/:userID
-// @desc    Add favorite to profile
+// @desc    Add favorite to profile or if already favorited removes it
 // @access  Private
 router.post(
     '/favorites/:userID',
@@ -206,58 +206,32 @@ router.post(
     (req, res) => {
         console.log('MADE IT TO THE ROUTE');
         Profile.findOne({ user: req.user.id }).then(profile => {
-                    /*if (
-                        profile.favorites.filter(favorite => favorite.user.toString() === req.body.favorite)
-                            .length > 0
-                    ) {
-                        return res
-                            .status(400)
-                            .json({ alreadyliked: 'User already favored this post' });
-                    }*/
+          console.log('find it');
+          const index = profile.favorites.indexOf(req.body.favorites);
+          if (index >= 0) {
+            
+              // Splice out of array
+              console.log(profile.favorites);
+              console.log('MAde it to the splace' + index);
+              
+              profile.favorites.splice(index, 2);
+              console.log(profile.favorites);
+              profile.save().then(profile => res.json(profile));
+              
+          } else {
 
-                    // Add favorite to favorites array
-
-                    profile.favorites.push(req.body.favorites);
-                    profile.save().then(profile => res.json(profile));
-                })
-                .catch(err => res.status(404).json({ favoritenotfound: 'No favorite found' }));
+            // Add favorite to favorites array
+            console.log('MAde it to the ifnis');
+            profile.favorites.push(req.body.favorites);
+            //console.log(profile.favorites);
+            profile.save().then(profile => res.json(profile));
+          }
+      })
+      .catch(err => res.status(404).json({ favoritenotfound: 'No favorite found' }));
 
     }
 );
 
-// @route   POST api/profile/favoriteProfile
-// @desc    unfavorite profile
-// @access  Private
-/*router.post(
-    '/unfavoriteProfile/:userID',
-    passport.authenticate('jwt', { session: false }),
-    (req, res) => {
-        Profile.findOne({ user: req.user.id }).then(profile => {
-
-            if (
-                profile.favoriteProfile.filter(favorite => favorite.user.toString() === req.params.userID)
-                    .length === 0
-            ) {
-                return res
-                    .status(400)
-                    .json({ alreadyliked: 'User has not liked this post' });
-            }
-
-                    // Get remove index
-                    const removeIndex = profile.favoriteProfile
-                        .map(favorite => favorite.user.toString())
-                        .indexOf(req.params.userID);
-
-                    // Splice out of array
-                    profile.favoriteProfile.splice(removeIndex, 1);
-
-                    // Save
-                    profile.save().then(profile => res.json(profile));
-                })
-                .catch(err => res.status(404).json({ profilenotfound: 'No profile found' }));
-});
-
-*/
 
 
 // @route   POST api/profile/education
