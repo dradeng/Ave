@@ -24,6 +24,7 @@ class PostForm extends Component {
       startDate: '',
       endDate: '',
       currFile: [],
+      deleteFile: '',
     };
 
     this.onChange = this.onChange.bind(this);
@@ -68,6 +69,7 @@ class PostForm extends Component {
     this.setState({ startDate: '' });
     this.setState({ endDate: '' });
     this.setState({ currFile: []});
+    this.setState({ deleteFile: ''});
     
     
   }
@@ -139,21 +141,16 @@ class PostForm extends Component {
     tmpImages.splice(index,1);
     this.setState({images: tmpImages});
     this.setState({ currFile: tmpCF });
-    
-    var params = {
-      Bucket: 'aveneu',
-      Key: fileName
-    /* where value for 'Key' equals 'pathName1/pathName2/.../pathNameN/fileName.ext' - full path name to your file without '/' at the beginning */
-    };
+    this.setState({ deleteFile: fileName})
 
-    const s3Client = new AWS.S3({
+    const formData = new FormData();
     
-    //might need to add region
-    });
-    s3Client.deleteObject(params, function(err, data) {
-      if (err) console.log("ERRROR",err, err.stack); // an error occurred
-      else     console.log('File deleted successful');           // successful response
-    });
+
+    formData.append('fileName', fileName);
+
+
+    axios.delete('api/posts/uploads', formData);
+  
 
   }
   getLatLong(address) {

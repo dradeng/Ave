@@ -27,9 +27,10 @@ const stream = require('stream');
 const s3 = require('../../config/s3.js');
 const storage = multer.memoryStorage()
 const upload = multer({storage: storage});
-const awsWorker = require('../../controllers/aws.js');
-
-router.post('/uploads', upload.any(), awsWorker.doUpload);
+const awsUploader = require('../../controllers/awsUpload.js');
+const awsDeleter = require('../../controllers/awsDelete.js');
+router.post('/uploads', upload.any(), awsUploader.doUpload);
+router.delete('/uploads', awsDeleter.doDelete);
 
 /*######################################################*/
 
