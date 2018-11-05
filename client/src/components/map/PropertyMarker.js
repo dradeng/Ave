@@ -27,7 +27,6 @@ export default class PropertyMarker extends React.Component {
     }
 //                        icon={StethoscopeIcon}
     render(){
-        console.log(this.props);
         return(
             <div>
                 <Marker onClick={this.toggleOpen}

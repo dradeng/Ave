@@ -55,7 +55,7 @@ class PostItem extends Component {
     const { post, auth, showActions } = this.props;
 
     const allImage = post.images.map((item, index) => (
-        <div>
+        <div style={{width:'100%',overflow:'hidden'}}>
       <img className="img-responsive" style={{borderRadius: 5}} src={item} />
         </div>)
     );
@@ -65,68 +65,32 @@ class PostItem extends Component {
     }
 
       return (
-          <div style={{border: 'none', backgroundColor: '#FFFFFF'}} className="card card-body mb-3 col-md-6">
-            
-            <button onClick={this.onFavorite.bind(this, auth.user.id, post._id)}>Add to favorites</button>
-            
-
-            <div style={{float: 'left',position: 'relative'}}>
-                <Carousel showThumbs={false}  showIndicators={false} showStatus={false}>
-                    {allImage}
-                </Carousel>
-                
-                <div className="row" style={{position: 'absolute', top: 0, right: 20, }}>
-                  <Month period="start" month={post.startDate}/>
-                  {endDateContent}
-                </div>
-            </div>
-
+          <div className="card card-body mb-3 col-md-6 feedTile">
             <div className="row">
                   <div className="col-md-2">
                       <a href="profile.html">
                           <img
-                              className="rounded-circle d-none d-md-block"
+                              className="rounded-circle d-none d-md-block postImage"
                               src={post.avatar}
                               alt=""
                           />
                       </a>
                       <br/>
-                      <p style={{fontSize: 7}} className="text-center">{post.name}</p>
 
                   </div>
                   <div className="col-md-10">
-                      <div className="row">
+                      <div  className="row">
                           <p className="lead col-md-10">{post.title}</p>
-                          <p className="lead col-md-10">{post.rent}</p>
-
+                          <div style={{color: '#fac71e'}}  onClick={this.onFavorite.bind(this, auth.user.id, post._id)}>
+                          <i  className="fas fa-star"/>
+                          </div>
                       </div>
 
 
                       {showActions ? (
                           <span>
-                <button
-                    onClick={this.onLikeClick.bind(this, post._id)}
-                    type="button"
-                    className="btn btn-light mr-1"
-                >
-                  <i
-                      className={classnames('fas fa-thumbs-up', {
-                          'text-info': this.findUserLike(post.likes)
-                      })}
-                  />
-                  <span className="badge badge-light">{post.likes.length}</span>
-                </button>
-                <button
-                    onClick={this.onUnlikeClick.bind(this, post._id)}
-                    type="button"
-                    className="btn btn-light mr-1"
-                >
-                  <i className="text-secondary fas fa-thumbs-down"/>
-                </button>
 
-                <Link to={`/post/${post._id}`} className="btn btn-info mr-1">
-                  Comments
-                </Link>
+
 
                               {post.user === auth.user.id ? (
                                   <button
@@ -143,6 +107,24 @@ class PostItem extends Component {
                   </div>
 
               </div>
+              <div style={{float: 'left',position: 'relative', display:'flex', }}>
+                  <Carousel style={{height:'40%'}} showThumbs={false}  showIndicators={false} showStatus={false}>
+                      {allImage}
+                  </Carousel>
+
+                  <div className="row" style={{position: 'absolute', top: 0, right: 20,}}>
+                      <Month period="start" month={post.startDate}/>
+                      {endDateContent}
+                  </div>
+                  <div className="row" style={{position: 'absolute', bottom: 20, left: 25, color: '#FFFFFF'}}>
+                      <i className="fas fa-dollar-sign"/>
+
+                      <p className="priceTag">{post.rent}</p>
+
+                  </div>
+
+              </div>
+
           </div>
       );
   }

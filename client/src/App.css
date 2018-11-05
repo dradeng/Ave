@@ -97,3 +97,64 @@ i.fa.fa-circle.half:after {
 ._find #main.one-col-s{
   margin-left:358px
 }
+
+/* Square
+
+ */
+.feedTile {
+  border-radius: 5px;
+  border: solid 0.1px rgba(112, 112, 112, 0.51);
+  background-color: #ffffff;
+}
+.navbarItem
+{
+  height: 14px;
+  font-family: HiraKakuStdN-W8, SansSerif;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 3.57;
+  letter-spacing: normal;
+  text-align: left;
+  color: #ffffff;
+  opacity: 0.8;
+
+}
+.navbarItemSelected
+{
+  height: 14px;
+  font-family: HiraKakuStdN-W8, SansSerif;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 3.57;
+  letter-spacing: normal;
+  text-align: left;
+  color: #ffffff;
+
+}
+
+.navbarItem:hover, .navbarItem:active {
+  opacity: 1;
+}
+
+.priceTag {
+  width: 80px;
+  height: 24px;
+  font-family: HiraMinProN-W6;
+  font-size: 24px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.63;
+  letter-spacing: normal;
+  text-align: left;
+  color: #ffffff;
+}
+
+.postImage {
+  width: 38.8px;
+  height: 38.8px;
+}

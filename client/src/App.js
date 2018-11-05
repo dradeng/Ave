@@ -57,11 +57,12 @@ if (localStorage.jwtToken) {
 
 class App extends Component {
   render() {
-    return (
+
+      return (
       <Provider store={store}>
         <Router>
           <div className="App">
-            <Navbar />
+            <Navbar curPath={window.location.pathname} />
             <Route exact path="/" component={Landing} />
             <div className="container">
               <Route exact path="/register" component={Register} />
