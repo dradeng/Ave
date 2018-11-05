@@ -24,7 +24,6 @@ class PostForm extends Component {
       startDate: '',
       endDate: '',
       currFile: [],
-      deleteFile: '',
     };
 
     this.onChange = this.onChange.bind(this);
@@ -69,7 +68,7 @@ class PostForm extends Component {
     this.setState({ startDate: '' });
     this.setState({ endDate: '' });
     this.setState({ currFile: []});
-    this.setState({ deleteFile: ''});
+  
     
     
   }
@@ -141,15 +140,13 @@ class PostForm extends Component {
     tmpImages.splice(index,1);
     this.setState({images: tmpImages});
     this.setState({ currFile: tmpCF });
-    this.setState({ deleteFile: fileName})
 
-    const formData = new FormData();
-    
+    console.log("FILE CLIENT"+fileName);
+    const newFile = {
+      fileName : fileName
+    };
 
-    formData.append('fileName', fileName);
-
-
-    axios.delete('api/posts/uploads', formData);
+    axios.post('api/posts/delete/uploads', newFile);
   
 
   }

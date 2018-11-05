@@ -1,6 +1,6 @@
 const stream = require('stream');
 const uuidv4 = require('uuid/v4');
-const s3 = require('../config/s3.js');
+const s3 = require('../config/s3Upload.js');
  
 exports.doUpload = (req, res) => {
 	const s3Client = s3.s3Client;
@@ -8,8 +8,6 @@ exports.doUpload = (req, res) => {
 
 
 	params.Key = req.files[0].originalname;
-
-
 
 	params.Body = req.files[0].buffer;
 	

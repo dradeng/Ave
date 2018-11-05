@@ -24,14 +24,13 @@ THIS IS FOR SETTING UP AMAZON S3
 const uuidv4 = require('uuid/v4');
 const multer = require('multer');
 const stream = require('stream');
-const s3 = require('../../config/s3.js');
 const storage = multer.memoryStorage()
 const upload = multer({storage: storage});
 const awsUploader = require('../../controllers/awsUpload.js');
 const awsDeleter = require('../../controllers/awsDelete.js');
 router.post('/uploads', upload.any(), awsUploader.doUpload);
-router.delete('/uploads', awsDeleter.doDelete);
-
+//router.delete('/uploads', awsDeleter.doDelete);
+router.post('/delete/uploads', awsDeleter.doDelete);
 /*######################################################*/
 
 
