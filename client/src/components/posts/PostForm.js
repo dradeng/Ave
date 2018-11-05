@@ -7,6 +7,7 @@ import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import { addPost } from '../../actions/postActions';
+import AWS from 'aws-sdk';
 
 class PostForm extends Component {
   constructor(props) {
@@ -91,7 +92,9 @@ class PostForm extends Component {
       
       this.setState({ images: [...this.state.images, fileName] });
       this.setState({ currFile: [...this.state.currFile, URL.createObjectURL(event.target.files[0])] });
-      
+      //console.log('currfile during upload' + this.state.currFile);
+      //console.log('miages during upload' + this.state.images);
+      //console.log('FILE NAME DURING UPLOAd' + fileName);
       axios.post('api/posts/uploads', formData);
     }
 
@@ -121,6 +124,38 @@ class PostForm extends Component {
     {
       this.getLatLong(e.target.value);
     }
+  }
+  onDeleteClick(imageURL) {
+    var index = this.state.currFile.indexOf(imageURL);
+    var fileName = this.state.images[index];//HAVE TO FUCKING USE IMAGES NOT CURR FILE
+
+   
+    var leng = ('https://s3.us-east-2.amazonaws.com/aveneu/').length;
+    fileName = fileName.substring(leng);
+    var tmpCF = [...this.state.currFile];
+    
+    var tmpImages = [...this.state.images];
+    tmpCF.splice(index, 1);
+    tmpImages.splice(index,1);
+    this.setState({images: tmpImages});
+    this.setState({ currFile: tmpCF });
+    
+    var params = {
+      Bucket: 'aveneu',
+      Key: fileName
+    /* where value for 'Key' equals 'pathName1/pathName2/.../pathNameN/fileName.ext' - full path name to your file without '/' at the beginning */
+    };
+
+    const s3Client = new AWS.S3({
+    accessKeyId: 'AKIAJTFR25KK7O2253YQ',
+    secretAccessKey: 'KY6qgbvQp6pByKDPK9zIb+Nb3Q33zkxBH/7tE6Ja',
+    //might need to add region
+    });
+    s3Client.deleteObject(params, function(err, data) {
+      if (err) console.log("ERRROR",err, err.stack); // an error occurred
+      else     console.log('File deleted successful');           // successful response
+    });
+
   }
   getLatLong(address) {
     // set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
@@ -157,7 +192,8 @@ class PostForm extends Component {
      
       imagePreviewContent = this.state.currFile.map( image => {
    
-        return <img style={{width: 100, height: 100, border:0}} src={image}/>
+        return <img onClick={this.onDeleteClick.bind(this, image)}
+          style={{width: 100, height: 100, border:0}} src={image} />
       });
     }
 

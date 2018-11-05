@@ -19,6 +19,8 @@ const validatePostInput = require('../../validation/post');
 THIS IS FOR SETTING UP AMAZON S3
 /*######################################################*/
 
+
+//Adding a photo
 const uuidv4 = require('uuid/v4');
 const multer = require('multer');
 const stream = require('stream');
