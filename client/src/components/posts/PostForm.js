@@ -147,8 +147,7 @@ class PostForm extends Component {
     };
 
     const s3Client = new AWS.S3({
-    accessKeyId: 'AKIAJTFR25KK7O2253YQ',
-    secretAccessKey: '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',
+    
     //might need to add region
     });
     s3Client.deleteObject(params, function(err, data) {
