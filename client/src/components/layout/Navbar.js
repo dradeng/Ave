@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { logoutUser } from '../../actions/authActions';
 import { clearCurrentProfile } from '../../actions/profileActions';
-import WhiteShed from '../../assets/whiteshed.png';
+import AveLogo from '../../assets/AveLogo.png';
 
 
 class Navbar extends Component {
@@ -42,25 +42,25 @@ class Navbar extends Component {
       },
     ];
     const authLinks = (
-      <ul style={{paddingBottom: '5%',paddingLeft:'5%'}} className="navbar-nav">
+      <ul style={{paddingBottom: '5%',paddingLeft:'5%',}} className="navbar-nav">
         <li className="nav-item navbarItem">
             <Link className="nav-link" to="/sublet">
-                <span style={{color: '#FFFFFF'}}>Post a Sublet</span>
+                <span style={{color:'#52586c' }}>Post a Sublet</span>
             </Link>
         </li>
         <li  className="nav-item navbarItem">
           <Link className="nav-link" to="/feed">
-              <span style={{color: '#FFFFFF'}}> Sublets </span>
+              <span  style={{color:'#52586c',opacity: .8  }}> Sublets </span>
           </Link>
         </li>
         <li className="nav-item navbarItem">
             <Link className="nav-link" to="/favorites">
-                <span style={{color: '#FFFFFF'}}>Favorites</span>
+                <span  style={{color:'#52586c',opacity: .8  }}>Favorites</span>
             </Link>
         </li>
         <li className="nav-item navbarItem">
             <Link className="nav-link" to="/chats">
-                <span >Messages</span>
+                <span  style={{color:'#52586c',opacity: .8 }}>Messages</span>
             </Link>
         </li>
       </ul>
@@ -82,38 +82,34 @@ class Navbar extends Component {
     );
 
     return (
-        <div className="row">
-            <nav style={{height: 70, backgroundColor: '#03eec2'}}
-                 className="navbar navbar-expand-sm navbar-dark  mb-4 col-md-10">
-                <img style={{width: 40, marginLeft: '3%'}} src={WhiteShed}/>
+        <nav style={{height: 70, color: '#03eec2', borderBottom: '1px solid rgba(0,0,0,0.25)'}}
+             className="navbar navbar-expand-sm navbar-dark  mb-4 ">
+            <img style={{width: 40, marginLeft: '3%'}} src={AveLogo}/>
 
-                <div className="container">
-                    <Link className="navbar-brand" to="/">
-                    </Link>
-                    <button
-                        className="navbar-toggler"
-                        type="button"
-                        data-toggle="collapse"
-                        data-target="#mobile-nav"
-                    >
-                        <span className="navbar-toggler-icon"/>
-                    </button>
+            <div className="container">
+                <Link className="navbar-brand" to="/">
+                </Link>
+                <button
+                    className="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#mobile-nav"
+                >
+                    <span className="navbar-toggler-icon"/>
+                </button>
 
-                    <div className="collapse navbar-collapse" id="mobile-nav">
-                        {isAuthenticated ? authLinks : guestLinks}
-                    </div>
+                <div className="collapse navbar-collapse" id="mobile-nav">
+                    {isAuthenticated ? authLinks : guestLinks}
                 </div>
-            </nav>
-            <nav style={{color: '#a0aabe'}} className="col-md-2">
                 <div className="nav-item">
                     <span className="nav-link">
                  <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                <DropdownToggle style={{backgroundColor: 'transparent', borderWidth: 0, padding: 0, margin: 0}}>
+                <DropdownToggle style={{backgroundColor: 'transparent', color: '#B4B4B4', borderWidth: 0, padding: 0, margin: 0}}>
                  <img
                      className="rounded-circle"
                      src={user.profilePic}
                      alt={user.name}
-                     style={{width: '25px', marginRight: '5px'}}
+                     style={{width: '25px', marginRight: '10px'}}
                      title="You must have a Gravatar connected to your email to display an image"
                  />
                   </DropdownToggle>
@@ -134,10 +130,12 @@ class Navbar extends Component {
                   </DropdownItem>
               </DropdownMenu>
               </Dropdown>
-  </span>
+                    </span>
                 </div>
-            </nav>
-        </div>
+            </div>
+
+        </nav>
+
     );
   }
 }
