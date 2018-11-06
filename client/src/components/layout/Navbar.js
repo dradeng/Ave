@@ -114,7 +114,7 @@ class Navbar extends Component {
     );
 
     return (
-      <nav style={{backgroundColor: '#ffffff', boxShadow: '0 8px 16px #eee'}} className="navbar navbar-expand-sm navbar-dark  mb-4">
+      <nav style={{backgroundColor: '#ffffff',borderBottom: '1px solid rgba(0,0,0,0.25)'}} className="navbar navbar-expand-sm navbar-dark  mb-4">
           <img style={{width: 40}} src={AveLogo}/>
 
           <div className="container">

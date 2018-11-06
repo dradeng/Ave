@@ -13,43 +13,39 @@ const Filter = props => {
         <div style={{marginLeft: 20,width: '100%',
         }}>
 
-            <h3>
-                Price
-            </h3>
-            <Range className="col-sm-10"  tipTransitionName='rc-slider-tooltip-zoom-down' onChange={(evt)=> props.priceChange(evt[0],evt[1])}  defaultValue={[0,5000]} max={5000}  min={0}/>
-            <div>
-                <h3> Type </h3>
-                <div className="btn-group" role="group" aria-label="Basic example">
-                    <button type="button" className="btn btn-secondary">Left</button>
-                    <button type="button" className="btn btn-secondary">Middle</button>
-                    <button type="button" className="btn btn-secondary">Right</button>
+
+            <div className="filterBox">
+                <h5> Type </h5>
+                <div  style={{margin: 10}}  className="btn-group buttonFilter" role="group" aria-label="Basic example">
+                    <button type="button" className="btn btn-secondary buttonFilter">Left</button>
+                    <button type="button" className="btn btn-secondary buttonFilter">Middle</button>
+                    <button type="button" className="btn btn-secondary buttonFilter">Right</button>
                 </div>
             </div>
-            <div>
-                <h3> Duration </h3>
-                <div className="btn-group" role="group" aria-label="Basic example">
-                    <button type="button" className="btn btn-secondary">Left</button>
-                    <button type="button" className="btn btn-secondary">Middle</button>
-                    <button type="button" className="btn btn-secondary">Right</button>
+            <div className="filterBox">
+                <h5> Duration </h5>
+                <div  style={{margin: 10,display: 'flex'}}  className="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" className="btn btn-secondary buttonFilter">Left</button>
+                    <button type="button" className="btn btn-secondary buttonFilter">Middle</button>
+                    <button type="button" className="btn btn-secondary buttonFilter">Right</button>
                 </div>
             </div>
-            <div>
-                <h3> Roommates </h3>
-                <div className="btn-group" role="group" aria-label="Basic example">
-                    <button type="button" className="btn btn-secondary">Left</button>
-                    <button type="button" className="btn btn-secondary">Middle</button>
-                    <button type="button" className="btn btn-secondary">Right</button>
+            <div className="filterBox ">
+                <h5> Roommates </h5>
+                <div style={{margin: 10}} className="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" className="btn btn-secondary buttonFilter">Left</button>
+                    <button type="button" className="btn btn-secondary buttonFilter">Middle</button>
+                    <button type="button" className="btn btn-secondary buttonFilter">Right</button>
                 </div>
             </div>
-            <div>
-                <h3> Bedrooms </h3>
-                <div className="btn-group" role="group" aria-label="Basic example">
-                    <button type="button" className="btn btn-secondary">Left</button>
-                    <button type="button" className="btn btn-secondary">Middle</button>
-                    <button type="button" className="btn btn-secondary">Right</button>
+            <div className="filterBox">
+                <h5> Bedrooms </h5>
+                <div  style={{margin: 10}}  className="btn-group buttonFilter" role="group" aria-label="Basic example">
+                    <button type="button" className="btn btn-secondary buttonFilter">Left</button>
+                    <button type="button" className="btn btn-secondary buttonFilter">Middle</button>
+                    <button type="button" className="btn btn-secondary buttonFilter">Right</button>
                 </div>
             </div>
-            <button> Apply </button>
         </div>
     );
 };

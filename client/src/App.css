@@ -157,3 +157,59 @@ i.fa.fa-circle.half:after {
   width: 38.8px;
   height: 38.8px;
 }
+/* filter */
+
+.filterBox {
+  borderTop: 1px solid #eeedf1;
+  width: 80%;
+}
+
+.buttonFilter {
+  color:#212529;
+  background: white;
+  borderColor: #eeedf1  ;
+  flex: 1;
+  width: 100%;
+
+}
+
+.filterPopUp {
+  padding: 24px;
+  z-index: 150;
+  border: 1px solid #eeedf1;
+  position: absolute;
+  margin-top: 20px;
+  display: 'flex';
+  background: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 14px 36px 2px !important;
+
+}
+
+.filterButton {
+  border-radius: 2px;
+  background: linear-gradient(97deg, #04edc3, #47dce4);
+  border: none;
+  font-family: HiraMaruProN-W4;
+  margin-right: 8px;
+  color: #ffffff;
+
+}
+.filterButtonSelected {
+  border-radius: 2px;
+  background: #ffffff;
+  border: none;
+  margin-right: 8px;
+  font-family: HiraMaruProN-W4;
+  color:#212529;
+  border: .5px solid #eeedf1;
+
+
+}
+
+.monthBox {
+  flex: 1;
+  border: 1px solid #eeedf1;
+  padding: 10px;
+  borderRadisu: 2px;
+
+}
