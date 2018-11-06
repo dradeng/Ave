@@ -34,7 +34,7 @@ class PostItem extends Component {
     {
       //do nothing
     } else {
-      console.log('MADE IR');
+   
       this.props.addFavorite(userID, newFavorite);
     }
 

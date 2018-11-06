@@ -41,27 +41,59 @@ class Navbar extends Component {
         value: 'Logout',
       },
     ];
+
     const authLinks = (
-      <ul style={{paddingBottom: '5%',paddingLeft:'5%',}} className="navbar-nav">
-        <li className="nav-item navbarItem">
+      <ul  className="navbar-nav ml-auto">
+        <li className="nav-item">
             <Link className="nav-link" to="/sublet">
-                <span style={{color:'#52586c' }}>Post a Sublet</span>
+                <span style={{color: '#B4B4B4'}}>Post a Sublet</span>
             </Link>
         </li>
-        <li  className="nav-item navbarItem">
+        <li  className="nav-item">
           <Link className="nav-link" to="/feed">
-              <span  style={{color:'#52586c',opacity: .8  }}> Sublets </span>
+              <span style={{color: '#B4B4B4'}}> Sublets </span>
           </Link>
         </li>
-        <li className="nav-item navbarItem">
+        <li className="nav-item">
             <Link className="nav-link" to="/favorites">
-                <span  style={{color:'#52586c',opacity: .8  }}>Favorites</span>
+                <span style={{color: '#B4B4B4'}}>Favorites</span>
             </Link>
         </li>
-        <li className="nav-item navbarItem">
+        <li className="nav-item">
             <Link className="nav-link" to="/chats">
-                <span  style={{color:'#52586c',opacity: .8 }}>Messages</span>
+                <span style={{color: '#B4B4B4'}}>Messages</span>
             </Link>
+        </li>
+        <li className="nav-item">
+          <span className="nav-link">
+           <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+              <DropdownToggle style={{backgroundColor: 'transparent', borderWidth:0, padding:0,margin:0}}>
+                <img
+                  className="rounded-circle"
+                  src={user.profilePic}
+                  alt={user.name}
+                  style={{ width: '25px', marginRight: '5px' }}
+                  title="You must have a Gravatar connected to your email to display an image"
+                />
+              </DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem>
+                  <Link to="/dashboard">
+                    Profile
+                  </Link>
+                </DropdownItem>
+                <DropdownItem>
+                  <a
+                    href=""
+                    onClick={this.onLogoutClick.bind(this)}
+                    className="nav-link"
+                  > 
+                    <span style={{color: 'Blue'}}>Logout</span> 
+                  </a>
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </span>    
         </li>
       </ul>
     );
@@ -82,60 +114,27 @@ class Navbar extends Component {
     );
 
     return (
-        <nav style={{height: 70, color: '#03eec2', borderBottom: '1px solid rgba(0,0,0,0.25)'}}
-             className="navbar navbar-expand-sm navbar-dark  mb-4 ">
-            <img style={{width: 40, marginLeft: '3%'}} src={AveLogo}/>
+      <nav style={{backgroundColor: '#ffffff', boxShadow: '0 8px 16px #eee'}} className="navbar navbar-expand-sm navbar-dark  mb-4">
+          <img style={{width: 40}} src={AveLogo}/>
 
-            <div className="container">
-                <Link className="navbar-brand" to="/">
-                </Link>
-                <button
-                    className="navbar-toggler"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#mobile-nav"
-                >
-                    <span className="navbar-toggler-icon"/>
-                </button>
+          <div className="container">
+          <Link className="navbar-brand" to="/">
+          </Link>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#mobile-nav"
+          >
+            <span className="navbar-toggler-icon" />
+          </button>
 
-                <div className="collapse navbar-collapse" id="mobile-nav">
-                    {isAuthenticated ? authLinks : guestLinks}
-                </div>
-                <div className="nav-item">
-                    <span className="nav-link">
-                 <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                <DropdownToggle style={{backgroundColor: 'transparent', color: '#B4B4B4', borderWidth: 0, padding: 0, margin: 0}}>
-                 <img
-                     className="rounded-circle"
-                     src={user.profilePic}
-                     alt={user.name}
-                     style={{width: '25px', marginRight: '10px'}}
-                     title="You must have a Gravatar connected to your email to display an image"
-                 />
-                  </DropdownToggle>
-              <DropdownMenu>
-                  <DropdownItem>
-                      <Link to="/dashboard">
-                          Profile
-                      </Link>
-                  </DropdownItem>
-                  <DropdownItem>
-                      <a
-                          href=""
-                          onClick={this.onLogoutClick.bind(this)}
-                          className="nav-link"
-                      >
-                          <span style={{color: 'Blue'}}>Logout</span>
-                      </a>
-                  </DropdownItem>
-              </DropdownMenu>
-              </Dropdown>
-                    </span>
-                </div>
-            </div>
-
-        </nav>
-
+          <div className="collapse navbar-collapse" id="mobile-nav">
+          
+            {isAuthenticated ? authLinks : guestLinks}
+          </div>
+        </div>
+      </nav>
     );
   }
 }
@@ -143,7 +142,6 @@ class Navbar extends Component {
 Navbar.propTypes = {
   logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-    curPath: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
