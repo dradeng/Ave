@@ -57,7 +57,7 @@ class Posts extends Component {
     return (
       <div style={{margin: 5, marginTop: '-1.5em'}}  className="feed">
         <div >
-            <div  style={{overflow: 'scroll',background: '#FFFFFF',position: 'absolute',zIndex: 100, maxWidth: 840, height: '100vh'}} className="col-md-8 row">
+            <div  style={{overflow: 'scroll',background: '#FFFFFF',position: 'absolute',zIndex: 100, maxWidth: 840, height: '100vh',borderRight: '1px solid rgba(0,0,0,0.25)'}} className="col-md-8 row">
                 {postContent}
 
             </div>
