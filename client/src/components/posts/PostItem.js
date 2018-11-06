@@ -64,6 +64,18 @@ class PostItem extends Component {
       endDateContent = <Month period="end" month={post.endDate}/>
     }
 
+    const { profile, loading } = this.props.profile;
+    let star = <i  className="fas fa-star"/>
+      
+
+    if(profile != null && !loading) {
+      //nothing
+      } else {
+        if(profile.favorites.includes(post._id)) {
+          star = <i  className="far fa-star"/>
+      }
+    }
+
       return (
           <div className="card card-body mb-3 col-md-6 feedTile">
             <div className="row">
@@ -82,7 +94,7 @@ class PostItem extends Component {
                       <div  className="row">
                           <p className="lead col-md-10">{post.title}</p>
                           <div style={{color: '#fac71e'}}  onClick={this.onFavorite.bind(this, auth.user.id, post._id)}>
-                          <i  className="fas fa-star"/>
+                          {star}
                           </div>
                       </div>
 
