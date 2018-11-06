@@ -65,14 +65,15 @@ class PostItem extends Component {
     }
 
     const { profile, loading } = this.props.profile;
-    let star = <i  className="fas fa-star"/>
+    let star = <i  className="far fa-star"/>
       
 
-    if(profile != null && !loading) {
-      //nothing
-      } else {
-        if(profile.favorites.includes(post._id)) {
-          star = <i  className="far fa-star"/>
+    if(profile != null) {
+      console.log(profile.favorites)
+      console.log(post._id)
+      if(profile.favorites.includes(post._id)) {
+        console.log("MAde IT INSIDE");
+        star = <i  className="fas fa-star"/>
       }
     }
 
