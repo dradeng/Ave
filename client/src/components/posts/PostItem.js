@@ -6,13 +6,32 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import {Carousel} from 'react-responsive-carousel';
 import ReactDom from 'react-dom';
 import { Link } from 'react-router-dom';
+import { FaStar, FaRegStar } from 'react-icons/fa';
+
 import { deletePost, addLike, removeLike } from '../../actions/postActions';
 import { addFavorite, getCurrentProfile } from '../../actions/profileActions';
 import Month from '../availability/Month';
 
 class PostItem extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      favorited: false,
+    }
+  }
   componentDidMount() {
+    console.log('beg up');
     this.props.getCurrentProfile();
+    const { post } = this.props;
+    const { profile, loading } = this.props.profile;
+    console.log(post._id);
+    if(profile != null) {
+
+      if(profile.favorites.includes(post._id)) {
+        console.log('whats up we found one'+post._id);
+        this.setState({ favorited: true });
+      }
+    }
   }
   onDeleteClick(id) {
     this.props.deletePost(id);
@@ -38,6 +57,10 @@ class PostItem extends Component {
       this.props.addFavorite(userID, newFavorite);
     }
 
+  const fav = this.state.favorited;
+  this.setState({ favorited: !fav });
+
+
   }
   onUnlikeClick(id) {
     this.props.removeLike(id);
@@ -51,9 +74,24 @@ class PostItem extends Component {
     }
   }
 
+
   render() {
     const { post, auth, showActions } = this.props;
 
+    
+    const { profile, loading } = this.props.profile;
+
+    let starContent = null
+    if(profile != null) {
+
+      console.log('WE IN RENDER'+post._id);
+      if(this.state.favorited) {
+        starContent = <FaStar/>
+      } else {
+        starContent = <FaRegStar/>
+      }
+      
+    }
     const allImage = post.images.map((item, index) => (
         <div style={{width:'100%',overflow:'hidden'}}>
       <img className="img-responsive" style={{borderRadius: 5}} src={item} />
@@ -62,19 +100,6 @@ class PostItem extends Component {
     let endDateContent = null;
     if(post.endDate != null && post.endDate.length > 1){
       endDateContent = <Month period="end" month={post.endDate}/>
-    }
-
-    const { profile, loading } = this.props.profile;
-    let star = <i  className="far fa-star"/>
-      
-
-    if(profile != null) {
-      console.log(profile.favorites)
-      console.log(post._id)
-      if(profile.favorites.includes(post._id)) {
-        console.log("MAde IT INSIDE");
-        star = <i  className="fas fa-star"/>
-      }
     }
 
       return (
@@ -95,7 +120,9 @@ class PostItem extends Component {
                       <div  className="row">
                           <p className="lead col-md-10">{post.title}</p>
                           <div style={{color: '#fac71e'}}  onClick={this.onFavorite.bind(this, auth.user.id, post._id)}>
-                          {star}
+                            
+                            {starContent}
+
                           </div>
                       </div>
 

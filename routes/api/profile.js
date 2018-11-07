@@ -204,9 +204,9 @@ router.post(
     '/favorites/:userID',
     passport.authenticate('jwt', { session: false }),
     (req, res) => {
-        console.log('MADE IT TO THE ROUTE');
+    
         Profile.findOne({ user: req.user.id }).then(profile => {
-          console.log('find it');
+         
           const index = profile.favorites.indexOf(req.body.favorites);
           if (index >= 0) {
             
@@ -214,7 +214,7 @@ router.post(
               console.log(profile.favorites);
               console.log('MAde it to the splace' + index);
               
-              profile.favorites.splice(index, 2);
+              profile.favorites.splice(index, 1);
               console.log(profile.favorites);
               profile.save().then(profile => res.json(profile));
               
