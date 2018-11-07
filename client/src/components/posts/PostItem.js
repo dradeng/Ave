@@ -20,15 +20,15 @@ class PostItem extends Component {
     }
   }
   componentDidMount() {
-    console.log('beg up');
+ 
     this.props.getCurrentProfile();
     const { post } = this.props;
     const { profile, loading } = this.props.profile;
-    console.log(post._id);
+
     if(profile != null) {
 
       if(profile.favorites.includes(post._id)) {
-        console.log('whats up we found one'+post._id);
+    
         this.setState({ favorited: true });
       }
     }
@@ -84,7 +84,6 @@ class PostItem extends Component {
     let starContent = null
     if(profile != null) {
 
-      console.log('WE IN RENDER'+post._id);
       if(this.state.favorited) {
         starContent = <FaStar/>
       } else {
@@ -164,7 +163,9 @@ class PostItem extends Component {
                   </div>
 
               </div>
-
+              <Link to={`/post/${post._id}`} className="btn btn-info mr-1">
+                  Comments
+                </Link>
           </div>
       );
   }

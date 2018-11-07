@@ -65,7 +65,10 @@ io.on('connection', socket => {
   // just like on the client side, we have a socket.on method that takes a callback function
     socket.on('addMessage', (message) => {
     
-      io.sockets.emit('addMessage', message)
+      console.log('chat id'+message.chat);
+      var chatID = message.chat;
+      var call = 'addMessage'+chatID;
+      io.sockets.emit(call, message);
     });
     
     // disconnect is fired when a client leaves the server

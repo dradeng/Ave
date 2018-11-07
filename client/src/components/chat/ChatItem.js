@@ -53,15 +53,20 @@ class ChatItem extends Component {
     const newMessage = {
       content: this.state.content,
       sender: user.id,
-      date: Date.now
+      date: Date.now,
+      chat: chat._id
     };
-
+    const newMessage2 = {
+      content: this.state.content,
+      sender: user.id,
+      date: Date.now,
+    };
     const socket = openSocket('http://localhost:5000');//NEED TO NOT HARD CODE THIS
 
     socket.emit('addMessage', newMessage); // change 'red' to this.state.color
 
 
-    this.props.addMessage(chat._id, newMessage);
+    this.props.addMessage(chat._id, newMessage2);
     
     //Might try later to getchat non-noticably later. Not super important but could save so many messages
     //be saved on client side
@@ -80,7 +85,8 @@ class ChatItem extends Component {
     
 
     const socket = openSocket('http://localhost:5000');//NEED TO NOT HARD CODE THIS
-    socket.on('addMessage', (message) => {
+    var call = 'addMessage'+chat._id;
+    socket.on(call, (message) => {
       console.log('client got new message');
       this.setMessage(message);
 
