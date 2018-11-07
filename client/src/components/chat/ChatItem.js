@@ -87,7 +87,7 @@ class ChatItem extends Component {
     const socket = openSocket('http://localhost:5000');//NEED TO NOT HARD CODE THIS
     var call = 'addMessage'+chat._id;
     socket.on(call, (message) => {
-      console.log('client got new message');
+      
       this.setMessage(message);
 
     });
