@@ -210,6 +210,21 @@ i.fa.fa-circle.half:after {
   flex: 1;
   border: 1px solid #eeedf1;
   padding: 10px;
-  borderRadisu: 2px;
+  width: 100%;
 
+}
+.monthFlip {
+  flex: 1;
+  border: 1px solid #eeedf1;
+  color: #FFFFFF;
+  background: linear-gradient(97deg, #04edc3, #47dce4);
+  padding: 10px;
+  width: 100%;
+}
+
+.row-eq-height {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
 }

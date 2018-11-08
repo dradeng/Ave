@@ -92,8 +92,9 @@ class PostItem extends Component {
       
     }
     const allImage = post.images.map((item, index) => (
-        <div style={{width:'100%',overflow:'hidden'}}>
-      <img className="img-responsive" style={{borderRadius: 5}} src={item} />
+        <div >
+        <div style={{paddingTop:'66%',backgroundSize: '100% 100%',overflow:'hidden', background: 'url('+item+')'}}>
+        </div>
         </div>)
     );
     let endDateContent = null;
@@ -146,27 +147,29 @@ class PostItem extends Component {
                   </div>
 
               </div>
-              <div style={{float: 'left',position: 'relative', display:'flex', }}>
-                  <Carousel style={{height:'40%'}} showThumbs={false}  showIndicators={false} showStatus={false}>
+              <div>
+
+                  <Carousel style={{height:'40%',borderRadius: 5}} showThumbs={false}  showIndicators={false} showStatus={false}>
+
                       {allImage}
                   </Carousel>
 
-                  <div className="row" style={{position: 'absolute', top: 0, right: 20,}}>
-                      <Month period="start" month={post.startDate}/>
-                      {endDateContent}
-                  </div>
-                  <div className="row" style={{position: 'absolute', bottom: 20, left: 25, color: '#FFFFFF'}}>
+              </div>
+              <div className="row" style={{position: 'absolute', top: '25%', right: '10%',}}>
+                  <Month period="start" month={post.startDate}/>
+                  {endDateContent}
+              </div>
+                  <div className="row" style={{position: 'absolute', bottom: 60, left: 40, color: '#FFFFFF'}}>
                       <i className="fas fa-dollar-sign"/>
 
                       <p className="priceTag">{post.rent}</p>
 
                   </div>
-
-              </div>
               <Link to={`/post/${post._id}`} className="btn btn-info mr-1">
                   Comments
-                </Link>
-          </div>
+              </Link>
+              </div>
+
       );
   }
 }

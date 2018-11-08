@@ -19,6 +19,10 @@ class PostFeed extends Component {
   	this.state = {
   		min: 0,
   		max: 2500,
+        startYear: 2018,
+        endYear: 2018,
+        startMonth: 11,
+        endMonth: 12,
         showFilter: false,
         showStartDate: false,
         showEndDate: false,
@@ -26,6 +30,12 @@ class PostFeed extends Component {
   	};
   	this.onChange = this.onChange.bind(this);
     this.onPriceChange = this.onPriceChange.bind(this);
+    this.onChangeStartYear = this.onChangeStartYear.bind(this);
+    this.onChangeEndYear = this.onChangeEndYear.bind(this);
+      this.onChangeStartMonth = this.onChangeStartMonth.bind(this);
+      this.onChangeEndMonth = this.onChangeEndMonth.bind(this);
+
+
   }
   
   onChange(e) {
@@ -36,6 +46,24 @@ class PostFeed extends Component {
   {
       this.setState({ min: min, max: max });
   }
+  onChangeStartMonth(num)
+  {
+      this.setState({ startMonth: num});
+
+  }
+    onChangeEndMonth(num)
+    {
+        this.setState({ endMonth: num});
+
+    }
+  onChangeStartYear(num)
+  {
+        this.setState({ startYear: this.state.startYear+num});
+  }
+    onChangeEndYear(num)
+    {
+        this.setState({ endYear: this.state.endYear+num});
+    }
   render() {
   	
 
@@ -46,7 +74,7 @@ class PostFeed extends Component {
     );
 
     let feedContent = newPosts.map(post => <PostItem className="col-md-6" key={post._id} post={post} />);
-    
+
     return (
     	<div>
             <div style={{ borderBottom: '1px solid #eeedf1', padding: 10, paddingLeft: 50}} className="row">
@@ -77,7 +105,7 @@ class PostFeed extends Component {
                         <span style={{padding: 2,paddingTop: 6, paddingBottom: 6}}> Start </span>
                     </button>
                     <div className="filterPopUp">
-                        <MonthGrid/>
+                        <MonthGrid changeMonth={this.onChangeStartMonth} changeYear={this.onChangeStartYear} selectedYear={this.state.startYear} selectedMonth={this.state.startMonth}/>
                     </div>
                     </div>:
                     <button className="filterButtonSelected"  onClick={() => this.setState({showStartDate: true,showPriceTool: false,showEndDate: false})}>
@@ -87,7 +115,7 @@ class PostFeed extends Component {
                         <span style={{padding: 2,paddingTop: 6, paddingBottom: 6}}> End </span>
                     </button>
                         <div className="filterPopUp">
-                            <MonthGrid/>
+                            <MonthGrid changeMonth={this.onChangeEndMonth} changeYear={this.onChangeEndYear} selectedYear={this.state.endYear} selectedMonth={this.state.endMonth}/>
                         </div>
                     </div>:
                     <button className="filterButtonSelected"  onClick={() => this.setState({showEndDate: true,showPriceTool: false, showStartDate: false})}>
@@ -106,7 +134,7 @@ class PostFeed extends Component {
     		<div className="row">
                 {this.state.showFilter && <Filter priceChange={this.onPriceChange}/> }
 
-                {!this.state.showFilter && feedContent}
+                {  !this.state.showFilter && feedContent }
             </div>
     	</div>
     );
