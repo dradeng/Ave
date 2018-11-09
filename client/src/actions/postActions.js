@@ -1,13 +1,17 @@
 import axios from 'axios';
 
 import {
-  ADD_POST,
-  GET_ERRORS,
-  CLEAR_ERRORS,
-  GET_POSTS,
-  GET_POST,
-  POST_LOADING,
-  DELETE_POST
+    ADD_POST,
+    GET_ERRORS,
+    CLEAR_ERRORS,
+    GET_POSTS,
+    GET_POST,
+    POST_LOADING,
+    DELETE_POST,
+    UPDATE_SELECTED_DATE,
+    UPDATE_SELECTED_ENDDATE,
+    UPDATE_SELECTED_CURRENT,
+
 } from './types';
 
 // Add Post
@@ -160,4 +164,16 @@ export const clearErrors = () => {
   return {
     type: CLEAR_ERRORS
   };
+};
+
+//update state
+export const updateCurrentDate= (date) => dispatch => {
+    dispatch({ type: UPDATE_SELECTED_CURRENT, payload: date });
+};
+
+export const updateStartDate= (date) => dispatch => {
+    dispatch({ type: UPDATE_SELECTED_DATE, payload: date });
+};
+export const updateEndDate= (date) => dispatch => {
+    dispatch({ type: UPDATE_SELECTED_ENDDATE, payload: date });
 };

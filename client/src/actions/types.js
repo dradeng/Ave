@@ -12,7 +12,9 @@ export const GET_POSTS = 'GET_POSTS';
 export const GET_POST = 'GET_POST';
 export const ADD_POST = 'ADD_POST';
 export const DELETE_POST = 'DELETE_POST';
-
+export const UPDATE_SELECTED_ENDDATE = 'UPDATE_SELECTED_ENDDATE';
+export const UPDATE_SELECTED_DATE = 'UPDATE_SELECTED_DATE';
+export const UPDATE_SELECTED_CURRENT = 'UPDATE_SELECTED_CURRENT';
 
 //stuff for chats
 export const GET_CHAT = 'GET_CHAT';

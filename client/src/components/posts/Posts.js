@@ -17,9 +17,8 @@ class Posts extends Component {
   }
 
   render() {
-    const { posts, loading } = this.props.post;
+      const { posts, loading } = this.props.post;
     let postContent;
-
       var geojson = [];
       geojson['type'] = 'FeatureCollection';
       geojson['features'] = [];
@@ -81,7 +80,8 @@ Posts.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  post: state.post
+  post: state.post,
+
 });
 
 export default connect(mapStateToProps, { getPosts })(Posts);

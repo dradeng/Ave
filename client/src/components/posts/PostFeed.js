@@ -8,6 +8,7 @@ import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 //import Slider, { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import MonthGrid from "./filter/MonthGrid";
+import Calendar from "./filter/Calendar.js";
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 
 const Range = createSliderWithTooltip(Slider.Range);
@@ -25,7 +26,7 @@ class PostFeed extends Component {
         endMonth: 12,
         showFilter: false,
         showStartDate: false,
-        showEndDate: false,
+        showCalendar: false,
         showPriceTool: false,
   	};
   	this.onChange = this.onChange.bind(this);
@@ -66,7 +67,6 @@ class PostFeed extends Component {
     }
   render() {
   	
-
     const { posts } = this.props;
     console.log(posts);
     let newPosts = posts.filter(post => 
@@ -101,25 +101,16 @@ class PostFeed extends Component {
 
                     </div>
                 }
-                {this.state.showStartDate ?   <div>  <button className="filterButton" onClick={() => this.setState({showStartDate: false})}>
-                        <span style={{padding: 2,paddingTop: 6, paddingBottom: 6}}> Start </span>
-                    </button>
-                    <div className="filterPopUp">
-                        <MonthGrid changeMonth={this.onChangeStartMonth} changeYear={this.onChangeStartYear} selectedYear={this.state.startYear} selectedMonth={this.state.startMonth}/>
-                    </div>
-                    </div>:
-                    <button className="filterButtonSelected"  onClick={() => this.setState({showStartDate: true,showPriceTool: false,showEndDate: false})}>
-                        <span style={{padding: 2,paddingTop: 6, paddingBottom: 6}}> Start </span>
-                    </button>}
-                {this.state.showEndDate ?   <div>  <button className="filterButton" onClick={() => this.setState({showEndDate: false})}>
-                        <span style={{padding: 2,paddingTop: 6, paddingBottom: 6}}> End </span>
+
+                {this.state.showCalendar ?   <div>  <button className="filterButton" onClick={() => this.setState({showCalendar: false})}>
+                        <span style={{padding: 2,paddingTop: 6, paddingBottom: 6}}> Dates </span>
                     </button>
                         <div className="filterPopUp">
-                            <MonthGrid changeMonth={this.onChangeEndMonth} changeYear={this.onChangeEndYear} selectedYear={this.state.endYear} selectedMonth={this.state.endMonth}/>
+                            <Calendar />
                         </div>
                     </div>:
-                    <button className="filterButtonSelected"  onClick={() => this.setState({showEndDate: true,showPriceTool: false, showStartDate: false})}>
-                        <span style={{padding: 2,paddingTop: 6, paddingBottom: 6}}> End </span>
+                    <button className="filterButtonSelected"  onClick={() => this.setState({showCalendar: true,showPriceTool: false, showStartDate: false})}>
+                        <span style={{padding: 2,paddingTop: 6, paddingBottom: 6}}> Dates </span>
                     </button>}
                 {this.state.showFilter ?   <div>  <button className="filterButton" onClick={() => this.setState({showFilter: false})}>
                         <span style={{padding: 2,paddingTop: 6, paddingBottom: 6}}> More </span>
@@ -142,7 +133,7 @@ class PostFeed extends Component {
 }
 
 PostFeed.propTypes = {
-  posts: PropTypes.array.isRequired
+    posts: PropTypes.array.isRequired,
 };
 
 export default PostFeed;
