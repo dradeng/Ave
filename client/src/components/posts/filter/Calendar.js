@@ -83,6 +83,10 @@ class Calendar extends React.Component {
                             onClick={() => this.onDateClick(dateFns.parse(cloneDay))}
                         >
                             <span className="number">{formattedDate}</span>
+                            {dateFns.isSameDay(day, selectedDate) &&<span style={{fontSize: 5, position: 'absolute',left: 0, bottom: 0}}> start </span>}
+                            {dateFns.isSameDay(day, selectedEndDate) && <span style={{fontSize: 5, position: 'absolute',right: 5, bottom: 0}}> end </span>}
+
+
                         </div>
                     );
                 } else if (!selectedEndDate && selectedDate) {
@@ -97,6 +101,7 @@ class Calendar extends React.Component {
                             onClick={() => this.onEndDateClick(dateFns.parse(cloneDay))}
                         >
                             <span className="number">{formattedDate}</span>
+                            {dateFns.isSameDay(day, selectedDate) && <span style={{fontSize: 5, position: 'absolute',left: 0, bottom: 0}}> start </span>}
                         </div>
                     );
                 }

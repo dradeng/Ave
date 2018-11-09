@@ -4,7 +4,8 @@ img {
 
 .landing {
   position: relative;
-  background: url('./img/showcase.jpg') no-repeat;
+  /*background: url('./img/showcase.jpg') no-repeat;*/
+  background: url('./assets/Timelapse.mp4') repeat;
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -16,8 +17,34 @@ img {
   padding-top: 80px;
 }
 
+/*
+
+COMMON
+ */
+.btn {
+  background: linear-gradient(97deg, #04edc3, #47dce4);
+  border:  1px solid #fff;
+
+}
+
+.btn-light {
+  background: #ffffff;
+  color: #47dce4;
+  border:  1px solid #47dce4;
+}
+.btn:hover
+{
+  background: #ffffff;
+  color: #47dce4;
+  border:  1px solid #47dce4;
+}
+.btn-light:hover {
+  background: linear-gradient(97deg, #04edc3, #47dce4);
+  color: #ffffff;
+  border:  1px solid #fff;
+}
 .dark-overlay {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.5);
   position: absolute;
   top: 0;
   left: 0;
@@ -25,7 +52,22 @@ img {
   height: 100%;
 }
 
+#background-video{
 
+  height: 100%;
+  width: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 0px;
+  float: left;
+  z-index: -1;
+  padding: none;
+  object-fit: fill;
+
+  position: fixed; /* optional depending on what you want to do in your app */
+
+
+}
 
 .card-form {
   opacity: 0.9;
