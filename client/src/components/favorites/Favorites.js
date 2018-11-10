@@ -21,9 +21,7 @@ class Favorites extends Component {
     const { profile, loading } = this.props.profile;
     const { posts } = this.props.post; //const { posts, loading } = this.props.post; might need to add loading
     let favoritesContent;
-    console.log('LAAAAME');
-    console.log(profile);
-    console.log(loading);
+    
     if (profile === null) {
       favoritesContent = <Spinner />;
     } else {
