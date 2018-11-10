@@ -86,6 +86,15 @@ router.post(
       endDate: req.body.endDate
     });
 
+    Profile.findOne({ user: req.user.id }).then(profile => {
+      // Add POSTID to posts array
+           
+            profile.posts.push(newPost._id);
+            
+            profile.save();
+    });
+
+
     newPost.save().then(post => res.json(post));
   }
 );

@@ -94,6 +94,7 @@ const ProfileSchema = new Schema({
             }
         }
     ],
+    posts: [String],
     favorites: [String],
     social: {
         youtube: {

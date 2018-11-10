@@ -212,7 +212,7 @@ router.post(
             
               // Splice out of array
               console.log(profile.favorites);
-              console.log('MAde it to the splace' + index);
+              
               
               profile.favorites.splice(index, 1);
               console.log(profile.favorites);
@@ -221,7 +221,7 @@ router.post(
           } else {
 
             // Add favorite to favorites array
-            console.log('MAde it to the ifnis');
+           
             profile.favorites.push(req.body.favorites);
             //console.log(profile.favorites);
             profile.save().then(profile => res.json(profile));
