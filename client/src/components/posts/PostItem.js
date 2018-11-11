@@ -113,8 +113,6 @@ class PostItem extends Component {
                               alt=""
                           />
                       </a>
-                      <br/>
-
                   </div>
                   <div className="col-md-10">
                       <div  className="row">
@@ -159,8 +157,8 @@ class PostItem extends Component {
                   <Month period="start" month={post.startDate}/>
                   {endDateContent}
               </div>
-                  <div className="row" style={{position: 'absolute', bottom: 60, left: 40, color: '#FFFFFF'}}>
-                      <i className="fas fa-dollar-sign"/>
+                  <div className="row" style={{position: 'absolute',textShadow: '0 .5px 0 rgba(0,0,0,0.6)', bottom: 60, left: 40, color: '#FFFFFF'}}>
+                      <i style={{border: '0 1px 0 rgba(0,0,0,0.6)'}} className="fas fa-dollar-sign"/>
 
                       <p className="priceTag">{post.rent}</p>
 

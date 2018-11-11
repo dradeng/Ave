@@ -24,7 +24,7 @@ class Chats extends Component {
     }
 
     return (
-      <div>
+      <div style={{flex: 1}}>
         
         {chatContent}
        

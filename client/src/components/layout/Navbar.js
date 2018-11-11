@@ -6,7 +6,7 @@ import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap
 import { logoutUser } from '../../actions/authActions';
 import { clearCurrentProfile } from '../../actions/profileActions';
 import AveLogo from '../../assets/AveLogo.png';
-
+import UserIcon from '../../assets/UserIcon.png';
 
 class Navbar extends Component {
   constructor(props) {
@@ -68,13 +68,23 @@ class Navbar extends Component {
           <span className="nav-link">
            <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
               <DropdownToggle style={{backgroundColor: 'transparent', borderWidth:0, padding:0,margin:0}}>
+                  {(user.profilePic !== null) ?
                 <img
                   className="rounded-circle"
-                  src={user.profilePic}
+                  src={user.profilePic }
                   alt={user.name}
                   style={{ width: '25px', marginRight: '5px' }}
                   title="You must have a Gravatar connected to your email to display an image"
                 />
+                      :
+                      <img
+                          className="rounded-circle"
+                          src={UserIcon}
+                          alt={user.name}
+                          style={{ width: '25px', marginRight: '5px' }}
+                          title="You must have a Gravatar connected to your email to display an image"
+                      />
+                  }
               </DropdownToggle>
               <DropdownMenu>
                 <DropdownItem>

@@ -50,15 +50,18 @@ class Chat extends Component {
 
     let messageContent;
     messageContent = chat.messages.map(
-      message => 
-      { 
-        if (user.id == message.sender)
-        {
-          return <p key={message._id} align="left" message={message}> {message.content} </p> 
-        }
-        else{
-          return <p key={message._id} align="right" message={message}> {message.content} </p> 
-        }
+      message =>
+      {
+          if (user.id == message.sender)
+          {
+              return <div style={{marginBottom: 15}} align="right">
+                  <span style={{boxShadow: '0 1px 0.5px rgba(0, 0, 0, 0.13)', padding: 8, paddingLeft: 10, paddingRight: 10, background: '#E1FAF5', borderRadius: 5}} key={message._id}  > {message.content} </span>
+              </div>
+          }
+          else{
+              return <div align="left" style={{margin: 5}} > <span style={{boxShadow: '0 1px 0.5px rgba(0, 0, 0, 0.13)', padding: 8, paddingLeft: 10, paddingRight: 10,  background: '#F5F5F5', borderRadius: 5}} key={message._id}  key={message._id} > {message.content} </span>
+              </div>
+          }
       }
     );
     console.log('START'+chat.user1);
