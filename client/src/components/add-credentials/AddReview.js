@@ -46,7 +46,7 @@ class AddReview extends Component {
         this.setState({ [e.target.name]: e.target.value });
     }
     updateRating(e) {
-        console.log(e);
+        
         this.setState({ rating: e});
     }
     onCheck(e) {
@@ -58,7 +58,7 @@ class AddReview extends Component {
 
     render() {
         const { errors } = this.state;
-        console.log(this.props);
+        
         return (
             <div className="add-education">
                 <div className="container">

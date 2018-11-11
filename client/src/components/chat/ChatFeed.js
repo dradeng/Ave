@@ -17,7 +17,7 @@ class ChatFeed extends Component {
 
         render(){
             const {chats, chatId} = this.props;
-            console.log(chats);
+           
             return (
                 <div className="row">
 

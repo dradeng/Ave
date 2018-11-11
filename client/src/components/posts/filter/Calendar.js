@@ -14,7 +14,7 @@ class Calendar extends React.Component {
         selectedEndDate: this.props.selectedEndDate,
     };
     renderHeader() {
-        console.log(this.props);
+       
 
         const dateFormat = "MMMM YYYY";
 

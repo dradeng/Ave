@@ -35,7 +35,7 @@ class Chat extends Component {
     const newMessage = {
       content: this.state.content,
     };
-    console.log(newMessage);
+    
     this.props.addMessage(chat._id, newMessage);
     this.setState({ content: '' });
   }
@@ -64,8 +64,7 @@ class Chat extends Component {
           }
       }
     );
-    console.log('START'+chat.user1);
-    console.log(chat.user2);
+
     return (
       
         <div>

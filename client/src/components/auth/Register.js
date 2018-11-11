@@ -50,7 +50,7 @@ class Register extends Component {
       fileName = 'https://s3.us-east-2.amazonaws.com/aveneu/' + fileName;
       
 
-      console.log("PROFILE PIC" + fileName);
+   
       this.setState({profilePic: fileName});
      
       
