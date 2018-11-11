@@ -39,6 +39,7 @@ class ProfileReview extends Component {
                 <hr />
                 <h3 className="mb-4">Reviews</h3>
                 {reviews}
+                {profile.reviews.length === 0 && <div> none yet </div>}
             </div>
         );
     }

@@ -5,22 +5,33 @@ import { connect } from 'react-redux';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { logoutUser } from '../../actions/authActions';
 import { clearCurrentProfile } from '../../actions/profileActions';
+import { getChats } from '../../actions/chatActions';
+
 import AveLogo from '../../assets/AveLogo.png';
 import UserIcon from '../../assets/UserIcon.png';
+import Chat from "../chat/Chat";
 
 class Navbar extends Component {
   constructor(props) {
     super(props);
 
     this.toggle = this.toggle.bind(this);
-    this.state = {
-      dropdownOpen: false
+      this.messageToggle = this.messageToggle.bind(this);
+
+      this.state = {
+      dropdownOpen: false,
+        messageOpen: false,
     };
   }
   toggle() {
     this.setState(prevState => ({
       dropdownOpen: !prevState.dropdownOpen
     }));
+  }
+  messageToggle() {
+      this.setState(prevState => ({
+          messageOpen: !prevState.messageOpen
+      }));
   }
   onLogoutClick(e) {
     e.preventDefault();
@@ -60,9 +71,28 @@ class Navbar extends Component {
             </Link>
         </li>
         <li className="nav-item">
-            <Link className="nav-link" to="/chats">
-                <span style={{color: '#B4B4B4'}}>Messages</span>
-            </Link>
+            <span className="nav-link">
+           <Dropdown isOpen={this.state.messageOpen} toggle={this.messageToggle}>
+              <DropdownToggle style={{backgroundColor: 'transparent', borderWidth:0, padding:0,margin:0}}>
+                 Messages
+              </DropdownToggle>
+                <DropdownMenu>
+
+                     {this.props.chat ? this.props.chat.chats.map(chat =>
+                         <DropdownItem>
+                         <Link  onClick="window.location.reload()" to={{pathname: `/chat/${chat._id}`, user2: chat.user2}}  className="btn btn-info mr-1">
+                             {chat.user2Name}
+                         </Link>
+                         </DropdownItem>
+                         ) :
+                     <div>
+                         n/a
+                     </div>}
+
+
+                </DropdownMenu>
+            </Dropdown>
+          </span>
         </li>
         <li className="nav-item">
           <span className="nav-link">
@@ -152,10 +182,12 @@ class Navbar extends Component {
 Navbar.propTypes = {
   logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
+    chat: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
+    chat: state.chat,
 });
 
 export default connect(mapStateToProps, { logoutUser, clearCurrentProfile })(

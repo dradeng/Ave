@@ -1,13 +1,13 @@
 import axios from 'axios';
 
 import {
-  GET_PROFILE,
-  GET_PROFILES,
-  PROFILE_LOADING,
-  CLEAR_CURRENT_PROFILE,
-  GET_ERRORS,
-  GET_POST,
-  SET_CURRENT_USER
+    GET_PROFILE,
+    GET_PROFILES,
+    PROFILE_LOADING,
+    CLEAR_CURRENT_PROFILE,
+    GET_ERRORS,
+    GET_POST,
+    SET_CURRENT_USER, GET_CHAT_PROFILE
 } from './types';
 
 // Get current profile
@@ -47,6 +47,28 @@ export const getProfileByHandle = handle => dispatch => {
       })
     );
 };
+
+
+// Get profile by id
+export const getProfileByID = user_id => dispatch => {
+    dispatch(setProfileLoading());
+    axios
+        .get(`/api/profile/user/${user_id}`)
+        .then(res =>
+            dispatch({
+                type: GET_CHAT_PROFILE,
+                payload: res.data
+            })
+        )
+        .catch(err =>
+            dispatch({
+                type: GET_CHAT_PROFILE,
+                payload: null
+            })
+        );
+};
+
+
 
 
 // Create Profile
