@@ -7,6 +7,7 @@ import CommentForm from './CommentForm';
 import CommentFeed from './CommentFeed';
 import Spinner from '../common/Spinner';
 import { getPost } from '../../actions/postActions';
+import { getCurrentProfile } from '../../actions/profileActions';
 import { addChat } from '../../actions/chatActions';
 
 class Post extends Component {
@@ -24,6 +25,7 @@ class Post extends Component {
 
   componentDidMount() {
     this.props.getPost(this.props.match.params.id);
+    this.props.getCurrentProfile();
   }
 
   createChat(e) {
@@ -53,7 +55,9 @@ class Post extends Component {
 
   render() {
     const { post, loading } = this.props.post;
+    const { profile } = this.props.profile;
     let postContent;
+    let editContent;
 
     if (post === null || loading || Object.keys(post).length === 0) {
       postContent = <Spinner />;
@@ -66,6 +70,11 @@ class Post extends Component {
         </div>
       );
     }
+    if (profile === null || null) {
+      //do nothing
+    } else if (profile.posts.indexOf(post._id) >= 0) {
+      editContent = <button>Edit Post</button>
+    }
 
     return (
       <div className="post">
@@ -77,6 +86,7 @@ class Post extends Component {
               </Link>
               {postContent}
             </div>
+              {editContent}
               <button onClick={this.createChat}>
                 <Link to="/chats">Message</Link>
               </button>
@@ -90,15 +100,18 @@ class Post extends Component {
 Post.propTypes = {
   getPost: PropTypes.func.isRequired,
   addChat: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   chat: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
   post: state.post,
   auth: state.auth,
   chat: state.chat,
+  profile: state.profile
 });
 
-export default connect(mapStateToProps, { getPost, addChat })(Post);
+export default connect(mapStateToProps, { getPost, addChat, getCurrentProfile })(Post);

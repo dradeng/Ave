@@ -50,8 +50,8 @@ class Dashboard extends Component {
           </div>
         );
         
-        if (profile === null) {
-          postContent = <Spinner />;
+        if (profile === null || posts) {
+          postContent = <p>No post to show</p>
         } else {
             postContent = posts.map(post => { 
                 if(profile.posts.indexOf(post._id) >= 0) {
