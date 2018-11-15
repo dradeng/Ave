@@ -22,17 +22,11 @@ class Profiles extends Component {
       if (profiles.length > 0) {
         profileItems = profiles.map(pro => {
           if (profile !== null) {
-              if(profile.favoriteProfile.filter(favorite => favorite.user.toString() === pro.user._id)
-                  .length === 0) {
-                  return (
-                      <ProfileItem key={pro._id} profile={pro} isFavorited={false}/>
-                  )
-              }
-              else {
-                  return  (
-                      <ProfileItem key={pro._id} profile={pro} isFavorited={true}/>
-                  )
-              }
+
+                   return (   <ProfileItem key={pro._id} profile={pro} isFavorited={true}/>
+                   );
+
+
           }
             return (
             <ProfileItem key={pro._id} profile={pro} isFavorited={false}/>
