@@ -76,7 +76,7 @@ class PostFeed extends Component {
     let feedContent = newPosts.map(post => <PostItem className="col-md-6" key={post._id} post={post} />);
 
     return (
-    	<div>
+    	<div className="col-md-12">
             <div style={{ borderBottom: '1px solid #eeedf1', padding: 10, paddingLeft: 50}} className="row">
 
                 {this.state.showPriceTool ?

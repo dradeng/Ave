@@ -5,9 +5,12 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
+import Dropzone from 'react-dropzone'
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import { addPost } from '../../actions/postActions';
 import AWS from 'aws-sdk';
+import TextFieldGroup from "../common/TextFieldGroup";
+import LocationSearchInput from "../common/LocationSearchInput";
 
 class PostForm extends Component {
   constructor(props) {
@@ -30,6 +33,7 @@ class PostForm extends Component {
     this.onStartDateChange = this.onStartDateChange.bind(this);
     this.onEndDateChange = this.onEndDateChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.changeAddress = this.changeAddress.bind(this);
   }
 
   componentWillReceiveProps(newProps) {
@@ -101,12 +105,48 @@ class PostForm extends Component {
 
 
   }
+    //THIS IS FOR A FILE BE UPLOADED
+    dropZoneHande = (event) => {
+
+        if(event.target.files[0] != null) {
+            const file = event.target.files[0];
+
+            // this.setState({selectedFile: event.target.files[0]});
+            const uuidv4 = require('uuid/v4');
+            const formData = new FormData();
+            var fileName = uuidv4();
+
+            formData.append('file', file, fileName);
+
+            // I do this after so it only affects the state, not whats uploaded to s3
+            // The state & model in the db stores the whole url
+            fileName = 'https://s3.us-east-2.amazonaws.com/aveneu/' + fileName;
+
+
+
+            this.setState({ images: [...this.state.images, fileName] });
+            this.setState({ currFile: [...this.state.currFile, URL.createObjectURL(event.target.files[0])] });
+            //console.log('currfile during upload' + this.state.currFile);
+            //console.log('miages during upload' + this.state.images);
+            //console.log('FILE NAME DURING UPLOAd' + fileName);
+            axios.post('api/posts/uploads', formData);
+        }
+
+
+    }
   onStartDateChange(dateValue){
     
     var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
     var startDate = months[dateValue.getMonth()] + ' ' + dateValue.getDay();
 
     this.setState({ 'startDate' : startDate });
+  }
+
+  changeAddress(newAddress) {
+        console.log(newAddress);
+        //this.setState({})
+        //this.changeProp(newAddress);
+
   }
   onEndDateChange(dateValue){
 
@@ -192,70 +232,92 @@ class PostForm extends Component {
 
     return (
       <div className="post-form mb-3">
-        <div className="card card-info">
-          <div className="card-header bg-info text-white">Say Somthing...</div>
-          <div className="card-body">
-            <form onSubmit={this.onSubmit} method="POST" enctype="multipart/form-data">
-              <div className="form-group">
-                <TextAreaFieldGroup
-                  placeholder="Title of post"
-                  name="title"
-                  value={this.state.title}
-                  onChange={this.onChange}
-                  error={errors.title} 
-                />
-              </div>
-              <div className="form-group">
-                <TextAreaFieldGroup
-                  placeholder="Create a post"
-                  name="text"
-                  value={this.state.text}
-                  onChange={this.onChange}
-                  error={errors.text}
-                />
-              </div>
-              <div className="form-group">
-                <TextAreaFieldGroup
-                  placeholder="Address of post (this will not be publicly visible)"
-                  name="address"
-                  value={this.state.address}
-                  onChange={this.onChange}
-                  error={errors.address}
-                />
-              </div>
-              <div className="form-group">
-                <TextAreaFieldGroup
-                  placeholder="Enter number for rent"
-                  name="rent"
-                  value={this.state.rent}
-                  onChange={this.onChange}
-                  error={errors.rent}
-                />
-              </div>
-              
+          <div className="container">
+              <div className="row">
+                  <div className="col-md-8 m-auto">
+                      <h4 className="display-4 text-center">Sublet your room</h4>
+                      <br/>
+                      <form onSubmit={this.onSubmit} method="POST" encType="multipart/form-data">
+                          <div className="form-group">
+                              <h6>
+                                 Provide a title
+                              </h6>
+                          <input
+                                  placeholder="ex. Jake's Magic Bungalow"
+                                  name="title"
+                                  type="text"
+                                  className="form-control"
+                                  value={this.state.title}
+                                  onChange={this.onChange}
+                                  error={errors.title}
+                              />
+                              <br/>
+                              <h6>
+                                  Provide details
+                              </h6>
+                              <TextAreaFieldGroup
+                                  placeholder="Create a post"
+                                  name="text"
+                                  value={this.state.text}
+                                  onChange={this.onChange}
+                                  error={errors.text}
+                              />
+                          </div>
+                          <div className="form-group">
+                              <h6>
+                                  Enter your address
+                              </h6>
+                              <LocationSearchInput
+                                  changeIt={(address) => this.changeAddress(address)}
+                                  value={this.state.address}
+                              />
+                          </div>
+                          <div className="form-group">
+                              <h6>
+                                  Price per week
+                              </h6>
+                              <div className="input-group mb-3">
+                                  <div className="input-group-prepend">
+                                      <span className="input-group-text">$</span>
+                                  </div>
+                                  <input type="text" className="form-control"
+                                         placeholder="Enter number for rent"
+                                         name="rent"
+                                         type="number"
+                                         className="form-control"
+                                         value={this.state.rent}
+                                         onChange={this.onChange}
+                                         aria-label="Amount (to the nearest dollar)"/>
+                              </div>
+                          </div>
 
-              <p>Start Date:</p>
-              <DayPickerInput
-                name="startDate"
-                value={this.state.startDate}
-                onDayChange={this.onStartDateChange}/>
-              <DayPickerInput
-                name="endDate"
-                value={this.state.endDate}
-                onDayChange={this.onEndDateChange}/>
-              <br/>
 
-              <input type="file" name="file" id="file" onChange={this.fileChangedHandler}/>
-              {imagePreviewContent}
+                          <h6>Start Date:</h6>
+                          <DayPickerInput
+                              name="startDate"
+                              value={this.state.startDate}
+                              onDayChange={this.onStartDateChange}/>
+                          <DayPickerInput
+                              name="endDate"
+                              value={this.state.endDate}
+                              onDayChange={this.onEndDateChange}/>
+                          <br/>
 
-              <br />
-              <button type="submit" className="btn btn-dark">
-                Submit
-              </button>
-         
-            </form>
+                          <div>
+                              <h6> Add Photos </h6>
+                          <input className="form-control" type="file" name="file" id="file" onChange={this.fileChangedHandler}/>
+                          {imagePreviewContent}
+
+                          </div>
+                          <br/>
+                          <button type="submit" className="btn btn-dark">
+                              Submit
+                          </button>
+
+                      </form>
+                  </div>
+              </div>
           </div>
-        </div>
       </div>
     );
   }

@@ -27,10 +27,11 @@ class PostItem extends Component {
 
     if(profile != null) {
 
-      if(profile.favorites.includes(post._id)) {
-    
-        this.setState({ favorited: true });
-      }
+            if (profile.favorites.includes(post._id)) {
+
+                this.setState({favorited: true});
+            }
+
     }
   }
   onDeleteClick(id) {
