@@ -105,35 +105,6 @@ class PostForm extends Component {
 
 
   }
-    //THIS IS FOR A FILE BE UPLOADED
-    dropZoneHande = (event) => {
-
-        if(event.target.files[0] != null) {
-            const file = event.target.files[0];
-
-            // this.setState({selectedFile: event.target.files[0]});
-            const uuidv4 = require('uuid/v4');
-            const formData = new FormData();
-            var fileName = uuidv4();
-
-            formData.append('file', file, fileName);
-
-            // I do this after so it only affects the state, not whats uploaded to s3
-            // The state & model in the db stores the whole url
-            fileName = 'https://s3.us-east-2.amazonaws.com/aveneu/' + fileName;
-
-
-
-            this.setState({ images: [...this.state.images, fileName] });
-            this.setState({ currFile: [...this.state.currFile, URL.createObjectURL(event.target.files[0])] });
-            //console.log('currfile during upload' + this.state.currFile);
-            //console.log('miages during upload' + this.state.images);
-            //console.log('FILE NAME DURING UPLOAd' + fileName);
-            axios.post('api/posts/uploads', formData);
-        }
-
-
-    }
   onStartDateChange(dateValue){
     
     var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
@@ -143,8 +114,7 @@ class PostForm extends Component {
   }
 
   changeAddress(newAddress) {
-        console.log(newAddress);
-        //this.setState({})
+        this.setState({address: newAddress});
         //this.changeProp(newAddress);
 
   }
@@ -238,7 +208,7 @@ class PostForm extends Component {
                       <h4 className="display-4 text-center">Sublet your room</h4>
                       <br/>
                       <form onSubmit={this.onSubmit} method="POST" encType="multipart/form-data">
-                          <div className="form-group">
+                          <div key="1" className="form-group">
                               <h6>
                                  Provide a title
                               </h6>
@@ -263,16 +233,16 @@ class PostForm extends Component {
                                   error={errors.text}
                               />
                           </div>
-                          <div className="form-group">
+                          <div key="2" className="form-group">
                               <h6>
                                   Enter your address
                               </h6>
                               <LocationSearchInput
                                   changeIt={(address) => this.changeAddress(address)}
-                                  value={this.state.address}
+
                               />
                           </div>
-                          <div className="form-group">
+                          <div key="3" className="form-group">
                               <h6>
                                   Price per week
                               </h6>
