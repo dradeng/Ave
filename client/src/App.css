@@ -21,24 +21,29 @@ img {
 
 COMMON
  */
-.btn {
+
+.btncustom {
   background: linear-gradient(97deg, #04edc3, #47dce4);
   border:  1px solid #fff;
-
+  color: #ffffff;
 }
 
-.btn-light {
+.fas {
+  color: #47dce4;
+  background: linear-gradient(97deg, #04edc3, #47dce4);
+}
+.btncustom-light {
   background: #ffffff;
   color: #47dce4;
   border:  1px solid #47dce4;
 }
-.btn:hover
+.btncustom:hover
 {
   background: #ffffff;
   color: #47dce4;
   border:  1px solid #47dce4;
 }
-.btn-light:hover {
+.btncustom-light:hover {
   background: linear-gradient(97deg, #04edc3, #47dce4);
   color: #ffffff;
   border:  1px solid #fff;

@@ -71,17 +71,18 @@ class Navbar extends Component {
             </Link>
         </li>
         <li className="nav-item">
-            <span className="nav-link">
-           <Dropdown isOpen={this.state.messageOpen} toggle={this.messageToggle}>
-              <DropdownToggle style={{backgroundColor: 'transparent', borderWidth:0, padding:0,margin:0}}>
-                 Messages
+           <Dropdown className="nav-link" isOpen={this.state.messageOpen} toggle={this.messageToggle}>
+              <DropdownToggle   style={{backgroundColor: 'transparent', borderWidth:0, padding:0,margin:0}}>
+
+               <span style={{color: '#B4B4B4'}}>Messages</span>
+
               </DropdownToggle>
                 <DropdownMenu>
 
                      {this.props.chat ? this.props.chat.chats.map(chat =>
                          <DropdownItem>
-                         <Link  onClick="window.location.reload()" to={{pathname: `/chat/${chat._id}`, user2: chat.user2}}  className="btn btn-info mr-1">
-                             {chat.user2Name}
+                         <Link  onClick="window.location.reload()" to={{pathname: `/chat/${chat._id}`, user2: chat.user2}} >
+                             <span style={{color: '#B4B4B4'}}> {chat.user2Name}</span>
                          </Link>
                          </DropdownItem>
                          ) :
@@ -92,7 +93,6 @@ class Navbar extends Component {
 
                 </DropdownMenu>
             </Dropdown>
-          </span>
         </li>
         <li className="nav-item">
           <span className="nav-link">
@@ -119,7 +119,7 @@ class Navbar extends Component {
               <DropdownMenu>
                 <DropdownItem>
                   <Link to="/dashboard">
-                    Profile
+                     <span style={{color: '#B4B4B4'}}>Profile</span>
                   </Link>
                 </DropdownItem>
                 <DropdownItem>

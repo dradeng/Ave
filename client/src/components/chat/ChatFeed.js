@@ -24,7 +24,7 @@ class ChatFeed extends Component {
                     <div style={{height: '80vh', marginLeft:20,
                         padding:0,borderRight: '1px solid rgba(0,0,0,0.25)',marginTop: -25}} className="col-md-2">
                         {chats.map(chat =>
-                            <Link to={{pathname: `/chat/${chat._id}`, user2: chat.user2}}  className="btn btn-info mr-1">
+                            <Link to={{pathname: `/chat/${chat._id}`, user2: chat.user2}}  className="btncustom btn btn-info mr-1">
                                 <Chat key={chat._id} chat={chat} chatId={chatId} />
                             </Link>)
 

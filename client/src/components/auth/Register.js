@@ -126,7 +126,7 @@ class Register extends Component {
                 <br />
                 <input type="file" name="file" id="file" onChange={this.fileChangedHandler}/>
 
-                <input type="submit" className="btn btn-info btn-block mt-4" />
+                <input type="submit" className="custombtn btn-info btn-block mt-4" />
               </form>
             </div>
           </div>

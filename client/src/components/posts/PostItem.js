@@ -120,14 +120,10 @@ class PostItem extends Component {
                   </div>
                   <div className="col-md-10">
                       <div  className="row">
-                          <p className="lead col-md-10">{post.title}</p>
-                          <div style={{color: '#fac71e'}}  onClick={this.onFavorite.bind(this, auth.user.id, post._id)}>
-                            
-                            {starContent}
-
-                          </div>
-                          {showActions ? (
-                              <span>
+                          <p className="lead col-md-9">{post.title}</p>
+                          <div className="ol-md-1">
+                              {showActions ? (
+                                  <span>
 
 
 
@@ -135,13 +131,20 @@ class PostItem extends Component {
                                   <button
                                       onClick={this.onDeleteClick.bind(this, post._id)}
                                       type="button"
-                                      className="btn btn-danger mr-1"
+                                      className="btn btncustom btncustom-danger mr-1"
                                   >
                                       <i className="fas fa-times"/>
                                   </button>
                               ) : null}
               </span>
-                          ) : null}
+                              ) : null}
+                          </div>
+                          <div style={{color: '#fac71e'}}  onClick={this.onFavorite.bind(this, auth.user.id, post._id)}>
+                            
+                            {starContent}
+
+                          </div>
+
                       </div>
 
 
@@ -168,7 +171,7 @@ class PostItem extends Component {
                       <p className="priceTag">{post.rent}</p>
 
                   </div>
-              <Link to={`/post/${post._id}`} className="btn btn-info mr-1">
+              <Link to={`/post/${post._id}`} className="btn btncustom mr-1">
                   Comments
               </Link>
               </div>

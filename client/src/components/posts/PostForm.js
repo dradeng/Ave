@@ -280,7 +280,7 @@ class PostForm extends Component {
 
                           </div>
                           <br/>
-                          <button type="submit" className="btn btn-dark">
+                          <button type="submit" className="btn btncustom">
                               Submit
                           </button>
 

@@ -102,7 +102,7 @@ const ChatProfile = ({
 
                 <ProfileReview profile={profile}/>
 
-            <Link to={`/profile/${profile.handle}`} className="btn btn-info">
+            <Link to={`/profile/${profile.handle}`} className="btncustom btn btn-info">
                 View Profile
             </Link>
 

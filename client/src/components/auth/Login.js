@@ -78,7 +78,7 @@ class Login extends Component {
                   onChange={this.onChange}
                   error={errors.password}
                 />
-                <input type="submit" className="btn btn-info btn-block mt-4" />
+                <input type="submit" className="custombtn btn-info btn-block mt-4" />
               </form>
             </div>
           </div>
@@ -91,7 +91,7 @@ class Login extends Component {
 Login.propTypes = {
   loginUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({
