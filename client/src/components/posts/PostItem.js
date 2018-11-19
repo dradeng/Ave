@@ -93,11 +93,14 @@ class PostItem extends Component {
       
     }
     const allImage = post.images.map((item, index) => (
-        <div >
-        <div style={{paddingTop:'66%',backgroundSize: '100% 100%',overflow:'hidden', background: 'url('+item+')'}}>
-        </div>
+        <div>
+            <div style={{height: '100%', paddingTop: '66%', backgroundSize: 'cover', backgroundPosition: 'center center', backgroundImage: 'url("' + item + '")'}} />
         </div>)
     );
+    /*
+    <div style={{paddingTop:'66%',backgroundSize: '100% 100%',overflow:'hidden', background: 'url('+item+')'}}>
+        </div>
+     */
     let endDateContent = null;
     if(post.endDate != null && post.endDate.length > 1){
       endDateContent = <Month period="end" month={post.endDate}/>
@@ -123,11 +126,8 @@ class PostItem extends Component {
                             {starContent}
 
                           </div>
-                      </div>
-
-
-                      {showActions ? (
-                          <span>
+                          {showActions ? (
+                              <span>
 
 
 
@@ -141,7 +141,11 @@ class PostItem extends Component {
                                   </button>
                               ) : null}
               </span>
-                      ) : null}
+                          ) : null}
+                      </div>
+
+
+
 
                   </div>
 
