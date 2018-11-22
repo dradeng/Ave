@@ -7,7 +7,8 @@ import { connect } from 'react-redux';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
-import { addPost } from '../../actions/postActions';
+import { addPost,getPost } from '../../actions/postActions';
+import { getCurrentProfile } from '../../actions/profileActions';
 import AWS from 'aws-sdk';
 
 class PostForm extends Component {
@@ -32,36 +33,37 @@ class PostForm extends Component {
     this.onEndDateChange = this.onEndDateChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
-
-  componentWillReceiveProps(newProps) {
-    if (newProps.errors) {
-      this.setState({ errors: newProps.errors });
-    }
-  }
+componentDidMount() {
+    console.log("POST ID");
+    console.log(this.props.match.params.id);
+    this.props.getPost(this.props.match.params.id);
+    this.props.getCurrentProfile();
+}
 componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
-
+    console.log('OUTSIDEIT');
     if (nextProps.post.post) {
-      const profile = nextProps.post.post;
-
+      console.log('WE INSIDE');
+      const post = nextProps.post.post;
+      console.log(post);
  
       const { user } = this.props.auth;
 
       // Set component fields state
       this.setState({
-        title: this.state.title,
-        text: this.state.text,
-        address: this.state.address,
-        longitude: this.state.longitude, 
-        latitude: this.state.latitude, 
+        title: post.title,
+        text: post.text,
+        address: post.address,
+        longitude: post.longitude, 
+        latitude: post.latitude, 
         name: user.name,
         avatar: user.profilePic,
-        images: this.state.images,
-        rent: this.state.rent,
-        startDate: this.state.startDate,
-        endDate: this.state.endDate,
+        images: post.images,
+        rent: post.rent,
+        startDate: post.startDate,
+        endDate: post.endDate,
       });
     }
   }
@@ -84,7 +86,7 @@ componentWillReceiveProps(nextProps) {
       endDate: this.state.endDate,
     };
 
-    this.props.addPost(newPost);
+    this.props.addPost(newPost, this.props.history);
     this.setState({ text: '' });
     this.setState({ title: '' });
     this.setState({ address: '' });
@@ -166,7 +168,7 @@ componentWillReceiveProps(nextProps) {
     this.setState({images: tmpImages});
     this.setState({ currFile: tmpCF });
 
-    console.log("FILE CLIENT"+fileName);
+    
     const newFile = {
       fileName : fileName
     };
@@ -288,6 +290,8 @@ componentWillReceiveProps(nextProps) {
 
 PostForm.propTypes = {
   addPost: PropTypes.func.isRequired,
+  getPost: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -297,4 +301,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps, { addPost })(withRouter(PostForm));
+export default connect(mapStateToProps, { addPost, getPost, getCurrentProfile })(withRouter(PostForm));
