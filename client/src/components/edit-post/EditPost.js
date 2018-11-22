@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Geocode from 'react-geocode';
 import axios from 'axios';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
@@ -45,8 +46,8 @@ componentWillReceiveProps(nextProps) {
     if (nextProps.post.post) {
       const profile = nextProps.post.post;
 
-      // Bring skills array back to CSV
-      
+ 
+      const { user } = this.props.auth;
 
       // Set component fields state
       this.setState({
@@ -296,4 +297,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps, { addPost })(withoutRouter(PostForm));
+export default connect(mapStateToProps, { addPost })(withRouter(PostForm));

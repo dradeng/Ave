@@ -73,7 +73,7 @@ class Post extends Component {
     if (profile === null || null) {
       //do nothing
     } else if (profile.posts.indexOf(post._id) >= 0) {
-      editContent = <button>Edit Post</button>
+      editContent = <Link to="/edit-post" className="btn btn-light">Edit Post</Link>
     }
 
     return (
