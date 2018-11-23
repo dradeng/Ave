@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Geocode from 'react-geocode';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import DayPickerInput from 'react-day-picker/DayPickerInput';
+import DatePicker from 'react-datepicker';
 import 'react-day-picker/lib/style.css';
 import Dropzone from 'react-dropzone'
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
@@ -11,6 +11,9 @@ import { addPost } from '../../actions/postActions';
 import AWS from 'aws-sdk';
 import TextFieldGroup from "../common/TextFieldGroup";
 import LocationSearchInput from "../common/LocationSearchInput";
+
+
+import "react-datepicker/dist/react-datepicker.css";
 
 class PostForm extends Component {
   constructor(props) {
@@ -24,8 +27,8 @@ class PostForm extends Component {
       rent: 0,
       images: [],
       errors: {},
-      startDate: '',
-      endDate: '',
+      startDate: new Date(),
+      endDate: new Date(),
       currFile: [],
     };
 
@@ -69,8 +72,8 @@ class PostForm extends Component {
     this.setState({ latitude: 0 });
     this.setState({ longitude: 0 });
     this.setState({ rent: 0 });
-    this.setState({ startDate: '' });
-    this.setState({ endDate: '' });
+    this.setState({ startDate:  new Date() });
+    this.setState({ endDate:  new Date() });
     this.setState({ currFile: []});
   
     
@@ -105,12 +108,12 @@ class PostForm extends Component {
 
 
   }
-  onStartDateChange(dateValue){
+  onStartDateChange(date){
     
-    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
-    var startDate = months[dateValue.getMonth()] + ' ' + dateValue.getDay();
+    //var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+    //var startDate = months[dateValue.getMonth()] + ' ' + dateValue.getDay();
 
-    this.setState({ 'startDate' : startDate });
+    this.setState({ 'startDate' : date });
   }
 
   changeAddress(newAddress) {
@@ -120,12 +123,12 @@ class PostForm extends Component {
       //this.changeProp(newAddress);
 
   }
-  onEndDateChange(dateValue){
+  onEndDateChange(date){
 
-    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
-    var endDate = months[dateValue.getMonth()] + ' ' + dateValue.getDay();
-
-    this.setState({ 'endDate' : endDate });
+    //var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+   // var endDate = months[dateValue.getMonth()] + ' ' + dateValue.getDay();
+     //   console.log(dateValue);
+    this.setState({ 'endDate' : date });
   }
 
   onChange(e) {
@@ -266,14 +269,14 @@ class PostForm extends Component {
 
 
                           <h6>Start Date:</h6>
-                          <DayPickerInput
-                              name="startDate"
-                              value={this.state.startDate}
-                              onDayChange={this.onStartDateChange}/>
-                          <DayPickerInput
-                              name="endDate"
-                              value={this.state.endDate}
-                              onDayChange={this.onEndDateChange}/>
+                          <DatePicker
+                              onChange={this.onStartDateChange}
+                              selected={this.state.startDate}
+                          />
+                          <DatePicker
+                              onChange={this.onEndDateChange}
+                              selected={this.state.endDate}
+                          />
                           <br/>
 
                           <div>
