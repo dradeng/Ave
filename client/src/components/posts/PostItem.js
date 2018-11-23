@@ -7,6 +7,7 @@ import {Carousel} from 'react-responsive-carousel';
 import ReactDom from 'react-dom';
 import { Link } from 'react-router-dom';
 import { FaStar, FaRegStar } from 'react-icons/fa';
+import { Textfit } from 'react-textfit';
 
 import { deletePost, addLike, removeLike } from '../../actions/postActions';
 import { addFavorite, getCurrentProfile } from '../../actions/profileActions';
@@ -119,31 +120,37 @@ class PostItem extends Component {
                       </a>
                   </div>
                   <div className="col-md-10">
-                      <div  className="row">
-                          <p className="lead col-md-9">{post.title}</p>
-                          <div className="ol-md-1">
+                      <div style={{minHeight: 49}} className="row">
+                          <p className="lead col-md-9">
+                              <Textfit
+                                  mode="single"
+                                  forceSingleModeWidth={false}>
+                                  {post.title}
+                                  </Textfit></p>
+                          <div className="col-md-1">
                               {showActions ? (
                                   <span>
 
 
 
                               {post.user === auth.user.id ? (
-                                  <button
+                                  <div
                                       onClick={this.onDeleteClick.bind(this, post._id)}
-                                      type="button"
-                                      className="btn btncustom btncustom-danger mr-1"
                                   >
-                                      <i className="fas fa-times"/>
-                                  </button>
+                                      <i style={{fontSize: 22, color: 'red'}} className="fas fa-times"/>
+                                  </div>
                               ) : null}
               </span>
                               ) : null}
                           </div>
-                          <div style={{color: '#fac71e'}}  onClick={this.onFavorite.bind(this, auth.user.id, post._id)}>
+                          {post.user !== auth.user.id ? (
+
+                          <div style={{fontSize: 22, color: '#fac71e'}}  onClick={this.onFavorite.bind(this, auth.user.id, post._id)}>
                             
                             {starContent}
 
-                          </div>
+                          </div> ):
+                              null }
 
                       </div>
 

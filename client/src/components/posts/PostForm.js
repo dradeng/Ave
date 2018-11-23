@@ -114,8 +114,10 @@ class PostForm extends Component {
   }
 
   changeAddress(newAddress) {
-        this.setState({address: newAddress});
-        //this.changeProp(newAddress);
+      this.getLatLong(newAddress);
+
+      this.setState({address: newAddress});
+      //this.changeProp(newAddress);
 
   }
   onEndDateChange(dateValue){
@@ -182,6 +184,7 @@ class PostForm extends Component {
         //Commented out because it says an error when ur not done typing out address
       }
     );
+    console.log(this.state.latitude);
   
   }
 
