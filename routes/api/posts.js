@@ -71,34 +71,53 @@ router.post(
       return res.status(400).json(errors);
     }
 
-    const newPost = new Post({
-      title: req.body.title,
-      address: req.body.address,
-      text: req.body.text,
-      name: req.body.name,
-      rent: req.body.rent,
-      avatar: req.body.avatar,
-      user: req.user.id,
-      latitude: req.body.latitude,
-      longitude: req.body.longitude,
-      images: req.body.images,
-      startDate: req.body.startDate,
-      endDate: req.body.endDate
-    });
+    
+    
 
     Profile.findOne({ user: req.user.id }).then(profile => {
     
       Post.findById(req.body.id).then(post => {
         if(post) {
-          console.log('updating');
-          console.log(post._id);
+          
+          const updatePost = {};
+
+          updatePost.title = req.body.title,
+          updatePost.address = req.body.address,
+          updatePost.text = req.body.text,
+          updatePost.name = req.body.name,
+          updatePost.rent = req.body.rent,
+          updatePost.avatar = req.body.avatar,
+          updatePost.user = req.user.id,
+          updatePost.latitude = req.body.latitude,
+          updatePost.longitude = req.body.longitude,
+          updatePost.images = req.body.images,
+          updatePost.startDate = req.body.startDate,
+          updatePost.endDate = req.body.endDate
+
+
           Post.findOneAndUpdate(
             { _id: req.body.id },
-            { $set: { "rent": req.body.rent }},
+            { $set: updatePost },
             { new: true }
           ).then(post => res.json(post));
         } else {
-          console.log('creating new');
+          
+
+          const newPost = new Post({
+            title: req.body.title,
+            address: req.body.address,
+            text: req.body.text,
+            name: req.body.name,
+            rent: req.body.rent,
+            avatar: req.body.avatar,
+            user: req.user.id,
+            latitude: req.body.latitude,
+            longitude: req.body.longitude,
+            images: req.body.images,
+            startDate: req.body.startDate,
+            endDate: req.body.endDate
+          });
+
           profile.posts.push(newPost._id);
         
           profile.save();
