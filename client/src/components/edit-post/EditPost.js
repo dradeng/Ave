@@ -34,21 +34,21 @@ class PostForm extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 componentDidMount() {
-    console.log("POST ID");
-    console.log(this.props.match.params.id);
+
     this.props.getPost(this.props.match.params.id);
     this.props.getCurrentProfile();
 }
 componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
-      console.log('wewewew');
+     
       this.setState({ errors: nextProps.errors });
     }
-    console.log('OUTSIDEIT');
+ 
     if (nextProps.post.post) {
-      console.log('WE INSIDE');
+   
       const post = nextProps.post.post;
-      console.log(post);
+    
+
  
       const { user } = this.props.auth;
 
@@ -72,7 +72,7 @@ componentWillReceiveProps(nextProps) {
     e.preventDefault();
 
     const { user } = this.props.auth;
-
+    const { post } = this.props.post;
     const newPost = {
       title: this.state.title,
       text: this.state.text,
@@ -85,6 +85,7 @@ componentWillReceiveProps(nextProps) {
       rent: this.state.rent,
       startDate: this.state.startDate,
       endDate: this.state.endDate,
+      id: post._id // ADDED THIS SO I CAN FIND IT IN WHEN UPDATING
     };
 
     this.props.addPost(newPost, this.props.history);

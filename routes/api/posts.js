@@ -56,7 +56,7 @@ router.get('/:id', (req, res) => {
 });
 
 // @route   POST api/posts
-// @desc    Create post
+// @desc    Create post or update
 // @access  Private
 router.post(
   '/',
@@ -87,15 +87,25 @@ router.post(
     });
 
     Profile.findOne({ user: req.user.id }).then(profile => {
-      // Add POSTID to posts array
-           
-            profile.posts.push(newPost._id);
-            
-            profile.save();
+    
+      Post.findById(req.body.id).then(post => {
+        if(post) {
+          console.log('updating');
+          console.log(post._id);
+          Post.findOneAndUpdate(
+            { _id: req.body.id },
+            { $set: { "rent": req.body.rent }},
+            { new: true }
+          ).then(post => res.json(post));
+        } else {
+          console.log('creating new');
+          profile.posts.push(newPost._id);
+        
+          profile.save();
+          newPost.save().then(post => res.json(post));
+        }
+      })
     });
-
-
-    newPost.save().then(post => res.json(post));
   }
 );
 
