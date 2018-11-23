@@ -161,22 +161,56 @@ componentWillReceiveProps(nextProps) {
 
    
     var leng = ('https://s3.us-east-2.amazonaws.com/aveneu/').length;
-    fileName = fileName.substring(leng);
-    var tmpCF = [...this.state.currFile];
     
-    var tmpImages = [...this.state.images];
-    tmpCF.splice(index, 1);
-    tmpImages.splice(index,1);
-    this.setState({images: tmpImages});
-    this.setState({ currFile: tmpCF });
-
+    if(fileName > 0)
+    { 
+      fileName = fileName.substring(leng);
     
-    const newFile = {
-      fileName : fileName
-    };
 
-    axios.post('api/posts/delete/uploads', newFile);
-  
+      var tmpCF = [...this.state.currFile];
+      
+      var tmpImages = [...this.state.images];
+      tmpCF.splice(index, 1);
+      tmpImages.splice(index,1);
+      this.setState({images: tmpImages});
+      this.setState({ currFile: tmpCF });
+
+      
+      const newFile = {
+        fileName : fileName
+      };
+
+      axios.post('api/posts/delete/uploads', newFile);
+    }
+
+  }
+  onDeleteExistingImage(imageURL) {
+    var index = this.state.currFile.indexOf(imageURL);
+    var fileName = this.state.images[index];//HAVE TO FUCKING USE IMAGES NOT CURR FILE
+
+   
+    var leng = ('https://s3.us-east-2.amazonaws.com/aveneu/').length;
+    
+    if(fileName > 0)
+    { 
+      fileName = fileName.substring(leng);
+    
+
+      var tmpCF = [...this.state.currFile];
+      
+      var tmpImages = [...this.state.images];
+      tmpCF.splice(index, 1);
+      tmpImages.splice(index,1);
+      this.setState({images: tmpImages});
+      this.setState({ currFile: tmpCF });
+
+      
+      const newFile = {
+        fileName : fileName
+      };
+
+      axios.post('api/posts/delete/uploads', newFile);
+    }
 
   }
   getLatLong(address) {
@@ -207,11 +241,17 @@ componentWillReceiveProps(nextProps) {
   render() {
     const { errors } = this.state;
     let imagePreviewContent = null;
+    let existingImages = null;
   
-    //HAVE TO USE CURRFILE IF USE IMAGES THE SRC DOES NOT RECOGNOIZE THE URL FOR SOME REASON
-    //MIGHT COME BACK TO< BUT PAIN IN THE ASS 
+    //HAVE TO USE CURRFILE for files not yet saved to s3
     if(this.state.images != null) {
      
+
+      existingImages = this.state.images.map( image => {
+   
+        return <img onClick={this.onDeleteExistingImage.bind(this, image)}
+          style={{width: 100, height: 100, border:0}} src={image} />
+      });
       imagePreviewContent = this.state.currFile.map( image => {
    
         return <img onClick={this.onDeleteClick.bind(this, image)}
@@ -275,6 +315,7 @@ componentWillReceiveProps(nextProps) {
               <br/>
 
               <input type="file" name="file" id="file" onChange={this.fileChangedHandler}/>
+              {existingImages}
               {imagePreviewContent}
 
               <br />

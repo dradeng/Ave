@@ -62,7 +62,7 @@ router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    
+    console.log('adding post');
     const { errors, isValid } = validatePostInput(req.body);
 
     // Check Validation
@@ -75,7 +75,8 @@ router.post(
     
 
     Profile.findOne({ user: req.user.id }).then(profile => {
-    
+      console.log('found the profile heres tthe id');
+      console.log(req.body.id);
       Post.findById(req.body.id).then(post => {
         if(post) {
           
@@ -101,7 +102,7 @@ router.post(
             { new: true }
           ).then(post => res.json(post));
         } else {
-          
+          console.log('post created');
 
           const newPost = new Post({
             title: req.body.title,
@@ -117,7 +118,7 @@ router.post(
             startDate: req.body.startDate,
             endDate: req.body.endDate
           });
-
+          console.log(newPost);
           profile.posts.push(newPost._id);
         
           profile.save();
