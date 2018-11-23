@@ -121,12 +121,12 @@ class PostItem extends Component {
                   </div>
                   <div className="col-md-10">
                       <div style={{minHeight: 49}} className="row">
-                          <p className="lead col-md-9">
+                          <div className="lead col-md-9">
                               <Textfit
                                   mode="single"
                                   forceSingleModeWidth={false}>
                                   {post.title}
-                                  </Textfit></p>
+                                  </Textfit></div>
                           <div className="col-md-1">
                               {showActions ? (
                                   <span>
