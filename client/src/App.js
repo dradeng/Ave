@@ -97,7 +97,7 @@ class App extends Component {
               <Switch>
                 <PrivateRoute
                   exact
-                  path="/edit-post"
+                  path="/edit-post/:id"
                   component={EditPost}
                 />
               </Switch>

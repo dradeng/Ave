@@ -41,7 +41,7 @@ class CreateProfile extends Component {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
-
+    console.log('WE MEADFE');
     if (nextProps.profile.profile) {
       const profile = nextProps.profile.profile;
 

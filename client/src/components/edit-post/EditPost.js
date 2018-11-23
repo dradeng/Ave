@@ -41,6 +41,7 @@ componentDidMount() {
 }
 componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
+      console.log('wewewew');
       this.setState({ errors: nextProps.errors });
     }
     console.log('OUTSIDEIT');
@@ -293,11 +294,14 @@ PostForm.propTypes = {
   getPost: PropTypes.func.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
+  post: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
+  post: state.post,
+  profile: state.profile,
   errors: state.errors
 });
 
