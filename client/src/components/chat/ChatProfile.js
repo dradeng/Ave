@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import UserIcon from "../../assets/UserIcon.png";
 import isEmpty from "../../validation/is-empty";
-import PostItem2 from '../posts/PostItem2.js';
+import PostItem2 from '../posts/PostFullSize.js';
 import ProfileReview from "../profile/ProfileReview";
 import {Link} from "react-router-dom";
 const ChatProfile = ({

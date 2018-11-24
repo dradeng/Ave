@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import PostItem from '../posts/PostItem';
+import PostFullSize from '../posts/PostFullSize';
+import PostInfoBox from '../posts/PostInfoBox';
 import CommentForm from './CommentForm';
 import CommentFeed from './CommentFeed';
 import Spinner from '../common/Spinner';
@@ -58,13 +59,13 @@ class Post extends Component {
     const { profile } = this.props.profile;
     let postContent;
     let editContent;
-
+    console.log(post);
     if (post === null || loading || Object.keys(post).length === 0) {
       postContent = <Spinner />;
     } else {
       postContent = (
         <div>
-          <PostItem post={post} showActions={false} />
+          <PostFullSize  className="col-md-12 " post={post} showActions={false} />
           <CommentForm postId={post._id} />
           <CommentFeed postId={post._id} comments={post.comments} />
         </div>
@@ -80,12 +81,15 @@ class Post extends Component {
       <div className="post">
         <div className="container">
           <div className="row">
-            <div className="col-md-12">
+            <div className="col-md-6">
               <Link to="/feed" className="btn btn-light mb-3">
                 Back To Feed
               </Link>
               {postContent}
             </div>
+              <div className="col-md-6">
+                <PostInfoBox post={post}/>
+              </div>
               {editContent}
               <button onClick={this.createChat}>
                 <Link to="/chats">Message</Link>

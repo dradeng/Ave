@@ -11,8 +11,9 @@ import { FaStar, FaRegStar } from 'react-icons/fa';
 import { deletePost, addLike, removeLike } from '../../actions/postActions';
 import { addFavorite, getCurrentProfile } from '../../actions/profileActions';
 import Month from '../availability/Month';
+import {Textfit} from "react-textfit";
 
-class PostItem2 extends Component {
+class PostFullSize extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -103,7 +104,7 @@ class PostItem2 extends Component {
         }
 
         return (
-            <div className="card card-body mb-3 col-md-8 feedTile">
+            <div className="card card-body mb-3 feedTile">
                 <div className="row">
                     <div className="col-md-2">
                         <a href="profile.html">
@@ -115,32 +116,42 @@ class PostItem2 extends Component {
                         </a>
                     </div>
                     <div className="col-md-10">
-                        <div  className="row">
-                            <p className="lead col-md-10">{post.title}</p>
-                            <div style={{color: '#fac71e'}}  onClick={this.onFavorite.bind(this, auth.user.id, post._id)}>
-
-                                {starContent}
-
-                            </div>
-                        </div>
-
-
-                        {showActions ? (
-                            <span>
+                        <div style={{minHeight: 49}} className="row">
+                            <div className="lead col-md-9">
+                                <Textfit
+                                    mode="single"
+                                    forceSingleModeWidth={false}>
+                                    {post.title}
+                                </Textfit></div>
+                            <div className="col-md-1">
+                                {showActions ? (
+                                    <span>
 
 
 
                               {post.user === auth.user.id ? (
-                                  <button
+                                  <div
                                       onClick={this.onDeleteClick.bind(this, post._id)}
-                                      type="button"
-                                      className="btn btn-danger mr-1"
                                   >
-                                      <i className="fas fa-times"/>
-                                  </button>
+                                      <i style={{fontSize: 22, color: 'red'}} className="fas fa-times"/>
+                                  </div>
                               ) : null}
               </span>
-                        ) : null}
+                                ) : null}
+                            </div>
+                            {post.user !== auth.user.id ? (
+
+                                    <div style={{fontSize: 22, color: '#fac71e'}}  onClick={this.onFavorite.bind(this, auth.user.id, post._id)}>
+
+                                        {starContent}
+
+                                    </div> ):
+                                null }
+
+                        </div>
+
+
+
 
                     </div>
 
@@ -163,7 +174,7 @@ class PostItem2 extends Component {
                     <p className="priceTag">{post.rent}</p>
 
                 </div>
-                <Link to={`/post/${post._id}`} className="btn btn-info mr-1">
+                <Link to={`/post/${post._id}`} className="btn btncustom mr-1">
                     Comments
                 </Link>
             </div>
@@ -172,11 +183,11 @@ class PostItem2 extends Component {
     }
 }
 
-PostItem2.defaultProps = {
+PostFullSize.defaultProps = {
     showActions: true
 };
 
-PostItem2.propTypes = {
+PostFullSize.propTypes = {
     deletePost: PropTypes.func.isRequired,
     addLike: PropTypes.func.isRequired,
     removeLike: PropTypes.func.isRequired,
@@ -192,5 +203,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, { deletePost, addLike, removeLike, addFavorite, getCurrentProfile })(
-    PostItem2
+    PostFullSize
 );
