@@ -4,16 +4,13 @@ import Geocode from 'react-geocode';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import DatePicker from 'react-datepicker';
-import 'react-day-picker/lib/style.css';
-import Dropzone from 'react-dropzone'
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import { addPost } from '../../actions/postActions';
 import AWS from 'aws-sdk';
 import TextFieldGroup from "../common/TextFieldGroup";
-import LocationSearchInput from "../common/LocationSearchInput";
 
+import './customcalendar.css';
 
-import "react-datepicker/dist/react-datepicker.css";
 
 class PostForm extends Component {
   constructor(props) {
@@ -173,7 +170,6 @@ class PostForm extends Component {
      
     // Enable or disable logs. Its optional.
     Geocode.enableDebug();
-     
     // Get latidude & longitude from address.
     Geocode.fromAddress(address).then(
       response => {
@@ -243,9 +239,14 @@ class PostForm extends Component {
                               <h6>
                                   Enter your address
                               </h6>
-                              <LocationSearchInput
-                                  changeIt={(address) => this.changeAddress(address)}
-
+                              <input
+                                  placeholder="ex. 922 Harold Ave, Washington, PN"
+                                  name="address"
+                                  type="text"
+                                  className="form-control"
+                                  value={this.state.address}
+                                  onChange={this.onChange}
+                                  error={errors.address}
                               />
                           </div>
                           <div key="3" className="form-group">

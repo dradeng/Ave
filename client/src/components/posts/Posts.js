@@ -17,14 +17,14 @@ class Posts extends Component {
   }
 
   render() {
-      const { posts, loading } = this.props.post;
+      const { posts, loading, selectedPosts } = this.props.post;
     let postContent;
       var geojson = [];
       geojson['type'] = 'FeatureCollection';
       geojson['features'] = [];
 
-      for (var k in posts) {
-          if (!posts[k].latitude)
+      for (var k in selectedPosts) {
+          if (!selectedPosts[k].latitude)
           {
             continue;
           }
@@ -43,14 +43,14 @@ class Posts extends Component {
 
           geojson['features'].push(newFeature);
 */
-          geojson.push(posts[k]);
+          geojson.push(selectedPosts[k]);
       }
 
 
     if (posts === null || loading) {
       postContent = <Spinner />;
     } else {
-      postContent = <PostFeed  posts={posts} />;
+      postContent = <PostFeed  selectedPosts={selectedPosts}  posts={posts} />;
     }
 
     return (
@@ -81,6 +81,7 @@ Posts.propTypes = {
 
 const mapStateToProps = state => ({
   post: state.post,
+    selectedPosts: state.post.selectedPosts
 
 });
 

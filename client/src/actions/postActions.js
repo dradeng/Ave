@@ -11,6 +11,7 @@ import {
     UPDATE_SELECTED_DATE,
     UPDATE_SELECTED_ENDDATE,
     UPDATE_SELECTED_CURRENT,
+    UPDATE_SELECTED_POSTS
 
 } from './types';
 
@@ -177,3 +178,8 @@ export const updateStartDate= (date) => dispatch => {
 export const updateEndDate= (date) => dispatch => {
     dispatch({ type: UPDATE_SELECTED_ENDDATE, payload: date });
 };
+
+export const updateSelectedPosts= (posts) => dispatch => {
+    dispatch({ type: UPDATE_SELECTED_POSTS, payload: posts });
+};
+

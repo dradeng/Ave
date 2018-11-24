@@ -1,21 +1,26 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Slider from 'rc-slider';
-
 import PostItem from './PostItem';
 import Filter from './filter/Filter';
-import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
-//import Slider, { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import MonthGrid from "./filter/MonthGrid";
-import Calendar from "./filter/Calendar.js";
-const createSliderWithTooltip = Slider.createSliderWithTooltip;
+import DatePicker from 'react-datepicker';
+import connect from "react-redux/es/connect/connect";
+import { updateSelectedPosts} from '../../actions/postActions';
 
+const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Range = createSliderWithTooltip(Slider.Range);
+
+
 
 class PostFeed extends Component {
   constructor(props) {
   	super(props);
+  	let CurrentDate = new Date();
+
+  	if (!props.endDate) {
+        CurrentDate.setMonth(CurrentDate.getMonth() + 1);
+    }
 
   	this.state = {
   		min: 0,
@@ -25,6 +30,8 @@ class PostFeed extends Component {
         startMonth: 11,
         endMonth: 12,
         showFilter: false,
+        startDate: new Date(),
+        endDate:CurrentDate,
         showStartDate: false,
         showCalendar: false,
         showPriceTool: false,
@@ -33,8 +40,8 @@ class PostFeed extends Component {
     this.onPriceChange = this.onPriceChange.bind(this);
     this.onChangeStartYear = this.onChangeStartYear.bind(this);
     this.onChangeEndYear = this.onChangeEndYear.bind(this);
-      this.onChangeStartMonth = this.onChangeStartMonth.bind(this);
-      this.onChangeEndMonth = this.onChangeEndMonth.bind(this);
+      this.onChangeStartDate = this.onChangeStartDate.bind(this);
+      this.onChangeEndDate = this.onChangeEndDate.bind(this);
 
 
   }
@@ -45,16 +52,63 @@ class PostFeed extends Component {
   }
   onPriceChange(min,max)
   {
+        let newPosts = [];
+      if (this.props.selectedPosts.length === 0)
+      {
+          newPosts = this.props.posts.filter(post =>
+              post.rent >= min && post.rent <= max &&  new Date(this.state.startDate).getTime() <= (new Date(post.startDate).getTime() + 12096e5));
+      }
+      else {
+          newPosts = this.props.selectedPosts.filter(post =>
+              post.rent >= min && post.rent <= max
+          );
+      }
+
+      this.props.updateSelectedPosts(newPosts);
+
       this.setState({ min: min, max: max });
-  }
-  onChangeStartMonth(num)
-  {
-      this.setState({ startMonth: num});
+
+
 
   }
-    onChangeEndMonth(num)
+  onChangeStartDate(date)
+  {
+      let newPosts  = [];
+      if (this.props.selectedPosts.length === 0)
+      {
+          newPosts = this.props.posts.filter(post =>
+              new Date(date).getTime() <= (new Date(post.startDate).getTime() + 12096e5));
+      }
+      else {
+          newPosts = this.props.selectedPosts.filter(post =>
+              new Date(date).getTime() <= (new Date(post.startDate).getTime() + 12096e5)   &&  post.rent >= this.state.min &&  post.rent <= this.state.max);
+      }
+
+      this.props.updateSelectedPosts(newPosts);
+      this.setState({ startDate: date});
+
+  }
+    onChangeEndDate(date)
     {
-        this.setState({ endMonth: num});
+        let newPosts = [];
+        if (this.props.selectedPosts.length === 0)
+        {
+            newPosts = this.props.posts.filter(post =>
+                (new Date(this.state.endDate).getTime() + 12096e5) >= new Date(date).getTime()  &&  post.rent >= this.state.min &&  post.rent <= this.state.max
+            );
+        }
+        else {
+            newPosts =  this.props.selectedPosts.filter(post =>
+                (new Date(this.state.endDate).getTime() + 12096e5) >= new Date(date).getTime()
+            );
+        }
+
+        console.log(this.props.posts);
+        console.log(date);
+
+        this.props.updateSelectedPosts(newPosts);
+        this.setState({ endDate: date});
+
 
     }
   onChangeStartYear(num)
@@ -67,13 +121,8 @@ class PostFeed extends Component {
     }
   render() {
   	
-    const { posts } = this.props;
-    console.log(posts);
-    let newPosts = posts.filter(post => 
-      post.rent >= this.state.min && post.rent <= this.state.max
-    );
-
-    let feedContent = newPosts.map(post => <PostItem className="col-md-6" key={post._id} post={post} />);
+     console.log(this.props.selectedPosts);
+    let feedContent = this.props.selectedPosts.map(post => <PostItem className="col-md-6" key={post._id} post={post} />);
 
     return (
     	<div className="col-md-12">
@@ -95,7 +144,7 @@ class PostFeed extends Component {
                         </div>
                     </div> :
                     <div>
-                        <button className="filterButtonSelected" onClick={() => this.setState({showPriceTool: true})}>
+                        <button className="filterButtonSelected" onClick={() => this.setState({showPriceTool: true,showFilter: false,showCalendar: false})}>
                             <span style={{padding: 2, paddingTop: 6, paddingBottom: 6}}>  Price </span>
                         </button>
 
@@ -106,17 +155,31 @@ class PostFeed extends Component {
                         <span style={{padding: 2,paddingTop: 6, paddingBottom: 6}}> Dates </span>
                     </button>
                         <div className="filterPopUp">
-                            <Calendar />
+                            <DatePicker
+                                selected={this.state.startDate}
+                                selectsStart
+                                startDate={this.state.startDate}
+                                endDate={this.state.endDate}
+                                onChange={this.onChangeStartDate}
+                            />
+
+                            <DatePicker
+                                selected={this.state.endDate}
+                                selectsEnd
+                                startDate={this.state.startDate}
+                                endDate={this.state.endDate}
+                                onChange={this.onChangeEndDate}
+                            />
                         </div>
                     </div>:
-                    <button className="filterButtonSelected"  onClick={() => this.setState({showCalendar: true,showPriceTool: false, showStartDate: false})}>
+                    <button className="filterButtonSelected"  onClick={() => this.setState({showCalendar: true,showPriceTool: false,showFilter: false})}>
                         <span style={{padding: 2,paddingTop: 6, paddingBottom: 6}}> Dates </span>
                     </button>}
                 {this.state.showFilter ?   <div>  <button className="filterButton" onClick={() => this.setState({showFilter: false})}>
                         <span style={{padding: 2,paddingTop: 6, paddingBottom: 6}}> More </span>
                     </button>
                     </div>:
-                    <button className="filterButtonSelected"  onClick={() => this.setState({showFilter: true,showPriceTool: false,showStartDate: false,showEndDate: false})}>
+                    <button className="filterButtonSelected"  onClick={() => this.setState({showFilter: true,showPriceTool: false,showCalendar: false,showEndDate: false})}>
                         <span style={{padding: 2,paddingTop: 6, paddingBottom: 6}}> More </span>
                     </button>}
 
@@ -134,6 +197,12 @@ class PostFeed extends Component {
 
 PostFeed.propTypes = {
     posts: PropTypes.array.isRequired,
+    selectedPosts: PropTypes.array.isRequired,
 };
 
-export default PostFeed;
+const mapStateToProps = state => ({
+    selectedPosts: state.post.selectedPosts,
+});
+
+export default connect(mapStateToProps, { updateSelectedPosts })(PostFeed);
+

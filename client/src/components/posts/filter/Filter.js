@@ -17,33 +17,25 @@ const Filter = props => {
             <div className="filterBox">
                 <h5> Type </h5>
                 <div  style={{margin: 10}}  className="btn-group buttonFilter" role="group" aria-label="Basic example">
-                    <button type="button" className="btn btn-secondary buttonFilter">Left</button>
-                    <button type="button" className="btn btn-secondary buttonFilter">Middle</button>
-                    <button type="button" className="btn btn-secondary buttonFilter">Right</button>
-                </div>
-            </div>
-            <div className="filterBox">
-                <h5> Duration </h5>
-                <div  style={{margin: 10,display: 'flex'}}  className="btn-group" role="group" aria-label="Basic example">
-                    <button type="button" className="btn btn-secondary buttonFilter">Left</button>
-                    <button type="button" className="btn btn-secondary buttonFilter">Middle</button>
-                    <button type="button" className="btn btn-secondary buttonFilter">Right</button>
+                    <button type="button" className="btn btncustom-light btn-secondary buttonFilter"> Private Room </button>
+                    <button type="button" className="btn btncustom-light  btn-secondary buttonFilter"> Full Apartment </button>
+                    <button type="button" className="btn btncustom-light btn-secondary buttonFilter">Shared Room</button>
                 </div>
             </div>
             <div className="filterBox ">
-                <h5> Roommates </h5>
+                <h5> Flatmates </h5>
                 <div style={{margin: 10}} className="btn-group" role="group" aria-label="Basic example">
-                    <button type="button" className="btn btn-secondary buttonFilter">Left</button>
-                    <button type="button" className="btn btn-secondary buttonFilter">Middle</button>
-                    <button type="button" className="btn btn-secondary buttonFilter">Right</button>
+                    <button type="button" className="btn btncustom-light btn-secondary buttonFilter"> One </button>
+                    <button type="button" className="btn btncustom-light btn-secondary buttonFilter"> Two </button>
+                    <button type="button" className="btn  btncustom-light btn-secondary buttonFilter"> Three </button>
+                    <button type="button" className="btn  btncustom-light btn-secondary buttonFilter"> Four </button>
                 </div>
             </div>
             <div className="filterBox">
-                <h5> Bedrooms </h5>
+                <h5> Bathroom </h5>
                 <div  style={{margin: 10}}  className="btn-group buttonFilter" role="group" aria-label="Basic example">
-                    <button type="button" className="btn btn-secondary buttonFilter">Left</button>
-                    <button type="button" className="btn btn-secondary buttonFilter">Middle</button>
-                    <button type="button" className="btn btn-secondary buttonFilter">Right</button>
+                    <button type="button" className="btn btncustom-light btn-secondary buttonFilter">Private </button>
+                    <button type="button" className="btn btncustom-light btn-secondary buttonFilter">Shared </button>
                 </div>
             </div>
         </div>

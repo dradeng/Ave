@@ -22,6 +22,12 @@ img {
 COMMON
  */
 
+.box-custom
+{
+  background: linear-gradient(97deg, #04edc3, #47dce4);
+  border:  1px solid #fff;
+  color: #ffffff;
+}
 .btncustom {
   background: linear-gradient(97deg, #04edc3, #47dce4);
   border:  1px solid #fff;

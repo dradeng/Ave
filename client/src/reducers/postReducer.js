@@ -6,13 +6,14 @@ import {
     UPDATE_SELECTED_DATE,
     UPDATE_SELECTED_ENDDATE,
     UPDATE_SELECTED_CURRENT,
-
+    UPDATE_SELECTED_POSTS,
     POST_LOADING
 } from '../actions/types';
 
 const initialState = {
     posts: [],
     post: {},
+    selectedPosts: [],
     currentMonth: new Date(),
     selectedDate: null,
     selectedEndDate: null,
@@ -30,6 +31,7 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 posts: action.payload,
+                selectedPosts: action.payload,
                 loading: false
             };
         case GET_POST:
@@ -62,6 +64,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 selectedEndDate: action.payload
+            };
+        case UPDATE_SELECTED_POSTS:
+            return {
+                ...state,
+                selectedPosts: action.payload,
             };
         default:
             return state;

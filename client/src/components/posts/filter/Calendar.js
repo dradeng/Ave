@@ -1,5 +1,5 @@
 import React from "react";
-import dateFns from "date-fns";
+import * as dateFns from "date-fns";
 import PropTypes from 'prop-types';
 
 import './Calendar.css';
@@ -40,7 +40,7 @@ class Calendar extends React.Component {
         const days = [];
 
         let startDate = dateFns.startOfWeek(this.state.currentMonth);
-
+        console.log(this.state.currentMonth);
         for (let i = 0; i < 7; i++) {
             days.push(
                 <div className="col col-center" key={i}>
