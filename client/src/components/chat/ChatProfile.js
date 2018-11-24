@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import UserIcon from "../../assets/UserIcon.png";
 import isEmpty from "../../validation/is-empty";
-import PostItem2 from '../posts/PostFullSize.js';
+import PostFullSize from '../posts/PostFullSize.js';
 import ProfileReview from "../profile/ProfileReview";
 import {Link} from "react-router-dom";
 const ChatProfile = ({
@@ -95,7 +95,7 @@ const ChatProfile = ({
 
                 <div className="d-flex justify-content-center" style={{width: '100%'}}>
 
-                    <PostItem2 className="col-md-8" style={{width: '100%'}} post={post}/>
+                    <PostFullSize className="col-md-8" style={{width: '100%'}} post={post}/>
                 </div>
                 </div>
             }
