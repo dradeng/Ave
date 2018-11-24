@@ -75,7 +75,6 @@ COMMON
   padding: none;
   object-fit: fill;
 
-  position: fixed; /* optional depending on what you want to do in your app */
 
 
 }
